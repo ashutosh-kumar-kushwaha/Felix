@@ -4,17 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     tools:context=".SplashActivity">
 
-    <TextView
-        android:id="@+id/felixTxtVw"
+    <LinearLayout
+        android:id="@+id/felixLogoLL"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Felix"
-        android:textColor="#000000"
-        android:textSize="96sp"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_30"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
+
 </android.support.constraint.ConstraintLayout>
