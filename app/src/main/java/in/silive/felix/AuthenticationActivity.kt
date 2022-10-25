@@ -26,6 +26,14 @@ class AuthenticationActivity : AppCompatActivity() {
         ft.commit()
     }
 
+    fun forgotPassFrag(view : View){
+        val fm : FragmentManager = supportFragmentManager
+        val ft : FragmentTransaction = fm.beginTransaction()
+        val forgotPasswordFrag = ForgotPasswordFragment()
+        ft.replace(R.id.container, forgotPasswordFrag)
+        ft.commit()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authentication)
