@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#040913"
+    tools:context=".OtpVerificationFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#040913">
+
+        <TextView
+            android:id="@+id/otpVerificationTxtVw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_33"
+            android:text="OTP Verification"
+            android:fontFamily="@font/montserrat"
+            android:textSize="@dimen/sp_25"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+         <EditText
+            android:id="@+id/otpETxt"
+            android:layout_width="@dimen/dp_260"
+            android:layout_height="@dimen/dp_45"
+            android:layout_marginTop="@dimen/dp_57"
+            android:background="@drawable/textbox_background"
+            android:ems="10"
+            android:fontFamily="@font/montserrat"
+            android:inputType="number"
+            android:paddingStart="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_16"
+            android:paddingEnd="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_16"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/otpVerificationTxtVw" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button2"
+            android:layout_width="@dimen/dp_260"
+            android:layout_height="@dimen/dp_45"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@drawable/buttonbackground"
+            android:fontFamily="@font/montserrat"
+            android:text="Continue"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_13"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/otpETxt" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_24"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:width="@dimen/dp_260"
+            android:fontFamily="@font/montserrat"
+            android:text="Enter OTP sent to example@gmail.com"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_13"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/otpVerificationTxtVw" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
