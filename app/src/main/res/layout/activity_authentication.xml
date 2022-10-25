@@ -19,7 +19,17 @@
             android:background="#040913"
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"  />
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" >
+
+
+            <ImageView
+                android:id="@+id/backImgVw"
+                android:layout_width="@dimen/dp_13"
+                android:layout_height="@dimen/dp_13"
+                android:onClick="back"
+                app:srcCompat="@drawable/back" />
+        </androidx.appcompat.widget.Toolbar>
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout

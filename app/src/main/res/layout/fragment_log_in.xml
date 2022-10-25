@@ -12,7 +12,7 @@
             android:layout_height="match_parent"
             android:background="#040913">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/felixLogo"
             android:layout_width="@dimen/dp_83"
             android:layout_height="@dimen/dp_40"
@@ -62,15 +62,27 @@
             android:text="Password"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_13"
-            app:layout_constraintBottom_toTopOf="@+id/passwordETxt"
-            app:layout_constraintStart_toStartOf="@+id/passwordETxt" />
+            app:layout_constraintBottom_toTopOf="@+id/passwordETxtLayout"
+            app:layout_constraintStart_toStartOf="@+id/passwordETxtLayout" />
 
-        <EditText
-            android:id="@+id/passwordETxt"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordETxtLayout"
             android:layout_width="@dimen/dp_260"
             android:layout_height="@dimen/dp_45"
             android:layout_marginTop="@dimen/dp_57"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             android:background="@drawable/textbox_background"
+            app:passwordToggleEnabled="true"
+            app:hintEnabled="false"
+            app:passwordToggleDrawable="@drawable/show_hide_password"
+            app:passwordToggleTint="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/emailETxt">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordETxt"
+            android:layout_width="@dimen/dp_260"
+            android:layout_height="@dimen/dp_45"
             android:ems="10"
             android:textSize="@dimen/sp_12"
             android:inputType="textPassword"
@@ -79,10 +91,9 @@
             android:paddingEnd="@dimen/dp_10"
             android:paddingBottom="@dimen/dp_15"
             android:textColor="@color/white"
-            android:fontFamily="@font/montserrat"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/emailETxt" />
+            android:background="@drawable/textbox_background"
+            android:fontFamily="@font/montserrat"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/textView4"
@@ -94,8 +105,8 @@
             android:textColor="@color/white"
             android:onClick="forgotPassFrag"
             android:textSize="@dimen/sp_12"
-            app:layout_constraintEnd_toEndOf="@+id/passwordETxt"
-            app:layout_constraintTop_toBottomOf="@+id/passwordETxt" />
+            app:layout_constraintEnd_toEndOf="@+id/passwordETxtLayout"
+            app:layout_constraintTop_toBottomOf="@+id/passwordETxtLayout" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button2"

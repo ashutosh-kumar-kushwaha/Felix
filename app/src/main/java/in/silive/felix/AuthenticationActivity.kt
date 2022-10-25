@@ -11,6 +11,10 @@ import androidx.fragment.app.FragmentTransaction
 
 class AuthenticationActivity : AppCompatActivity() {
 
+    fun back(view : View){
+        finish()
+    }
+
     private fun replaceFrag(fragment : Fragment){
         val fm : FragmentManager = supportFragmentManager
         val ft : FragmentTransaction = fm.beginTransaction()
@@ -63,12 +67,5 @@ class AuthenticationActivity : AppCompatActivity() {
 
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == android.R.id.home){
-            finish()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
-    }
 
 }

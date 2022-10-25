@@ -20,8 +20,6 @@ class IntroActivity : AppCompatActivity() {
 
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        supportActionBar?.setLogo(R.drawable.ic_felix)
-
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
     }
@@ -32,11 +30,4 @@ class IntroActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.signIn){
-            val intent = Intent(this, AuthenticationActivity::class.java)
-            startActivity(intent)
-        }
-        return super.onOptionsItemSelected(item)
-    }
 }

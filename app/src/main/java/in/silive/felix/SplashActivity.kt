@@ -29,7 +29,7 @@ class SplashActivity : Activity() {
             Handler(Looper.getMainLooper()).postDelayed({
                 val img : ImageView = ImageView(this)
                 img.setImageResource(felixImages[i])
-                val params = LinearLayout.LayoutParams(resources.getDimensionPixelSize(R.dimen.dp_50), resources.getDimensionPixelSize(R.dimen.dp_80))
+                val params = LinearLayout.LayoutParams(resources.getDimensionPixelSize(R.dimen.dp_43), resources.getDimensionPixelSize(R.dimen.dp_80))
                 img.layoutParams = params
                 felixLL.addView(img)
             }, (300 + i*300).toLong())

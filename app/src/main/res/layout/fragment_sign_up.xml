@@ -39,20 +39,20 @@
 
         <EditText
             android:id="@+id/firstNameETxt"
-            android:layout_width="@dimen/dp_260"
+            android:layout_width="@dimen/dp_124"
             android:layout_height="@dimen/dp_45"
+            android:layout_marginStart="@dimen/dp_27"
             android:layout_marginTop="@dimen/dp_67"
             android:background="@drawable/textbox_background"
             android:ems="10"
-            android:textSize="@dimen/sp_12"
+            android:fontFamily="@font/montserrat"
             android:inputType="textPersonName"
             android:paddingStart="@dimen/dp_10"
             android:paddingTop="@dimen/dp_15"
             android:paddingEnd="@dimen/dp_10"
             android:paddingBottom="@dimen/dp_15"
             android:textColor="@color/white"
-            android:fontFamily="@font/montserrat"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="@dimen/sp_12"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/registerTxtVw" />
 
@@ -70,22 +70,22 @@
 
         <EditText
             android:id="@+id/lastNameETxt"
-            android:layout_width="@dimen/dp_260"
+            android:layout_width="@dimen/dp_124"
             android:layout_height="@dimen/dp_45"
-            android:layout_marginTop="@dimen/dp_29"
+            android:layout_marginEnd="@dimen/dp_27"
             android:background="@drawable/textbox_background"
             android:ems="10"
-            android:textSize="@dimen/sp_12"
+            android:fontFamily="@font/montserrat"
             android:inputType="textPersonName"
             android:paddingStart="@dimen/dp_10"
             android:paddingTop="@dimen/dp_15"
             android:paddingEnd="@dimen/dp_10"
             android:paddingBottom="@dimen/dp_15"
             android:textColor="@color/white"
-            android:fontFamily="@font/montserrat"
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintBottom_toBottomOf="@+id/firstNameETxt"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/firstNameETxt" />
+            app:layout_constraintTop_toTopOf="@+id/firstNameETxt" />
 
         <TextView
             android:id="@+id/emailTxtVw"
@@ -119,7 +119,7 @@
             app:layout_constraintTop_toBottomOf="@+id/lastNameETxt" />
 
         <TextView
-            android:id="@+id/passwordTxtVw"
+            android:id="@+id/password1TxtVw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dp_3"
@@ -127,10 +127,64 @@
             android:text="Password"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_13"
-            app:layout_constraintBottom_toTopOf="@+id/passwordETxt"
-            app:layout_constraintStart_toStartOf="@+id/passwordETxt" />
+            app:layout_constraintBottom_toTopOf="@+id/password1ETxtLayout"
+            app:layout_constraintStart_toStartOf="@+id/password1ETxtLayout" />
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password1ETxtLayout"
+            android:layout_width="@dimen/dp_260"
+            android:layout_height="@dimen/dp_45"
+            android:layout_marginTop="@dimen/dp_29"
+            android:background="@drawable/textbox_background"
+            app:passwordToggleEnabled="true"
+            app:hintEnabled="false"
+            app:passwordToggleDrawable="@drawable/show_hide_password"
+            app:passwordToggleTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/emailETxt" >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password1ETxt"
+                android:layout_width="@dimen/dp_260"
+                android:layout_height="@dimen/dp_45"
+                android:layout_marginTop="@dimen/dp_29"
+                android:background="@drawable/textbox_background"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:paddingStart="@dimen/dp_10"
+                android:paddingTop="@dimen/dp_15"
+                android:paddingEnd="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_15"
+                android:textColor="@color/white"
+                android:fontFamily="@font/montserrat"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/password2TxtVw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_3"
+            android:fontFamily="@font/montserrat"
+            android:text="Confirm Password"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_13"
+            app:layout_constraintBottom_toTopOf="@+id/password2ETxtLayout"
+            app:layout_constraintStart_toStartOf="@+id/password2ETxtLayout" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password2ETxtLayout"
+            android:layout_width="@dimen/dp_260"
+            android:layout_height="@dimen/dp_45"
+            android:layout_marginTop="@dimen/dp_29"
+            android:background="@drawable/textbox_background"
+            app:passwordToggleEnabled="true"
+            app:hintEnabled="false"
+            app:passwordToggleDrawable="@drawable/show_hide_password"
+            app:passwordToggleTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/password1ETxtLayout" >
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordETxt"
             android:layout_width="@dimen/dp_260"
             android:layout_height="@dimen/dp_45"
@@ -143,10 +197,8 @@
             android:paddingEnd="@dimen/dp_10"
             android:paddingBottom="@dimen/dp_15"
             android:textColor="@color/white"
-            android:fontFamily="@font/montserrat"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/emailETxt" />
+            android:fontFamily="@font/montserrat"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button2"
@@ -161,7 +213,7 @@
             android:textSize="@dimen/sp_13"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/passwordETxt" />
+            app:layout_constraintTop_toBottomOf="@+id/password2ETxtLayout" />
 
         <TextView
             android:id="@+id/textView5"
