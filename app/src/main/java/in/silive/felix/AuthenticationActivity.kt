@@ -35,6 +35,24 @@ class AuthenticationActivity : AppCompatActivity() {
         ft.commit()
     }
 
+    fun otpVerificationFrag(view : View){
+        val fm : FragmentManager = supportFragmentManager
+        val ft : FragmentTransaction = fm.beginTransaction()
+        val otpVerificationFrag = OtpVerificationFragment()
+        ft.replace(R.id.container, otpVerificationFrag)
+        ft.commit()
+    }
+
+    fun resetPasswordFrag(view : View){
+        val fm : FragmentManager = supportFragmentManager
+        val ft : FragmentTransaction = fm.beginTransaction()
+        val resetPasswordFrag = ResetPasswordFragment()
+        ft.replace(R.id.container, resetPasswordFrag)
+        ft.commit()
+    }
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authentication)
