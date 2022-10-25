@@ -11,44 +11,36 @@ import androidx.fragment.app.FragmentTransaction
 
 class AuthenticationActivity : AppCompatActivity() {
 
-    fun signUpFrag(view: View){
+    private fun replaceFrag(fragment : Fragment){
         val fm : FragmentManager = supportFragmentManager
         val ft : FragmentTransaction = fm.beginTransaction()
-        val signUpFrag = SignUpFragment()
-        ft.replace(R.id.container, signUpFrag)
+        ft.replace(R.id.container, fragment)
         ft.commit()
+    }
+
+    fun signUpFrag(view: View){
+        val signUpFrag = SignUpFragment()
+        replaceFrag(signUpFrag)
     }
 
     fun logInFrag(view : View){
-        val fm : FragmentManager = supportFragmentManager
-        val ft : FragmentTransaction = fm.beginTransaction()
         val logInFrag = LogInFragment()
-        ft.replace(R.id.container, logInFrag)
-        ft.commit()
+        replaceFrag(logInFrag)
     }
 
     fun forgotPassFrag(view : View){
-        val fm : FragmentManager = supportFragmentManager
-        val ft : FragmentTransaction = fm.beginTransaction()
         val forgotPasswordFrag = ForgotPasswordFragment()
-        ft.replace(R.id.container, forgotPasswordFrag)
-        ft.commit()
+        replaceFrag(forgotPasswordFrag)
     }
 
     fun otpVerificationFrag(view : View){
-        val fm : FragmentManager = supportFragmentManager
-        val ft : FragmentTransaction = fm.beginTransaction()
         val otpVerificationFrag = OtpVerificationFragment()
-        ft.replace(R.id.container, otpVerificationFrag)
-        ft.commit()
+        replaceFrag(otpVerificationFrag)
     }
 
     fun resetPasswordFrag(view : View){
-        val fm : FragmentManager = supportFragmentManager
-        val ft : FragmentTransaction = fm.beginTransaction()
         val resetPasswordFrag = ResetPasswordFragment()
-        ft.replace(R.id.container, resetPasswordFrag)
-        ft.commit()
+        replaceFrag(resetPasswordFrag)
     }
 
 
