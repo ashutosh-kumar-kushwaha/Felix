@@ -3,6 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Programming/Felix/app/src/main/res/drawable/buttonbackground.xml" value="0.2555" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/drawable/textbox_background.xml" value="0.2555" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/layout/activity_authentication.xml" value="0.1" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/layout/activity_intro.xml" value="0.1" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_log_in.xml" value="0.264" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_sign_up.xml" value="0.234375" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/menu/intro_menu.xml" value="0.25" />
         <entry key="..\:/Users/Ashu/AndroidStudioProjects/Felix/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Users/Ashu/AndroidStudioProjects/Felix/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/Ashu/AndroidStudioProjects/Felix/app/src/main/res/layout/activity_splash.xml" value="0.264" />

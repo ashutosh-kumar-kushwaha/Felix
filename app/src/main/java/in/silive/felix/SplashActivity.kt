@@ -10,7 +10,7 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.support.v4.content.res.ResourcesCompat
+import androidx.core.content.res.ResourcesCompat
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -21,7 +21,7 @@ class SplashActivity : Activity() {
         setContentView(R.layout.activity_splash)
 
 
-        val intent : Intent = Intent(this, LoginActivity::class.java)
+        val intent : Intent = Intent(this, IntroActivity::class.java)
         val felixLL : LinearLayout = findViewById(R.id.felixLogoLL)
         val felixImages = arrayOf(R.drawable.f, R.drawable.e, R.drawable.l, R.drawable.i, R.drawable.x)
 
@@ -40,8 +40,6 @@ class SplashActivity : Activity() {
             startActivity(intent)
             finish()
         }, 2000)
-
-
 
 
 
