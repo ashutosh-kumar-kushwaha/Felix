@@ -5,7 +5,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ServiceBuilder {
-    private const val URL = "https://6a89-223-236-188-76.in.ngrok.io/"
+    private const val URL = " https://b181-223-236-188-76.in.ngrok.io/"
 
     private val okHttp = OkHttpClient.Builder()
 
