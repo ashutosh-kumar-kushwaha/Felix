@@ -8,4 +8,7 @@ import retrofit2.http.POST
 interface RetrofitAPI {
     @POST("api/auth/login")
     fun sendUserData(@Body userSend: User) : Call<User>
+
+    @POST("api/auth/signup")
+    fun signIn(@Body userSend: User) : Call<String>
 }

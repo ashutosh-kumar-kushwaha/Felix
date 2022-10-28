@@ -38,26 +38,26 @@ class LogInFragment : Fragment() {
         logInBtn.setOnClickListener{
 
 
-        val user = User(null, emailETxt.text.toString(), null, null, passwordETxt.text.toString(), null)
-        val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
-        val call = retrofitAPI.sendUserData(user)
+            val user = User(null, emailETxt.text.toString(), null, null, passwordETxt.text.toString(), null)
+            val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
+            val call = retrofitAPI.sendUserData(user)
 
-        call.enqueue(object: Callback<User> {
-            override fun onResponse(call: Call<User>, response: Response<User>) {
-                if(response.body() == null){
-                    Toast.makeText(view.context, "Invalid Email or Password", Toast.LENGTH_LONG).show()
+            call.enqueue(object: Callback<User> {
+                override fun onResponse(call: Call<User>, response: Response<User>) {
+                    if(response.body() == null){
+                        Toast.makeText(view.context, "Invalid Email or Password", Toast.LENGTH_LONG).show()
+                    }
+                    else{
+                        Toast.makeText(view.context, "Hello " + response.body()?.firstName.toString() + "!", Toast.LENGTH_LONG).show()
+                        Log.i("Ashu", response.body().toString())
+                    }
                 }
-                else{
-                    Toast.makeText(view.context, "Hello " + response.body()?.firstName.toString() + "!", Toast.LENGTH_LONG).show()
-                    Log.i("Ashu", response.body().toString())
-                }
-            }
 
-            override fun onFailure(call: Call<User>, t: Throwable) {
-                Toast.makeText(view.context, "Please check your internet connection", Toast.LENGTH_LONG).show()
-                Log.i("Ashu", "Please check your internet connection")
-            }
-        })
+                override fun onFailure(call: Call<User>, t: Throwable) {
+                    Toast.makeText(view.context, "Please check your internet connection", Toast.LENGTH_LONG).show()
+                    Log.i("Ashu", "Please check your internet connection")
+                }
+            })
 
         }
         return view

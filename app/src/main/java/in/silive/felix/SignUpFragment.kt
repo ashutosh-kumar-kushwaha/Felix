@@ -1,6 +1,10 @@
 package `in`.silive.felix
 
+import `in`.silive.felix.module.User
+import `in`.silive.felix.server.RetrofitAPI
+import `in`.silive.felix.server.ServiceBuilder
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +12,9 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SignUpFragment : Fragment() {
 
@@ -50,7 +57,26 @@ class SignUpFragment : Fragment() {
                                 val msg = isValidPassword(password1)
                                 if(msg == "true"){
 
-                                    Toast.makeText(view.context, "Fine", Toast.LENGTH_SHORT).show()
+                                    val user = User(null, email, firstName, lastName, password1, null)
+                                    val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
+                                    val call = retrofitAPI.signIn(user)
+
+                                    call.enqueue(object: Callback<String> {
+                                        override fun onResponse(call: Call<String>, response: Response<String>) {
+                                            if(response.body() == null){
+                                                Toast.makeText(view.context, "NULL", Toast.LENGTH_LONG).show()
+                                            }
+                                            else{
+                                                Toast.makeText(view.context, response.body()?.toString(), Toast.LENGTH_LONG).show()
+                                                Log.i("Ashu", response.body().toString())
+                                            }
+                                        }
+
+                                        override fun onFailure(call: Call<String>, t: Throwable) {
+                                            Toast.makeText(view.context, "Please check your internet connection", Toast.LENGTH_LONG).show()
+                                            Log.i("Ashu", "Please check your internet connection")
+                                        }
+                                    })
 
 
                                 }
