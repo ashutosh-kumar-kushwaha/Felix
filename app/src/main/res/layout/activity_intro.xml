@@ -27,14 +27,16 @@
                 android:layout_width="@dimen/dp_47"
                 android:layout_height="@dimen/dp_22"
                 app:srcCompat="@drawable/ic_felix"/>
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SIGN IN"
-                android:textSize="@dimen/sp_12"
-                android:fontFamily="@font/montserrat"
                 android:layout_gravity="end"
-                android:textColor="@color/white"/>
+                android:fontFamily="@font/montserrat"
+                android:onClick="authenticationActivity"
+                android:text="SIGN IN"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_12" />
 
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>

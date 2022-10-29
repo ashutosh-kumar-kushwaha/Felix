@@ -233,5 +233,6 @@
             android:textColor="@color/white"
             app:layout_constraintStart_toEndOf="@+id/textView5"
             app:layout_constraintTop_toTopOf="@+id/textView5" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

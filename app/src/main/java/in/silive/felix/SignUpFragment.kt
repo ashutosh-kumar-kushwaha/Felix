@@ -64,16 +64,16 @@ class SignUpFragment : Fragment() {
                                     call.enqueue(object: Callback<String> {
                                         override fun onResponse(call: Call<String>, response: Response<String>) {
                                             if(response.body() == null){
-                                                Toast.makeText(view.context, "NULL", Toast.LENGTH_LONG).show()
+                                                Toast.makeText(view.context, "NULL", Toast.LENGTH_SHORT).show()
                                             }
                                             else{
-                                                Toast.makeText(view.context, response.body()?.toString(), Toast.LENGTH_LONG).show()
+                                                Toast.makeText(view.context, response.body()?.toString(), Toast.LENGTH_SHORT).show()
                                                 Log.i("Ashu", response.body().toString())
                                             }
                                         }
 
                                         override fun onFailure(call: Call<String>, t: Throwable) {
-                                            Toast.makeText(view.context, "Please check your internet connection", Toast.LENGTH_LONG).show()
+                                            Toast.makeText(view.context, "Please check your internet connection", Toast.LENGTH_SHORT).show()
                                             Log.i("Ashu", "Please check your internet connection")
                                         }
                                     })

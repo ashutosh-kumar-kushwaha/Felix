@@ -4,17 +4,22 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Programming/Felix/app/src/main/res/drawable/buttonbackground.xml" value="0.2555" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/drawable/home_btn.xml" value="0.156" />
         <entry key="..\:/Programming/Felix/app/src/main/res/drawable/ic_back.xml" value="0.2165" />
         <entry key="..\:/Programming/Felix/app/src/main/res/drawable/ic_felix.xml" value="0.2165" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/drawable/ic_vector__1_.xml" value="0.156" />
         <entry key="..\:/Programming/Felix/app/src/main/res/drawable/show_hide_password.xml" value="0.2555" />
         <entry key="..\:/Programming/Felix/app/src/main/res/drawable/textbox_background.xml" value="0.2555" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/activity_authentication.xml" value="0.2" />
-        <entry key="..\:/Programming/Felix/app/src/main/res/layout/activity_intro.xml" value="0.14736842105263157" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/layout/activity_home_page.xml" value="0.23842592592592593" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/layout/activity_intro.xml" value="0.2" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_forgot_password.xml" value="0.25" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_home_page.xml" value="0.14635416666666667" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_log_in.xml" value="0.176" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_otp_verification.xml" value="0.25" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_reset_password.xml" value="0.25" />
-        <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_sign_up.xml" value="0.234375" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_sign_up.xml" value="0.2" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/menu/bottom_menu_user.xml" value="0.2" />
         <entry key="..\:/Programming/Felix/app/src/main/res/menu/intro_menu.xml" value="0.25" />
         <entry key="..\:/Users/Ashu/AndroidStudioProjects/Felix/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Users/Ashu/AndroidStudioProjects/Felix/app/src/main/res/layout/activity_main.xml" value="0.25" />

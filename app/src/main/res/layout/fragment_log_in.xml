@@ -71,9 +71,9 @@
             android:layout_marginTop="@dimen/dp_57"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:background="@drawable/textbox_background"
             app:passwordToggleEnabled="true"
             app:hintEnabled="false"
+            app:errorEnabled="true"
             app:passwordToggleDrawable="@drawable/show_hide_password"
             app:passwordToggleTint="@color/white"
             app:layout_constraintTop_toBottomOf="@+id/emailETxt">

@@ -12,39 +12,46 @@ import androidx.fragment.app.FragmentTransaction
 class AuthenticationActivity : AppCompatActivity() {
 
     fun back(view : View){
-        finish()
+        onBackPressed()
     }
 
-    private fun replaceFrag(fragment : Fragment){
+    private fun replaceFrag(fragment : Fragment, name : String){
         val fm : FragmentManager = supportFragmentManager
         val ft : FragmentTransaction = fm.beginTransaction()
-        ft.replace(R.id.container, fragment)
+        ft.addToBackStack(name)
+        ft.add(R.id.container, fragment)
         ft.commit()
     }
 
     fun signUpFrag(view: View){
         val signUpFrag = SignUpFragment()
-        replaceFrag(signUpFrag)
+        replaceFrag(signUpFrag, "signUp")
     }
 
     fun logInFrag(view : View){
+        val fm = supportFragmentManager
+        if(fm.backStackEntryCount > 0){
+            fm.popBackStackImmediate()
+            return
+        }
+
         val logInFrag = LogInFragment()
-        replaceFrag(logInFrag)
+        replaceFrag(logInFrag, "LogIn")
     }
 
     fun forgotPassFrag(view : View){
         val forgotPasswordFrag = ForgotPasswordFragment()
-        replaceFrag(forgotPasswordFrag)
+        replaceFrag(forgotPasswordFrag, "forgotPass")
     }
 
     fun otpVerificationFrag(view : View){
         val otpVerificationFrag = OtpVerificationFragment()
-        replaceFrag(otpVerificationFrag)
+        replaceFrag(otpVerificationFrag, "otpVerify")
     }
 
     fun resetPasswordFrag(view : View){
         val resetPasswordFrag = ResetPasswordFragment()
-        replaceFrag(resetPasswordFrag)
+        replaceFrag(resetPasswordFrag, "resetPass")
     }
 
 
@@ -66,6 +73,5 @@ class AuthenticationActivity : AppCompatActivity() {
         actionBar?.setDisplayShowTitleEnabled(false)
 
     }
-
 
 }
