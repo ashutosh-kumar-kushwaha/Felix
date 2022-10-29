@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
 object ServiceBuilder {
-    private const val URL = "https://acb6-223-236-188-76.in.ngrok.io"
+    private const val URL = "https://felixapis.herokuapp.com/"
 
     private val okHttp = OkHttpClient.Builder()
 

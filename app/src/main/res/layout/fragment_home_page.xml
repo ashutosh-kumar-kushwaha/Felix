@@ -1,27 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#070E1E"
-    tools:context=".HomePageFragment">
+<!--<androidx.core.widget.NestedScrollView >-->
 
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#070E1E">
+<!--    <HorizontalScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:background="#070E1E">-->
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:background="#070E1E"
+            tools:context=".HomePageFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#070E1E">
+            android:layout_height="match_parent">
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="@dimen/dp_315"
+                android:layout_height="@dimen/dp_200"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+            </androidx.viewpager.widget.ViewPager>
+
 
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </HorizontalScrollView>
+<!--    </HorizontalScrollView>-->
 
-</androidx.core.widget.NestedScrollView>
+<!--</androidx.core.widget.NestedScrollView>-->
