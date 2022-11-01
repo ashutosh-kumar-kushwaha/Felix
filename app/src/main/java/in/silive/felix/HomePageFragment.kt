@@ -1,5 +1,6 @@
 package `in`.silive.felix
 
+import `in`.silive.felix.recyclerview.RecyclerMoviesAdapter
 import `in`.silive.felix.viewpager.ViewPagerAdapter
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
@@ -19,6 +21,8 @@ class HomePageFragment : Fragment() {
     lateinit var viewPager : ViewPager2
     var images : MutableList<Int> = mutableListOf(R.drawable.money_heist, R.drawable.daredevil, R.drawable.money_heist, R.drawable.daredevil, R.drawable.money_heist, R.drawable.daredevil)
     lateinit var viewPagerAdapter : ViewPagerAdapter
+    lateinit var movieRecyclerView: RecyclerView
+
 
 
 
@@ -61,6 +65,12 @@ class HomePageFragment : Fragment() {
 
         viewPager.setPageTransformer(transformer)
 
+        movieRecyclerView = view.findViewById(R.id.recyclerView)
+        movieRecyclerView.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL, false)
+
+        val recyclerMoviesAdapter = RecyclerMoviesAdapter(view.context, images)
+
+        movieRecyclerView.adapter = recyclerMoviesAdapter
 
 
 
