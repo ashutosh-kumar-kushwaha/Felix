@@ -6,39 +6,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.viewpager.widget.PagerAdapter
-import java.util.*
+import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.recyclerview.widget.RecyclerView
 
-class ViewPagerAdapter(val context: Context, val images: MutableList<Int>) : PagerAdapter() {
+class ViewPagerAdapter(val context: Context, val images: MutableList<Int>) : RecyclerView.Adapter<ViewPagerAdapter.ViewHolder>() {
 
-    var mLayoutInflater : LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+    class ViewHolder(val itemView : View) : RecyclerView.ViewHolder(itemView) {
+        var images : AppCompatImageView = itemView.findViewById(R.id.item)
+    }
 
 
-    override fun getCount(): Int {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view : View = LayoutInflater.from(context).inflate(R.layout.item, parent, false)
+
+        return ViewHolder(view as LinearLayoutCompat)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.images.setImageResource(images[position])
+    }
+
+    override fun getItemCount(): Int {
         return images.size
-    }
-
-    override fun isViewFromObject(view: View, `object`: Any): Boolean {
-        return view == `object`
-    }
-
-    override fun instantiateItem(container: ViewGroup, position: Int): Any {
-
-        val view : View = LayoutInflater.from(context).inflate(R.layout.item, container, false)
-
-        val item1 : AppCompatImageView = view.findViewById(R.id.item1)
-
-        item1.setImageResource(images[position])
-
-        Objects.requireNonNull(container).addView(view)
-
-//        container.addView(view, 0)
-
-        return view
-    }
-
-    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-        container.removeView(`object` as View)
     }
 
 

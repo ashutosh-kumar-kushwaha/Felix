@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.appcompat.widget.LinearLayoutCompat
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/item1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/item"
+        android:layout_width="@dimen/dp_157"
+        android:layout_height="@dimen/dp_233"
+        android:scaleType="fitCenter"/>
 
-</LinearLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

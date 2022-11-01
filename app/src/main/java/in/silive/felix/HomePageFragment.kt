@@ -7,12 +7,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.viewpager.widget.ViewPager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.CompositePageTransformer
+import androidx.viewpager2.widget.MarginPageTransformer
+import androidx.viewpager2.widget.ViewPager2
+import kotlin.math.abs
 
 
 class HomePageFragment : Fragment() {
 
-    lateinit var viewPager : ViewPager
+    lateinit var viewPager : ViewPager2
     var images : MutableList<Int> = mutableListOf(R.drawable.money_heist, R.drawable.daredevil, R.drawable.money_heist, R.drawable.daredevil, R.drawable.money_heist, R.drawable.daredevil)
     lateinit var viewPagerAdapter : ViewPagerAdapter
 
@@ -34,34 +38,36 @@ class HomePageFragment : Fragment() {
 //        images.add(R.drawable.daredevil)
 //        images.add(R.drawable.money_heist)
 
-
-
         viewPagerAdapter = ViewPagerAdapter(view.context, images)
 
         viewPager.adapter = viewPagerAdapter
 
+        viewPager.offscreenPageLimit = 3
+        viewPager.clipChildren = false
+
+
+        viewPager.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+
         viewPager.clipToPadding = false;
-        viewPager.setPadding(300,0,300,0);
+        viewPager.setPadding(resources.getDimensionPixelSize(R.dimen.dp_79),resources.getDimensionPixelSize(R.dimen.dp_13),resources.getDimensionPixelSize(R.dimen.dp_79),resources.getDimensionPixelSize(R.dimen.dp_13));
 
-        Log.d("Ashu", viewPagerAdapter.count.toString())
+        val transformer = CompositePageTransformer()
+        transformer.addTransformer(MarginPageTransformer(40))
+        transformer.addTransformer(ViewPager2.PageTransformer { page, position -> val r : Float = 1 - abs(position)
+            Log.d("Ashu", r.toString())
+        page.scaleY = 1f + r*0.12f
+            page.scaleX = 1f + r*0.12f
+        })
+
+        viewPager.setPageTransformer(transformer)
 
 
-//        viewPager = view.findViewById(R.id.viewPager)
-//        imageList = mutableListOf()
-//
-//        imageList.add(Image(R.drawable.daredevil))
-//        imageList.add(Image(R.drawable.money_heist))
-//        imageList.add(Image(R.drawable.daredevil))
-//        imageList.add(Image(R.drawable.money_heist))
-//        imageList.add(Image(R.drawable.daredevil))
-//        imageList.add(Image(R.drawable.money_heist))
-//
-//        imageAdapter = ImageAdapter(imageList, viewPager)
-//
-//        viewPager.adapter = imageAdapter
 
 
         return view
     }
+
+
+
 
 }
