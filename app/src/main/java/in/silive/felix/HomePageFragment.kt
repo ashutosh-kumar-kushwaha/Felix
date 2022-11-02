@@ -1,5 +1,7 @@
 package `in`.silive.felix
 
+import `in`.silive.felix.module.MoviesList
+import `in`.silive.felix.recyclerview.ParentRecyclerAdapter
 import `in`.silive.felix.recyclerview.RecyclerMoviesAdapter
 import `in`.silive.felix.viewpager.ViewPagerAdapter
 import android.os.Bundle
@@ -19,9 +21,10 @@ import kotlin.math.abs
 class HomePageFragment : Fragment() {
 
     lateinit var viewPager : ViewPager2
-    var images : MutableList<Int> = mutableListOf(R.drawable.money_heist, R.drawable.daredevil, R.drawable.money_heist, R.drawable.daredevil, R.drawable.money_heist, R.drawable.daredevil)
+    var images : MutableList<Int> = mutableListOf(R.drawable.money_heist, R.drawable.daredevil, R.drawable.money_heist, R.drawable.daredevil , R.drawable.money_heist, R.drawable.daredevil)
     lateinit var viewPagerAdapter : ViewPagerAdapter
     lateinit var movieRecyclerView: RecyclerView
+    var moviesList = listOf(MoviesList("Top Picks for you", images), MoviesList("Top Picks for you", images), MoviesList("Top Picks for you", images))
 
 
 
@@ -42,8 +45,10 @@ class HomePageFragment : Fragment() {
 //        images.add(R.drawable.daredevil)
 //        images.add(R.drawable.money_heist)
 
-        viewPagerAdapter = ViewPagerAdapter(view.context, images)
+//        viewPagerAdapter = ViewPagerAdapter(view.context, listOf(images[images.size-2]) + listOf(images[images.size-1]) + images + listOf(images[0]) + listOf(images[1]))
 
+
+        viewPagerAdapter = ViewPagerAdapter(view.context, listOf(images.last()) + images + listOf(images.first()))
         viewPager.adapter = viewPagerAdapter
 
         viewPager.offscreenPageLimit = 3
@@ -64,13 +69,19 @@ class HomePageFragment : Fragment() {
         })
 
         viewPager.setPageTransformer(transformer)
+//        viewPager.setCurrentItem(2)
+
+        onInfinitePageChangeCallBack(images.size + 2)
+
+
+
 
         movieRecyclerView = view.findViewById(R.id.recyclerView)
-        movieRecyclerView.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL, false)
+        movieRecyclerView.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
 
-        val recyclerMoviesAdapter = RecyclerMoviesAdapter(view.context, images)
+        val parentRecyclerAdapter = ParentRecyclerAdapter(view.context, moviesList)
 
-        movieRecyclerView.adapter = recyclerMoviesAdapter
+        movieRecyclerView.adapter = parentRecyclerAdapter
 
 
 
@@ -78,6 +89,19 @@ class HomePageFragment : Fragment() {
     }
 
 
+    fun onInfinitePageChangeCallBack(listSize : Int){
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+            override fun onPageScrollStateChanged(state: Int) {
+                super.onPageScrollStateChanged(state)
+                if(state == ViewPager2.SCROLL_STATE_IDLE){
+                    when (viewPager.currentItem){
+                        listSize - 1 -> viewPager.setCurrentItem(1, false)
+                        0 -> viewPager.setCurrentItem(listSize-2, false)
+                    }
+                }
+            }
+        })
+    }
 
 
 }

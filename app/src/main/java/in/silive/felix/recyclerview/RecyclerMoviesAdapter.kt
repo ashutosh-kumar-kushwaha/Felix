@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 class RecyclerMoviesAdapter(val context: Context, val movies : List<Int>) : RecyclerView.Adapter<RecyclerMoviesAdapter.ViewHolder>(){
 
     class ViewHolder(val itemView: View) : RecyclerView.ViewHolder(itemView){
-        val movieImgVw : ImageView = itemView.findViewById<ImageView>(R.id.movieImgVw)
+        val movieImgVw : ImageView = itemView.findViewById(R.id.movieImgVw)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,4 +29,7 @@ class RecyclerMoviesAdapter(val context: Context, val movies : List<Int>) : Recy
     override fun getItemCount(): Int {
         return movies.size
     }
+
+
+
 }

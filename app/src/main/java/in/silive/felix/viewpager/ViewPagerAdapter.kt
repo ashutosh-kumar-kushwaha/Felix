@@ -9,11 +9,20 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.recyclerview.widget.RecyclerView
 
-class ViewPagerAdapter(val context: Context, val images: MutableList<Int>) : RecyclerView.Adapter<ViewPagerAdapter.ViewHolder>() {
+class ViewPagerAdapter(val context: Context, val images: List<Int>) : RecyclerView.Adapter<ViewPagerAdapter.ViewHolder>() {
 
     class ViewHolder(val itemView : View) : RecyclerView.ViewHolder(itemView) {
         var images : AppCompatImageView = itemView.findViewById(R.id.item)
     }
+
+
+//    val private runnable:Runnable = Runnable(){
+//        override fun run(){
+//            images.addAll(images)
+//            notifyDataSetChanged()
+//        }
+//    }
+
 
 
 

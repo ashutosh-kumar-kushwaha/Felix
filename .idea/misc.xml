@@ -15,7 +15,7 @@
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/activity_intro.xml" value="0.2" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/adapter_viewpager.xml" value="0.1453125" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_forgot_password.xml" value="0.25" />
-        <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_home_page.xml" value="0.14635416666666667" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_home_page.xml" value="0.176" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_log_in.xml" value="0.176" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_otp_verification.xml" value="0.25" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_reset_password.xml" value="0.25" />
@@ -23,6 +23,8 @@
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/image_container.xml" value="0.12013681060282172" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/item.xml" value="0.11928174433518597" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/movie.xml" value="0.10047028644719966" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/layout/nested_recycler_view.xml" value="0.20436083796494228" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/layout/parent_recycler_view.xml" value="0.12013681060282172" />
         <entry key="..\:/Programming/Felix/app/src/main/res/menu/bottom_menu_user.xml" value="0.2" />
         <entry key="..\:/Programming/Felix/app/src/main/res/menu/intro_menu.xml" value="0.25" />
         <entry key="..\:/Users/Ashu/AndroidStudioProjects/Felix/app/src/main/res/layout/activity_login.xml" value="0.25" />
