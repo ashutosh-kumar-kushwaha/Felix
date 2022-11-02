@@ -33,34 +33,40 @@
         app:layout_constraintTop_toBottomOf="@+id/viewPager">
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/circle1"
         android:layout_width="@dimen/dp_5"
         android:layout_height="@dimen/dp_5"
         android:layout_marginEnd="@dimen/dp_6"
-        app:srcCompat="@drawable/circle_grey"/>
+        app:srcCompat="@drawable/ic_circle_white"/>
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/circle2"
         android:layout_width="@dimen/dp_5"
         android:layout_height="@dimen/dp_5"
         android:layout_marginEnd="@dimen/dp_6"
-        app:srcCompat="@drawable/circle_grey"/>
+        app:srcCompat="@drawable/ic_circle_grey"/>
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/circle3"
             android:layout_width="@dimen/dp_5"
         android:layout_height="@dimen/dp_5"
             android:layout_marginEnd="@dimen/dp_6"
-        app:srcCompat="@drawable/circle_grey"/>
+        app:srcCompat="@drawable/ic_circle_grey"/>
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/circle4"
         android:layout_width="@dimen/dp_5"
         android:layout_height="@dimen/dp_5"
         android:layout_marginEnd="@dimen/dp_6"
-        app:srcCompat="@drawable/circle_grey"/>
+        app:srcCompat="@drawable/ic_circle_grey"/>
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/circle5"
             android:layout_width="@dimen/dp_5"
             android:layout_height="@dimen/dp_5"
             android:layout_marginEnd="@dimen/dp_6"
-            app:srcCompat="@drawable/circle_grey"/>
+            app:srcCompat="@drawable/ic_circle_grey"/>
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/circle6"
         android:layout_width="@dimen/dp_5"
         android:layout_height="@dimen/dp_5"
-        app:srcCompat="@drawable/circle_grey"/>
+        app:srcCompat="@drawable/ic_circle_grey"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

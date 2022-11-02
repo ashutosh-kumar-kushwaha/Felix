@@ -4,12 +4,15 @@ import `in`.silive.felix.module.MoviesList
 import `in`.silive.felix.recyclerview.ParentRecyclerAdapter
 import `in`.silive.felix.recyclerview.RecyclerMoviesAdapter
 import `in`.silive.felix.viewpager.ViewPagerAdapter
+import android.media.Image
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
@@ -25,6 +28,7 @@ class HomePageFragment : Fragment() {
     lateinit var viewPagerAdapter : ViewPagerAdapter
     lateinit var movieRecyclerView: RecyclerView
     var moviesList = listOf(MoviesList("Top Picks for you", images), MoviesList("Top Picks for you", images), MoviesList("Top Picks for you", images))
+    lateinit var circles : List<ImageView>
 
 
 
@@ -38,6 +42,8 @@ class HomePageFragment : Fragment() {
 
         viewPager = view.findViewById(R.id.viewPager)
 
+        circles = listOf(view.findViewById<ImageView>(R.id.circle1), view.findViewById<ImageView>(R.id.circle2), view.findViewById<ImageView>(R.id.circle3), view.findViewById<ImageView>(R.id.circle4), view.findViewById<ImageView>(R.id.circle5), view.findViewById<ImageView>(R.id.circle6))
+
 //        images.add(R.drawable.daredevil)
 //        images.add(R.drawable.money_heist)
 //        images.add(R.drawable.daredevil)
@@ -47,6 +53,7 @@ class HomePageFragment : Fragment() {
 
 //        viewPagerAdapter = ViewPagerAdapter(view.context, listOf(images[images.size-2]) + listOf(images[images.size-1]) + images + listOf(images[0]) + listOf(images[1]))
 
+        var currentPage = 0
 
         viewPagerAdapter = ViewPagerAdapter(view.context, listOf(images.last()) + images + listOf(images.first()))
         viewPager.adapter = viewPagerAdapter
@@ -69,7 +76,7 @@ class HomePageFragment : Fragment() {
         })
 
         viewPager.setPageTransformer(transformer)
-//        viewPager.setCurrentItem(2)
+        viewPager.setCurrentItem(1)
 
         onInfinitePageChangeCallBack(images.size + 2)
 
@@ -99,6 +106,13 @@ class HomePageFragment : Fragment() {
                         0 -> viewPager.setCurrentItem(listSize-2, false)
                     }
                 }
+
+                circles[(viewPager.currentItem-1) % circles.size].setImageResource(R.drawable.ic_circle_white)
+                if((viewPager.currentItem-1) % circles.size == 0){
+                    circles[listSize-3].setImageResource(R.drawable.ic_circle_grey)
+                }
+                else
+                    circles[(viewPager.currentItem-2) % circles.size].setImageResource(R.drawable.ic_circle_grey)
             }
         })
     }
