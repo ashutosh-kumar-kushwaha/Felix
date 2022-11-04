@@ -63,12 +63,11 @@ class SignUpFragment : Fragment() {
 
                                     call.enqueue(object: Callback<String> {
                                         override fun onResponse(call: Call<String>, response: Response<String>) {
-                                            if(response.body() == null){
-                                                Toast.makeText(view.context, "NULL", Toast.LENGTH_SHORT).show()
+                                            if(response.code() == 200){
+                                                Toast.makeText(view.context, response.body(), Toast.LENGTH_SHORT).show()
                                             }
                                             else{
-                                                Toast.makeText(view.context, response.body()?.toString(), Toast.LENGTH_SHORT).show()
-                                                Log.i("Ashu", response.body().toString())
+                                                Toast.makeText(view.context, response.code().toString(), Toast.LENGTH_SHORT).show()
                                             }
                                         }
 

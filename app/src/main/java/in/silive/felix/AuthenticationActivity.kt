@@ -11,6 +11,8 @@ import androidx.fragment.app.FragmentTransaction
 
 class AuthenticationActivity : AppCompatActivity() {
 
+    lateinit var email : String
+
     fun back(view : View){
         onBackPressed()
     }
@@ -39,12 +41,12 @@ class AuthenticationActivity : AppCompatActivity() {
         replaceFrag(logInFrag, "LogIn")
     }
 
-    fun forgotPassFrag(view : View){
+    fun forgotPassFrag(){
         val forgotPasswordFrag = ForgotPasswordFragment()
         replaceFrag(forgotPasswordFrag, "forgotPass")
     }
 
-    fun otpVerificationFrag(view : View){
+    fun otpVerificationFrag(){
         val otpVerificationFrag = OtpVerificationFragment()
         replaceFrag(otpVerificationFrag, "otpVerify")
     }
@@ -73,5 +75,6 @@ class AuthenticationActivity : AppCompatActivity() {
         actionBar?.setDisplayShowTitleEnabled(false)
 
     }
+
 
 }

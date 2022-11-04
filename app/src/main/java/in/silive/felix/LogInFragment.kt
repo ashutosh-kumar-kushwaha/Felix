@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import com.google.android.material.textfield.TextInputLayout
@@ -25,6 +26,7 @@ class LogInFragment : Fragment() {
     lateinit var passwordETxt : EditText
     lateinit var passwordLayout : TextInputLayout
     lateinit var logInBtn : AppCompatButton
+    lateinit var forgotPassTxtVw : TextView
 
 
 
@@ -39,8 +41,12 @@ class LogInFragment : Fragment() {
         emailETxt = view.findViewById(R.id.emailETxt)
         passwordETxt = view.findViewById(R.id.passwordETxt)
         logInBtn = view.findViewById(R.id.logInBtn)
-        logInBtn.setOnClickListener{
+        forgotPassTxtVw = view.findViewById(R.id.forgotPassTxtVw)
+        forgotPassTxtVw.setOnClickListener {
+            (activity as AuthenticationActivity).forgotPassFrag()
+        }
 
+        logInBtn.setOnClickListener{
 
             val user = User(null, emailETxt.text.toString(), null, null, passwordETxt.text.toString(), null)
             val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
@@ -56,11 +62,13 @@ class LogInFragment : Fragment() {
 //                        passwordLayout.error = "Invalid email or password"
                     }
                     else{
-                        Toast.makeText(view.context, "Hello " + response.body()?.firstName.toString() + "!\nRole = " + response.body()?.role.toString(), Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(view.context, "Hello " + response.body()?.firstName.toString() + "!\nRole = " + response.body()?.role.toString(), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(view.context, response.headers().get("Set-Cookie").toString(), Toast.LENGTH_SHORT).show()
+                        Log.d("Ashu", response.headers().get("Set-Cookie").toString())
 //                        var l = passwordLayout.layoutParams
 //                        l.height = resources.getDimensionPixelSize(R.dimen.dp_45)
 //                        passwordLayout.layoutParams = l
-                        Log.i("Ashu", response.body().toString())
+                        Log.i("Ashu", response.headers().toString())
                     }
                 }
 
@@ -71,6 +79,8 @@ class LogInFragment : Fragment() {
             })
 
         }
+
+
         return view
     }
 

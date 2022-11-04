@@ -46,7 +46,7 @@
             app:layout_constraintTop_toBottomOf="@+id/otpVerificationTxtVw" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button2"
+            android:id="@+id/continueBtn"
             android:layout_width="@dimen/dp_260"
             android:layout_height="@dimen/dp_45"
             android:layout_marginTop="@dimen/dp_20"
