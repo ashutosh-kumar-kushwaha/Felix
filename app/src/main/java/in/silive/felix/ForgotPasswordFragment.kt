@@ -40,7 +40,8 @@ class ForgotPasswordFragment : Fragment() {
             override fun onResponse(call: Call<String>, response: Response<String>) {
                 (activity as AuthenticationActivity).email = email.email
                 Toast.makeText(view.context, response.body().toString(), Toast.LENGTH_SHORT).show()
-                (activity as AuthenticationActivity).otpVerificationFrag()
+                if(response.body() == "OTP sent on the given mail")
+                    (activity as AuthenticationActivity).otpVerificationFrag()
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {

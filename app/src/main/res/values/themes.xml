@@ -22,5 +22,12 @@
     </style>
 
 
+    <style name="Widget.BottomNavigationView"
+        parent="Widget.Design.BottomNavigationView">
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="fontWeight">600</item>
+        <item name="android:textSize">@dimen/sp_7</item>
+    </style>
+
 
 </resources>

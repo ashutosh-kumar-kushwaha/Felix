@@ -1,5 +1,6 @@
 package `in`.silive.felix
 
+import `in`.silive.felix.module.Email
 import `in`.silive.felix.module.User
 import `in`.silive.felix.server.RetrofitAPI
 import `in`.silive.felix.server.ServiceBuilder
@@ -64,7 +65,29 @@ class SignUpFragment : Fragment() {
                                     call.enqueue(object: Callback<String> {
                                         override fun onResponse(call: Call<String>, response: Response<String>) {
                                             if(response.code() == 200){
-                                                Toast.makeText(view.context, response.body(), Toast.LENGTH_SHORT).show()
+                                                if(response.body() == "Invalid user"){
+                                                    Toast.makeText(view.context, "Invalid Uer", Toast.LENGTH_SHORT).show()
+                                                }
+                                                else{
+
+
+                                                    val call2 = retrofitAPI.resendVerificationLink(Email(email))
+                                                    call2.enqueue(object : Callback<String>{
+                                                        override fun onResponse(call: Call<String>, response: Response<String>) {
+                                                            if(response.code()==200){
+                                                                (activity as AuthenticationActivity).email = email
+                                                                (activity as AuthenticationActivity).emailVerifyFrag()
+                                                            }
+                                                        }
+
+                                                        override fun onFailure(call: Call<String>, t: Throwable) {
+                                                            Toast.makeText(view.context, "Failed", Toast.LENGTH_SHORT).show()
+                                                        }
+
+                                                    })
+
+                                                }
+                                                (activity as AuthenticationActivity).emailVerifyFrag()
                                             }
                                             else{
                                                 Toast.makeText(view.context, response.code().toString(), Toast.LENGTH_SHORT).show()

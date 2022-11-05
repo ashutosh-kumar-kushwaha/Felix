@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Programming/Felix/app/src/main/res/drawable/bottom_navigation_bar_selector.xml" value="0.156" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/drawable/bottom_navigation_text_selector.xml" value="0.155" />
         <entry key="..\:/Programming/Felix/app/src/main/res/drawable/buttonbackground.xml" value="0.2555" />
         <entry key="..\:/Programming/Felix/app/src/main/res/drawable/home_btn.xml" value="0.156" />
         <entry key="..\:/Programming/Felix/app/src/main/res/drawable/ic_back.xml" value="0.2165" />
@@ -14,10 +16,12 @@
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/activity_home_page.xml" value="0.23842592592592593" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/activity_intro.xml" value="0.2" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/adapter_viewpager.xml" value="0.1453125" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/layout/bottom_navigation_bar_menu.xml" value="0.11928174433518597" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_email_verification.xml" value="0.20521590423257802" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_forgot_password.xml" value="0.25" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_home_page.xml" value="0.176" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_log_in.xml" value="0.176" />
-        <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_otp_verification.xml" value="0.25" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_otp_verification.xml" value="0.2" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_reset_password.xml" value="0.25" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_sign_up.xml" value="0.2" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/image_container.xml" value="0.12013681060282172" />

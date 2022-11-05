@@ -1,5 +1,6 @@
 package `in`.silive.felix
 
+import `in`.silive.felix.datastore.DataStoreManager
 import android.annotation.SuppressLint
 import android.app.ActionBar
 import android.app.Activity
@@ -10,18 +11,47 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.core.content.res.ResourcesCompat
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class SplashActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
+        var intent = Intent(this@SplashActivity, IntroActivity::class.java)
 
-        val intent : Intent = Intent(this, IntroActivity::class.java)
+        GlobalScope.launch(Dispatchers.IO) {
+            val dataStoreManager = DataStoreManager(this@SplashActivity)
+            dataStoreManager.getLogInInfo().collect{
+                if(it.logInState){
+                    intent = Intent(this@SplashActivity, HomePageActivity::class.java)
+                }
+            }
+        }
+
+//        Log.d("Ashu", let {
+//            DataStoreManager(it.applicationContext).getLogInInfo().collect(){}
+//        })
+
+
+//        runBlocking {
+//            DataStoreManager(this@SplashActivity).getLogInInfo().collect {
+//                if (it.logInState) {
+//                    Log.d("Ashu", "A")
+//                    intent = Intent(this@SplashActivity, HomePageActivity::class.java)
+//                }
+//            }
+//        }
+
         val felixLL : LinearLayout = findViewById(R.id.felixLogoLL)
         val felixImages = arrayOf(R.drawable.f, R.drawable.e, R.drawable.l, R.drawable.i, R.drawable.x)
 

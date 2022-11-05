@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#070E1E"
+    tools:context=".EmailVerificationFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#070E1E">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/emailVerifyTxtVw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:text="Email Verification"
+            android:textColor="@color/white"
+            android:textFontWeight="500"
+            android:textSize="@dimen/sp_26"
+            android:layout_marginTop="@dimen/dp_32"
+            android:layout_marginStart="@dimen/dp_21"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/emailSentTxtVw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_7"
+            android:fontFamily="@font/montserrat"
+            android:text="We have sent a verification email to example@gmail.com"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintStart_toStartOf="@+id/emailVerifyTxtVw"
+            app:layout_constraintTop_toBottomOf="@+id/emailVerifyTxtVw" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/resendMailTxtVw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_21"
+            android:fontFamily="@font/montserrat"
+            android:text="Resend email in"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintStart_toStartOf="@+id/emailSentTxtVw"
+            app:layout_constraintTop_toBottomOf="@+id/emailSentTxtVw" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/timeTxtVw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:text="1:00"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14"
+            android:textFontWeight="600"
+            android:layout_marginStart="@dimen/dp_7"
+            app:layout_constraintStart_toEndOf="@+id/resendMailTxtVw"
+            app:layout_constraintTop_toTopOf="@+id/resendMailTxtVw" />
+        
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/resendBtn"
+            android:layout_width="@dimen/dp_273"
+            android:layout_height="@dimen/dp_47"
+            android:background="@drawable/buttonbackground"
+            android:text="Resend"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat"
+            android:textFontWeight="600"
+            android:textSize="@dimen/sp_14"
+            android:textAllCaps="false"
+            app:layout_constraintTop_toBottomOf="@id/resendMailTxtVw"
+            android:layout_marginTop="@dimen/dp_36"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

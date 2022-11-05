@@ -1,5 +1,7 @@
 package `in`.silive.felix
 
+import `in`.silive.felix.datastore.DataStoreManager
+import `in`.silive.felix.module.LogInInfo
 import `in`.silive.felix.module.User
 import `in`.silive.felix.server.RetrofitAPI
 import `in`.silive.felix.server.ServiceBuilder
@@ -15,7 +17,12 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
+import androidx.datastore.dataStore
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -64,11 +71,25 @@ class LogInFragment : Fragment() {
                     else{
 //                        Toast.makeText(view.context, "Hello " + response.body()?.firstName.toString() + "!\nRole = " + response.body()?.role.toString(), Toast.LENGTH_SHORT).show()
                         Toast.makeText(view.context, response.headers().get("Set-Cookie").toString(), Toast.LENGTH_SHORT).show()
+
+                        GlobalScope.launch(Dispatchers.IO) {
+                            val dataStoreManager = DataStoreManager(view.context)
+                            dataStoreManager.storeLogInInfo(LogInInfo(response.headers().get("Set-Cookie").toString(), true))
+                        }
+
+//                        runBlocking { view?.let { DataStoreManager(it.context).storeLogInInfo(
+//                            LogInInfo(response.headers().get("Set-Cookie").toString(), true)
+//                        ) } }
+
+
+
                         Log.d("Ashu", response.headers().get("Set-Cookie").toString())
 //                        var l = passwordLayout.layoutParams
 //                        l.height = resources.getDimensionPixelSize(R.dimen.dp_45)
 //                        passwordLayout.layoutParams = l
                         Log.i("Ashu", response.headers().toString())
+
+                        (activity as AuthenticationActivity).homePage()
                     }
                 }
 

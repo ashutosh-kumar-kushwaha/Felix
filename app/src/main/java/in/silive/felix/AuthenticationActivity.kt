@@ -1,5 +1,6 @@
 package `in`.silive.felix
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -12,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction
 class AuthenticationActivity : AppCompatActivity() {
 
     lateinit var email : String
+    lateinit var otp : String
 
     fun back(view : View){
         onBackPressed()
@@ -51,12 +53,21 @@ class AuthenticationActivity : AppCompatActivity() {
         replaceFrag(otpVerificationFrag, "otpVerify")
     }
 
-    fun resetPasswordFrag(view : View){
+    fun resetPasswordFrag(){
         val resetPasswordFrag = ResetPasswordFragment()
         replaceFrag(resetPasswordFrag, "resetPass")
     }
 
+    fun emailVerifyFrag(){
+        val emailVerificationFragment = EmailVerificationFragment()
+        replaceFrag(emailVerificationFragment, "emailVerify")
+    }
 
+    fun homePage(){
+        val intent = Intent(applicationContext, HomePageActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
