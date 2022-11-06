@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MyProfileFragment"
+    android:background="#070E1E">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#070E1E">
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/profile"
+            android:layout_width="@dimen/dp_287"
+            android:layout_height="@dimen/dp_91"
+            android:layout_marginTop="@dimen/dp_17"
+            android:background="@drawable/profile_options_bg"
+            android:gravity="center_vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/dp_77"
+                android:layout_height="@dimen/dp_77"
+                android:layout_marginStart="@dimen/dp_7"
+                app:srcCompat="@drawable/pngwing_com" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/sp_7"
+                android:orientation="vertical"
+                android:layout_gravity="start">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp_21"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="@dimen/dp_7"
+                    android:text="Clay Jensen"
+                    android:textFontWeight="500"
+                    android:fontFamily="@font/montserrat"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="clayjens12@gmail.com"
+                    android:textColor="#B1B1B1"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:maxLines="1"
+                    android:fontFamily="@font/montserrat"
+                    />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="@dimen/dp_286"
+            android:layout_height="@dimen/dp_1"
+            android:background="#6B6B6B66"
+            app:layout_constraintTop_toBottomOf="@+id/profile"
+            android:layout_marginTop="@dimen/dp_14"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/wishlistBtn"
+            android:layout_width="@dimen/dp_287"
+            android:layout_height="@dimen/dp_56"
+            android:background="@drawable/profile_options_bg"
+            android:drawableStart="@drawable/wishlist_profile"
+            android:textColor="@color/white"
+            android:text="Wishlist"
+            android:textAllCaps="false"
+            app:maxImageSize="@dimen/dp_17"
+            android:textSize="@dimen/sp_14"
+            android:paddingStart="@dimen/dp_11"
+            android:textAlignment="textStart"
+            android:fontFamily="@font/montserrat"
+            android:drawablePadding="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_11"
+            app:layout_constraintTop_toBottomOf="@+id/line"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/changePassBtn"
+            android:layout_width="@dimen/dp_287"
+            android:layout_height="@dimen/dp_56"
+            android:background="@drawable/profile_options_bg"
+            android:drawableStart="@drawable/change_password_profile"
+            android:layout_marginTop="@dimen/dp_11"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat"
+            android:text="Change Password"
+            android:textAllCaps="false"
+            android:textSize="@dimen/sp_14"
+            android:paddingStart="@dimen/dp_11"
+            android:textAlignment="textStart"
+            android:drawablePadding="@dimen/dp_10"
+            app:layout_constraintTop_toBottomOf="@+id/wishlistBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/historyBtn"
+            android:layout_width="@dimen/dp_287"
+            android:layout_height="@dimen/dp_56"
+            android:paddingStart="@dimen/dp_11"
+            android:background="@drawable/profile_options_bg"
+            android:drawableStart="@drawable/history_profile"
+            android:layout_marginTop="@dimen/dp_11"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat"
+            android:text="Watch History"
+            android:textAllCaps="false"
+            android:textSize="@dimen/sp_14"
+            android:textAlignment="textStart"
+            android:drawablePadding="@dimen/dp_10"
+            app:layout_constraintTop_toBottomOf="@+id/changePassBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/signOutBtn"
+            android:layout_width="@dimen/dp_287"
+            android:layout_height="@dimen/dp_56"
+            android:background="@drawable/profile_options_bg"
+            android:drawableStart="@drawable/sign_out_profile"
+            android:layout_marginTop="@dimen/dp_11"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat"
+            android:text="Sign Out"
+            android:textAllCaps="false"
+            android:textSize="@dimen/sp_14"
+            android:paddingStart="@dimen/dp_11"
+            android:textAlignment="textStart"
+            android:drawablePadding="@dimen/dp_10"
+            app:layout_constraintTop_toBottomOf="@+id/historyBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

@@ -5,12 +5,17 @@ import `in`.silive.felix.module.User
 import `in`.silive.felix.server.RetrofitAPI
 import `in`.silive.felix.server.ServiceBuilder
 import android.app.Activity
+import android.app.AlertDialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import com.google.android.material.textfield.TextInputEditText
@@ -22,12 +27,34 @@ class ResetPasswordFragment : Fragment() {
     lateinit var resetPassBtn : AppCompatButton
     lateinit var password1ETxt : TextInputEditText
     lateinit var password2ETxt : TextInputEditText
+    lateinit var progressBar: AlertDialog
+    var builder : AlertDialog.Builder? = null
+
+
+    fun getDialogueProgressBar(view : View) : AlertDialog.Builder{
+        if(builder==null){
+            builder = AlertDialog.Builder(view.context)
+            val progressBar = ProgressBar(view.context)
+            val lp = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            progressBar.layoutParams = lp
+            builder!!.setView(progressBar)
+        }
+        return builder as AlertDialog.Builder
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_reset_password, container, false)
+
+        progressBar = getDialogueProgressBar(view).create()
+        progressBar.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        progressBar.setCanceledOnTouchOutside(false)
+
         password1ETxt = view.findViewById(R.id.password1ETxt)
         password2ETxt = view.findViewById(R.id.password2ETxt)
         resetPassBtn = view.findViewById(R.id.resetPassBtn)
@@ -38,6 +65,7 @@ class ResetPasswordFragment : Fragment() {
     }
 
     fun resetPass(){
+        progressBar.show()
         val password1 = password1ETxt.text.toString()
         val password2 = password2ETxt.text.toString()
 
@@ -50,11 +78,12 @@ class ResetPasswordFragment : Fragment() {
                 call.enqueue(object : Callback<String>{
                     override fun onResponse(call: Call<String>, response: Response<String>) {
                         val user = User(null, (activity as AuthenticationActivity).email, null, null, password1, null)
-                        val call2 = retrofitAPI.sendUserData(user)
+                        val call2 = retrofitAPI.logIn(user)
                         call2.enqueue(object : Callback<User>{
                             override fun onResponse(call: Call<User>, response: Response<User>) {
                                 if(response.body() == null){
                                     Toast.makeText(view?.context, "Invalid Email or Password", Toast.LENGTH_SHORT).show()
+                                    progressBar.dismiss()
 //                        var l = passwordLayout.layoutParams
 //                        l.height = resources.getDimensionPixelSize(R.dimen.dp_74)
 //                        passwordLayout.layoutParams = l
@@ -69,7 +98,7 @@ class ResetPasswordFragment : Fragment() {
 //                        passwordLayout.layoutParams = l
                                     Log.i("Ashu", response.headers().toString())
 
-
+                                    progressBar.dismiss()
 
                                     (activity as AuthenticationActivity).homePage()
                                 }
@@ -78,24 +107,28 @@ class ResetPasswordFragment : Fragment() {
                             override fun onFailure(call: Call<User>, t: Throwable) {
                                 Toast.makeText(view?.context, "Please check your internet connection", Toast.LENGTH_SHORT).show()
                                 Log.i("Ashu", "Please check your internet connection")
+                                progressBar.dismiss()
                             }
 
                         })
                     }
 
                     override fun onFailure(call: Call<String>, t: Throwable) {
-                        TODO("Not yet implemented")
+                        Toast.makeText(view?.context, "Failed", Toast.LENGTH_SHORT).show()
+                        progressBar.dismiss()
                     }
 
                 })
             }
             else{
                 Toast.makeText(view?.context, msg, Toast.LENGTH_SHORT).show()
+                progressBar.dismiss()
             }
         }
         else{
             if(password1 != password2){
                 Toast.makeText(view?.context, "Enter the same password in both fields", Toast.LENGTH_SHORT).show()
+                progressBar.dismiss()
             }
         }
 

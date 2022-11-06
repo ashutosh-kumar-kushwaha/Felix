@@ -1,0 +1,7 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:drawable="@drawable/clarity_sign_out_solid"
+        android:width="@dimen/dp_21"
+        android:height="@dimen/dp_21">
+    </item>
+</layer-list>

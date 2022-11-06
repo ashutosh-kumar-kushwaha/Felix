@@ -11,10 +11,10 @@ import retrofit2.http.PUT
 
 interface RetrofitAPI {
     @POST("api/auth/login")
-    fun sendUserData(@Body userSend: User) : Call<User>
+    fun logIn(@Body userSend: User) : Call<User>
 
     @POST("api/auth/signup")
-    fun signIn(@Body userSend: User) : Call<String>
+    fun signUp(@Body userSend: User) : Call<String>
 
     @PUT("api/auth/resend-verification-link")
     fun resendVerificationLink(@Body email : Email) : Call<String>
@@ -27,4 +27,7 @@ interface RetrofitAPI {
 
     @PUT("api/auth/change-password")
     fun resetPassword(@Body resetPasswordRequest: ResetPasswordRequest) :  Call<String>
+
+    @PUT("api/auth/resend-otp")
+    fun resendOtp(@Body email:Email) : Call<String>
 }

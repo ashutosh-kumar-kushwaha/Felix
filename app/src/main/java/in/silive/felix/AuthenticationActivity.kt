@@ -3,6 +3,7 @@ package `in`.silive.felix
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -14,6 +15,7 @@ class AuthenticationActivity : AppCompatActivity() {
 
     lateinit var email : String
     lateinit var otp : String
+    lateinit var password : String
 
     fun back(view : View){
         onBackPressed()
@@ -59,6 +61,7 @@ class AuthenticationActivity : AppCompatActivity() {
     }
 
     fun emailVerifyFrag(){
+        Log.d("Ashu", "Reset")
         val emailVerificationFragment = EmailVerificationFragment()
         replaceFrag(emailVerificationFragment, "emailVerify")
     }
