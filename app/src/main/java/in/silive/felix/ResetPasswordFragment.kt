@@ -19,6 +19,7 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,6 +28,7 @@ class ResetPasswordFragment : Fragment() {
     lateinit var resetPassBtn : AppCompatButton
     lateinit var password1ETxt : TextInputEditText
     lateinit var password2ETxt : TextInputEditText
+    lateinit var password2ETxtLayout : TextInputLayout
     lateinit var progressBar: AlertDialog
     var builder : AlertDialog.Builder? = null
 
@@ -57,6 +59,7 @@ class ResetPasswordFragment : Fragment() {
 
         password1ETxt = view.findViewById(R.id.password1ETxt)
         password2ETxt = view.findViewById(R.id.password2ETxt)
+        password2ETxtLayout = view.findViewById(R.id.password2ETxtLayout)
         resetPassBtn = view.findViewById(R.id.resetPassBtn)
         resetPassBtn.setOnClickListener{
             resetPass()
@@ -84,18 +87,11 @@ class ResetPasswordFragment : Fragment() {
                                 if(response.body() == null){
                                     Toast.makeText(view?.context, "Invalid Email or Password", Toast.LENGTH_SHORT).show()
                                     progressBar.dismiss()
-//                        var l = passwordLayout.layoutParams
-//                        l.height = resources.getDimensionPixelSize(R.dimen.dp_74)
-//                        passwordLayout.layoutParams = l
-//                        passwordLayout.error = "Invalid email or password"
                                 }
                                 else{
 //                        Toast.makeText(view.context, "Hello " + response.body()?.firstName.toString() + "!\nRole = " + response.body()?.role.toString(), Toast.LENGTH_SHORT).show()
                                     Toast.makeText(view?.context, response.headers().get("Set-Cookie").toString(), Toast.LENGTH_SHORT).show()
                                     Log.d("Ashu", response.headers().get("Set-Cookie").toString())
-//                        var l = passwordLayout.layoutParams
-//                        l.height = resources.getDimensionPixelSize(R.dimen.dp_45)
-//                        passwordLayout.layoutParams = l
                                     Log.i("Ashu", response.headers().toString())
 
                                     progressBar.dismiss()
@@ -121,13 +117,13 @@ class ResetPasswordFragment : Fragment() {
                 })
             }
             else{
-                Toast.makeText(view?.context, msg, Toast.LENGTH_SHORT).show()
+                password2ETxtLayout.helperText = msg
                 progressBar.dismiss()
             }
         }
         else{
             if(password1 != password2){
-                Toast.makeText(view?.context, "Enter the same password in both fields", Toast.LENGTH_SHORT).show()
+                password2ETxtLayout.helperText = "Enter same password in both fields"
                 progressBar.dismiss()
             }
         }

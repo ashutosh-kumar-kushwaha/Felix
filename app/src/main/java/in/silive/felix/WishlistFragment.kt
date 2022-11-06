@@ -22,10 +22,10 @@ class WishlistFragment : Fragment() {
 
         val view =  inflater.inflate(R.layout.fragment_wishlist, container, false)
 
-        movieRecyclerView = view.findViewById(R.id.recyclerView)
-        movieRecyclerView.layoutManager = GridLayoutManager(view.context, 3)
-
-        movieRecyclerView.adapter = RecyclerMoviesAdapter(view.context, listOf(R.drawable.daredevil, R.drawable.daredevil, R.drawable.daredevil, R.drawable.daredevil, R.drawable.daredevil, R.drawable.daredevil, R.drawable.daredevil,R.drawable.daredevil,R.drawable.daredevil,R.drawable.daredevil,R.drawable.daredevil,R.drawable.daredevil,R.drawable.daredevil,R.drawable.daredevil,R.drawable.daredevil,R.drawable.daredevil,R.drawable.daredevil,R.drawable.daredevil,R.drawable.daredevil,R.drawable.daredevil,R.drawable.daredevil))
+//        movieRecyclerView = view.findViewById(R.id.recyclerView)
+//        movieRecyclerView.layoutManager = GridLayoutManager(view.context, 3)
+//
+//        movieRecyclerView.adapter = RecyclerMoviesAdapter(view.context, listOf(R.drawable.daredevil, R.drawable.daredevil, R.drawable.daredevil, R.drawable.daredevil, R.drawable.daredevil, R.drawable.daredevil, R.drawable.daredevil,R.drawable.daredevil,R.drawable.daredevil,R.drawable.daredevil,R.drawable.daredevil,R.drawable.daredevil,R.drawable.daredevil,R.drawable.daredevil,R.drawable.daredevil,R.drawable.daredevil,R.drawable.daredevil,R.drawable.daredevil,R.drawable.daredevil,R.drawable.daredevil,R.drawable.daredevil))
 
 
         return view

@@ -17,6 +17,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
+import com.google.android.material.textfield.TextInputEditText
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,20 +25,20 @@ import retrofit2.Response
 
 class OtpVerificationFragment : Fragment() {
 
-    lateinit var continueBtn : AppCompatButton
-    lateinit var otpETxt : EditText
-    lateinit var resendOtpTxtVw : AppCompatTextView
-    lateinit var timeTxtVw : AppCompatTextView
+    lateinit var continueBtn: AppCompatButton
+    lateinit var otpETxt: TextInputEditText
+    lateinit var resendOtpTxtVw: AppCompatTextView
+    lateinit var timeTxtVw: AppCompatTextView
     var canResend = false
     var isSending = true
-    var time : Int = 60
-    lateinit var textView3 : TextView
+    var time: Int = 60
+    lateinit var textView3: TextView
     lateinit var progressBar: AlertDialog
-    var builder : AlertDialog.Builder? = null
+    var builder: AlertDialog.Builder? = null
 
 
-    fun getDialogueProgressBar(view : View) : AlertDialog.Builder{
-        if(builder==null){
+    fun getDialogueProgressBar(view: View): AlertDialog.Builder {
+        if (builder == null) {
             builder = AlertDialog.Builder(view.context)
             val progressBar = ProgressBar(view.context)
             val lp = LinearLayout.LayoutParams(
@@ -67,11 +68,11 @@ class OtpVerificationFragment : Fragment() {
         textView3 = view.findViewById(R.id.textView3)
         resendOtpTxtVw = view.findViewById(R.id.resendOtpTxtVw)
         textView3.text = "Enter the otp sent on this email ${(activity as AuthenticationActivity).email}"
-                continueBtn.setOnClickListener{
+        continueBtn.setOnClickListener {
             sendOtp()
         }
         resendOtpTxtVw.setOnClickListener {
-            if(canResend && !isSending){
+            if (canResend && !isSending) {
                 resendOtp()
             }
         }
@@ -80,32 +81,39 @@ class OtpVerificationFragment : Fragment() {
     }
 
     private fun sendOtp() {
-        progressBar.show()
-        val otpRequest = VerifyOtpRequest((activity as AuthenticationActivity).email, otpETxt.text.toString())
-        val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
-        val call = retrofitAPI.verifyOtp(otpRequest)
-        call.enqueue(object : Callback<String> {
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-                Toast.makeText(view?.context, response.body(), Toast.LENGTH_SHORT).show()
-                (activity as AuthenticationActivity).otp = otpETxt.text.toString()
-                progressBar.dismiss()
-                if(response.body()=="OTP Verified")
-                    (activity as AuthenticationActivity).resetPasswordFrag()
-            }
+        val otp = otpETxt.text.toString()
+        if (otp.length == 6) {
+            progressBar.show()
+            val otpRequest =
+                VerifyOtpRequest((activity as AuthenticationActivity).email, otp)
+            val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
+            val call = retrofitAPI.verifyOtp(otpRequest)
+            call.enqueue(object : Callback<String> {
+                override fun onResponse(call: Call<String>, response: Response<String>) {
+                    Toast.makeText(view?.context, response.body(), Toast.LENGTH_SHORT).show()
+                    (activity as AuthenticationActivity).otp = otpETxt.text.toString()
+                    progressBar.dismiss()
+                    if (response.body() == "OTP Verified")
+                        (activity as AuthenticationActivity).resetPasswordFrag()
+                }
 
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                Toast.makeText(view?.context, "Failed", Toast.LENGTH_SHORT).show()
-                progressBar.dismiss()
-            }
-        })
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    Toast.makeText(view?.context, "Failed", Toast.LENGTH_SHORT).show()
+                    progressBar.dismiss()
+                }
+            })
+        }
+        else{
+            otpETxt.error = "OTP is of six digits"
+        }
     }
 
-    fun resendOtp(){
+    fun resendOtp() {
         progressBar.show()
         isSending = true
         val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
         val call = retrofitAPI.resendOtp(Email((activity as AuthenticationActivity).email))
-        call.enqueue(object : Callback<String>{
+        call.enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
                 time = 60
                 Toast.makeText(view?.context, response.body(), Toast.LENGTH_SHORT).show()
@@ -129,8 +137,8 @@ class OtpVerificationFragment : Fragment() {
     }
 
 
-    fun updateTime(){
-        object : CountDownTimer(60000, 1000){
+    fun updateTime() {
+        object : CountDownTimer(60000, 1000) {
             override fun onTick(p0: Long) {
                 time--
                 timeTxtVw.text = printTime(time)
@@ -138,7 +146,7 @@ class OtpVerificationFragment : Fragment() {
 
             override fun onFinish() {
                 canResend = true
-                time=0
+                time = 0
                 resendOtpTxtVw.text = "Resend OTP"
                 timeTxtVw.text = ""
                 isSending = false
@@ -147,12 +155,12 @@ class OtpVerificationFragment : Fragment() {
         }.start()
     }
 
-    fun printTime(time : Int) : String{
-        val hr = time/60
-        val min = time%60
-        return if(min < 10){
+    fun printTime(time: Int): String {
+        val hr = time / 60
+        val min = time % 60
+        return if (min < 10) {
             "${hr}:0${min}"
-        } else{
+        } else {
             "${hr}:${min}"
         }
     }

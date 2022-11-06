@@ -31,14 +31,25 @@
             android:text="Email"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_13"
-            app:layout_constraintBottom_toTopOf="@+id/emailETxt"
-            app:layout_constraintStart_toStartOf="@+id/emailETxt" />
+            app:layout_constraintBottom_toTopOf="@+id/emailETxtLayout"
+            app:layout_constraintStart_toStartOf="@+id/emailETxtLayout" />
 
-        <EditText
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailETxtLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:hintEnabled="false"
+            android:layout_marginTop="@dimen/dp_57"
+            android:background="@drawable/textbox_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/felixLogo">
+
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailETxt"
             android:layout_width="@dimen/dp_260"
             android:layout_height="@dimen/dp_45"
-            android:layout_marginTop="@dimen/dp_57"
             android:background="@drawable/textbox_background"
             android:ems="10"
             android:fontFamily="@font/montserrat"
@@ -47,10 +58,8 @@
             android:paddingEnd="@dimen/dp_10"
             android:textColor="@color/white"
             android:textCursorDrawable="@null"
-            android:textSize="@dimen/sp_12"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/felixLogo" />
+            android:textSize="@dimen/sp_12"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/passwordTxtVw"
@@ -66,17 +75,17 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordETxtLayout"
-            android:layout_width="@dimen/dp_260"
-            android:layout_height="@dimen/dp_45"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_57"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:passwordToggleEnabled="true"
             app:hintEnabled="false"
-            app:errorEnabled="true"
+            app:helperTextTextAppearance="@style/TextLabel"
             app:passwordToggleDrawable="@drawable/show_hide_password"
             app:passwordToggleTint="@color/white"
-            app:layout_constraintTop_toBottomOf="@+id/emailETxt">
+            app:layout_constraintTop_toBottomOf="@+id/emailETxtLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordETxt"

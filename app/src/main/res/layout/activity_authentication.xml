@@ -24,8 +24,9 @@
 
             <ImageView
                 android:id="@+id/backImgVw"
-                android:layout_width="@dimen/dp_13"
-                android:layout_height="@dimen/dp_13"
+                android:layout_width="@dimen/dp_23"
+                android:layout_height="@dimen/dp_23"
+                android:padding="@dimen/dp_5"
                 android:onClick="back"
                 app:srcCompat="@drawable/back" />
         </androidx.appcompat.widget.Toolbar>

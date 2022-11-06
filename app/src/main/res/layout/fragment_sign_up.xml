@@ -25,65 +25,94 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/firstNameTxtVw"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/nameLinearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp_3"
-            android:fontFamily="@font/montserrat"
-            android:text="First Name"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_13"
-            app:layout_constraintBottom_toTopOf="@+id/firstNameETxt"
-            app:layout_constraintStart_toStartOf="@+id/firstNameETxt" />
-
-        <EditText
-            android:id="@+id/firstNameETxt"
-            android:layout_width="@dimen/dp_124"
-            android:layout_height="@dimen/dp_45"
-            android:layout_marginStart="@dimen/dp_27"
-            android:layout_marginTop="@dimen/dp_67"
-            android:background="@drawable/textbox_background"
-            android:ems="10"
-            android:fontFamily="@font/montserrat"
-            android:inputType="textPersonName"
-            android:paddingStart="@dimen/dp_10"
-            android:paddingEnd="@dimen/dp_10"
-            android:textColor="@color/white"
-            android:textCursorDrawable="@null"
-            android:textSize="@dimen/sp_12"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/registerTxtVw" />
+            android:layout_marginTop="@dimen/dp_21"
+            app:layout_constraintTop_toBottomOf="@+id/registerTxtVw"
+            app:layout_constraintEnd_toEndOf="parent">
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginEnd="@dimen/dp_12">
 
-        <TextView
-            android:id="@+id/lastNameTxtVw"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp_3"
-            android:fontFamily="@font/montserrat"
-            android:text="Last Name"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_13"
-            app:layout_constraintBottom_toTopOf="@+id/lastNameETxt"
-            app:layout_constraintStart_toStartOf="@+id/lastNameETxt" />
+                <TextView
+                    android:id="@+id/firstNameTxtVw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp_3"
+                    android:fontFamily="@font/montserrat"
+                    android:text="First Name"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_13" />
 
-        <EditText
-            android:id="@+id/lastNameETxt"
-            android:layout_width="@dimen/dp_124"
-            android:layout_height="@dimen/dp_45"
-            android:layout_marginEnd="@dimen/dp_27"
-            android:background="@drawable/textbox_background"
-            android:ems="10"
-            android:fontFamily="@font/montserrat"
-            android:inputType="textPersonName"
-            android:paddingStart="@dimen/dp_10"
-            android:paddingEnd="@dimen/dp_10"
-            android:textColor="@color/white"
-            android:textCursorDrawable="@null"
-            android:textSize="@dimen/sp_12"
-            app:layout_constraintBottom_toBottomOf="@+id/firstNameETxt"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/firstNameETxt" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/firstNameETxtLayout"
+                    android:layout_width="@dimen/dp_124"
+                    android:layout_height="wrap_content"
+                    app:passwordToggleEnabled="false"
+                    app:hintEnabled="false">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/firstNameETxt"
+                        android:layout_width="@dimen/dp_124"
+                        android:layout_height="@dimen/dp_45"
+                        android:background="@drawable/textbox_background"
+                        android:ems="10"
+                        android:textSize="@dimen/sp_12"
+                        android:inputType="textPersonName"
+                        android:textCursorDrawable="@null"
+                        android:paddingStart="@dimen/dp_10"
+                        android:paddingEnd="@dimen/dp_10"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/montserrat"/>
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/lastNameTxtVw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp_3"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Last Name"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_13"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/lastNameETxtLayout"
+                    android:layout_width="@dimen/dp_124"
+                    android:layout_height="wrap_content"
+                    app:passwordToggleEnabled="false"
+                    app:hintEnabled="false">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/lastNameETxt"
+                        android:layout_width="@dimen/dp_124"
+                        android:layout_height="@dimen/dp_45"
+                        android:background="@drawable/textbox_background"
+                        android:ems="10"
+                        android:textSize="@dimen/sp_12"
+                        android:inputType="textPersonName"
+                        android:textCursorDrawable="@null"
+                        android:paddingStart="@dimen/dp_10"
+                        android:paddingEnd="@dimen/dp_10"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/montserrat"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
 
         <TextView
             android:id="@+id/emailTxtVw"
@@ -94,26 +123,35 @@
             android:text="Email"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_13"
-            app:layout_constraintBottom_toTopOf="@+id/emailETxt"
-            app:layout_constraintStart_toStartOf="@+id/emailETxt" />
+            app:layout_constraintBottom_toTopOf="@+id/emailETxtLayout"
+            app:layout_constraintStart_toStartOf="@+id/emailETxtLayout" />
 
-        <EditText
-            android:id="@+id/emailETxt"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailETxtLayout"
             android:layout_width="@dimen/dp_260"
-            android:layout_height="@dimen/dp_45"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_29"
-            android:background="@drawable/textbox_background"
-            android:ems="10"
-            android:textSize="@dimen/sp_12"
-            android:inputType="textEmailAddress"
-            android:paddingStart="@dimen/dp_10"
-            android:paddingEnd="@dimen/dp_10"
-            android:textColor="@color/white"
-            android:textCursorDrawable="@null"
-            android:fontFamily="@font/montserrat"
+            app:passwordToggleEnabled="false"
+            app:hintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lastNameETxt" />
+            app:layout_constraintTop_toBottomOf="@+id/nameLinearLayout" >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailETxt"
+                android:layout_width="@dimen/dp_260"
+                android:layout_height="@dimen/dp_45"
+                android:layout_marginTop="@dimen/dp_29"
+                android:background="@drawable/textbox_background"
+                android:ems="10"
+                android:textSize="@dimen/sp_12"
+                android:inputType="textEmailAddress"
+                android:textCursorDrawable="@null"
+                android:paddingStart="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_10"
+                android:textColor="@color/white"
+                android:fontFamily="@font/montserrat"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/password1TxtVw"
@@ -130,16 +168,16 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/password1ETxtLayout"
             android:layout_width="@dimen/dp_260"
-            android:layout_height="@dimen/dp_45"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_29"
-            android:background="@drawable/textbox_background"
             app:passwordToggleEnabled="true"
             app:hintEnabled="false"
             app:passwordToggleDrawable="@drawable/show_hide_password"
             app:passwordToggleTint="@color/white"
+            app:helperTextTextAppearance="@style/TextLabel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/emailETxt" >
+            app:layout_constraintTop_toBottomOf="@+id/emailETxtLayout" >
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password1ETxt"
                 android:layout_width="@dimen/dp_260"
@@ -170,14 +208,14 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/password2ETxtLayout"
             android:layout_width="@dimen/dp_260"
-            android:layout_height="@dimen/dp_45"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_29"
-            android:background="@drawable/textbox_background"
             app:passwordToggleEnabled="true"
             app:hintEnabled="false"
             app:passwordToggleDrawable="@drawable/show_hide_password"
             app:passwordToggleTint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
+            app:helperTextTextAppearance="@style/TextLabel"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/password1ETxtLayout" >
         <com.google.android.material.textfield.TextInputEditText
@@ -187,6 +225,7 @@
             android:layout_marginTop="@dimen/dp_29"
             android:background="@drawable/textbox_background"
             android:ems="10"
+            app:helperTextTextAppearance="@style/TextLabel"
             android:inputType="textPassword"
             android:paddingStart="@dimen/dp_10"
             android:paddingEnd="@dimen/dp_10"

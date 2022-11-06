@@ -9,8 +9,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 
-class RecyclerMoviesAdapter(val context: Context, val movies : List<Int>) : RecyclerView.Adapter<RecyclerMoviesAdapter.ViewHolder>(){
+class RecyclerMoviesAdapter(val context: Context, val movies : List<String>) : RecyclerView.Adapter<RecyclerMoviesAdapter.ViewHolder>(){
 
     class ViewHolder(val itemView: View) : RecyclerView.ViewHolder(itemView){
         val movieImgVw : ImageView = itemView.findViewById(R.id.movieImgVw)
@@ -23,7 +24,7 @@ class RecyclerMoviesAdapter(val context: Context, val movies : List<Int>) : Recy
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            holder.movieImgVw.setImageResource(movies[position])
+            holder.movieImgVw.load(movies[position])
     }
 
     override fun getItemCount(): Int {

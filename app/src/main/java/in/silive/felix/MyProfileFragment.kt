@@ -2,6 +2,8 @@ package `in`.silive.felix
 
 import `in`.silive.felix.datastore.DataStoreManager
 import `in`.silive.felix.module.LogInInfo
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -27,7 +29,12 @@ class MyProfileFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_my_profile, container, false)
         signOutBtn = view.findViewById(R.id.signOutBtn)
         signOutBtn.setOnClickListener{
-            signOut(view)
+
+            val alertDialogBuilder = AlertDialog.Builder(view.context)
+            alertDialogBuilder.setTitle("Confirm sign out?").setMessage("Do you want to sign out?").setPositiveButton("Yes", DialogInterface.OnClickListener { _, _ -> signOut(view) }).setNegativeButton("Cancel", DialogInterface.OnClickListener { _, _ ->  })
+            val alert = alertDialogBuilder.create()
+            alert.setCanceledOnTouchOutside(false)
+            alert.show()
         }
         return view
     }

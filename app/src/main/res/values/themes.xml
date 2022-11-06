@@ -34,5 +34,11 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
+    <style name="TextLabel" parent="TextAppearance.Design.Hint">
+        <item name="android:textColor">#FC6C64</item>
+        <item name="android:textSize">@dimen/sp_12</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+    </style>
+
 
 </resources>

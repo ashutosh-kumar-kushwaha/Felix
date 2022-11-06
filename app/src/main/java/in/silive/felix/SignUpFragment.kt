@@ -8,16 +8,19 @@ import android.app.AlertDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.Fragment
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,138 +28,145 @@ import retrofit2.Response
 
 class SignUpFragment : Fragment() {
 
-    lateinit var firstNameETxt : EditText
-    lateinit var lastNameETxt : EditText
-    lateinit var emailETxt : EditText
-    lateinit var password1ETxt : EditText
-    lateinit var password2ETxt : EditText
-    lateinit var createAccBtn : AppCompatButton
-    var builder : AlertDialog.Builder? = null
+    lateinit var firstNameETxt: TextInputEditText
+    lateinit var lastNameETxt: TextInputEditText
+    lateinit var emailETxt: TextInputEditText
+    lateinit var password1ETxt: TextInputEditText
+    lateinit var password2ETxt: TextInputEditText
+    lateinit var password1ETxtLayout: TextInputLayout
+    lateinit var password2ETxtLayout: TextInputLayout
+    lateinit var createAccBtn: AppCompatButton
+    var builder: AlertDialog.Builder? = null
 
 
-        override fun onCreateView(
+    override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-            val view = inflater.inflate(R.layout.fragment_sign_up, container, false)
+        val view = inflater.inflate(R.layout.fragment_sign_up, container, false)
 
-            firstNameETxt = view.findViewById(R.id.firstNameETxt)
-            lastNameETxt = view.findViewById(R.id.lastNameETxt)
-            emailETxt = view.findViewById(R.id.emailETxt)
-            password1ETxt = view.findViewById(R.id.password1ETxt)
-            password2ETxt = view.findViewById(R.id.password2ETxt)
-            createAccBtn = view.findViewById(R.id.createAccBtn)
+        firstNameETxt = view.findViewById(R.id.firstNameETxt)
+        lastNameETxt = view.findViewById(R.id.lastNameETxt)
+        emailETxt = view.findViewById(R.id.emailETxt)
+        password1ETxt = view.findViewById(R.id.password1ETxt)
+        password2ETxt = view.findViewById(R.id.password2ETxt)
+        createAccBtn = view.findViewById(R.id.createAccBtn)
+        password1ETxtLayout = view.findViewById(R.id.password1ETxtLayout)
+        password2ETxtLayout = view.findViewById(R.id.password2ETxtLayout)
 
-            val progressBar = getDialogueProgressBar(view).create()
-            progressBar.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            progressBar.setCanceledOnTouchOutside(false)
+        val progressBar = getDialogueProgressBar(view).create()
+        progressBar.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        progressBar.setCanceledOnTouchOutside(false)
 
 
 
-            createAccBtn.setOnClickListener{
+        createAccBtn.setOnClickListener {
 
+
+
+
+            var firstName = firstNameETxt.text.toString()
+            var lastName = lastNameETxt.text.toString()
+            var email = emailETxt.text.toString()
+            val password1 = password1ETxt.text.toString()
+            val password2 = password2ETxt.text.toString()
+            firstName = firstName.trim()
+            lastName = lastName.trim()
+            email.trim()
+
+            val checkFirstName = isValidName(firstName)
+            val checkLastName = isValidName(lastName)
+            val checkEmail = email.isValidEmail()
+            var checkPassword = true
+            if (!checkFirstName) {
+                firstNameETxt.error = "Enter a valid first name"
+            }
+            if (!checkLastName) {
+                lastNameETxt.error = "Enter a valid last name"
+            }
+            if (!checkEmail) {
+                emailETxt.error = "Enter a valid email"
+            }
+            if (password1 != password2) {
+                password2ETxtLayout.helperText = "Enter same password in both fields"
+                checkPassword = false
+            } else {
+                if (isValidPassword(password1) != "true") {
+                    password2ETxtLayout.helperText = isValidPassword(password1)
+                    checkPassword = false
+                }
+            }
+
+
+
+
+            if (checkFirstName && checkLastName && checkEmail && checkPassword) {
                 progressBar.show()
 
+                val user = User(null, email, firstName, lastName, password1, null)
+                val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
+                val call = retrofitAPI.signUp(user)
 
-                val firstName = firstNameETxt.text.toString()
-                val lastName = lastNameETxt.text.toString()
-                val email = emailETxt.text.toString()
-                val password1 = password1ETxt.text.toString()
-                val password2 = password2ETxt.text.toString()
+                call.enqueue(object : Callback<String> {
+                    override fun onResponse(call: Call<String>, response: Response<String>) {
+                        Toast.makeText(view.context, response.body().toString(), Toast.LENGTH_SHORT)
+                            .show()
+                        if (response.code() == 200) {
+                            if (response.body() == "Please verify your email first.") {
 
-                val checkFirstName = isValidName(firstName)
-                val checkLastName = isValidName(lastName)
-                val checkEmail = isValidEmail(email)
-
-                if(checkFirstName){
-                    if(checkLastName){
-                        if(checkEmail){
-                            if(password1 == password2){
-                                val msg = isValidPassword(password1)
-                                if(msg == "true"){
-
-                                    val user = User(null, email, firstName, lastName, password1, null)
-                                    val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
-                                    val call = retrofitAPI.signUp(user)
-
-                                    call.enqueue(object: Callback<String> {
-                                        override fun onResponse(call: Call<String>, response: Response<String>) {
-                                            Toast.makeText(view.context, response.body().toString(), Toast.LENGTH_SHORT).show()
-                                            if(response.code() == 200){
-                                                if(response.body() == "Please verify your email first."){
-
-                                                    val call2 = retrofitAPI.resendVerificationLink(Email(email))
-                                                    call2.enqueue(object : Callback<String>{
-                                                        override fun onResponse(call: Call<String>, response: Response<String>) {
-                                                            if(response.code()==200){
+                                val call2 = retrofitAPI.resendVerificationLink(Email(email))
+                                call2.enqueue(object : Callback<String> {
+                                    override fun onResponse(
+                                        call: Call<String>,
+                                        response: Response<String>
+                                    ) {
+                                        if (response.code() == 200) {
 //                                                                Toast.makeText(view.context, response.body(), Toast.LENGTH_SHORT).show()
-                                                                (activity as AuthenticationActivity).email = email
-                                                                (activity as AuthenticationActivity).password = password1
-                                                                (activity as AuthenticationActivity).emailVerifyFrag()
-                                                            }
-                                                        }
-
-                                                        override fun onFailure(call: Call<String>, t: Throwable) {
-                                                            Toast.makeText(view.context, "Failed", Toast.LENGTH_SHORT).show()
-                                                        }
-
-                                                    })
-
-                                                }
-                                                (activity as AuthenticationActivity).email = email
-                                                (activity as AuthenticationActivity).password = password1
-                                                (activity as AuthenticationActivity).emailVerifyFrag()
-                                            }
-                                            else{
-                                                Toast.makeText(view.context, response.code().toString(), Toast.LENGTH_SHORT).show()
-
-                                            }
-                                            progressBar.dismiss()
+                                            (activity as AuthenticationActivity).email = email
+                                            (activity as AuthenticationActivity).password =
+                                                password1
+                                            (activity as AuthenticationActivity).emailVerifyFrag()
                                         }
+                                    }
 
-                                        override fun onFailure(call: Call<String>, t: Throwable) {
-                                            Toast.makeText(view.context, "Please check your internet connection", Toast.LENGTH_SHORT).show()
-                                            Log.i("Ashu", "Please check your internet connection")
-                                            progressBar.dismiss()
-                                        }
-                                    })
+                                    override fun onFailure(call: Call<String>, t: Throwable) {
+                                        Toast.makeText(view.context, "Failed", Toast.LENGTH_SHORT)
+                                            .show()
+                                    }
 
+                                })
 
-                                }
-                                else{
-                                    Toast.makeText(view.context, msg, Toast.LENGTH_SHORT).show()
-                                    progressBar.dismiss()                                }
                             }
-                            else{
-                                if(password1 != password2){
-                                    Toast.makeText(view.context, "Enter the same password in both fields", Toast.LENGTH_SHORT).show()
-                                    progressBar.dismiss()
-                                }
-                            }
+                            (activity as AuthenticationActivity).email = email
+                            (activity as AuthenticationActivity).password = password1
+                            (activity as AuthenticationActivity).emailVerifyFrag()
+                        } else {
+                            Toast.makeText(
+                                view.context,
+                                response.code().toString(),
+                                Toast.LENGTH_SHORT
+                            ).show()
+
                         }
-                        else{
-                            Toast.makeText(view.context, "Enter a valid email", Toast.LENGTH_SHORT).show()
-                            progressBar.dismiss()
-                        }
-                    }
-                    else{
-                        Toast.makeText(view.context, "Enter a valid last name", Toast.LENGTH_SHORT).show()
                         progressBar.dismiss()
                     }
-                }
-                else{
-                    Toast.makeText(view.context, "Enter a valid first name", Toast.LENGTH_SHORT).show()
-                    progressBar.dismiss()
-                }
 
-
-
-
-
-
+                    override fun onFailure(call: Call<String>, t: Throwable) {
+                        Toast.makeText(
+                            view.context,
+                            "Please check your internet connection",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        Log.i("Ashu", "Please check your internet connection")
+                        progressBar.dismiss()
+                    }
+                })
 
 
             }
+
+
+        }
 
 
         return view
@@ -165,7 +175,7 @@ class SignUpFragment : Fragment() {
     fun isValidPassword(password: String): String {
 
 
-        if(password.length < 8){
+        if (password.length < 8) {
             return "Password must contain at least 8 characters"
         }
 
@@ -174,7 +184,7 @@ class SignUpFragment : Fragment() {
         var hasNumber = false
         var hasSpecialSymbol = false
 
-        for(char in password){
+        for (char in password) {
             when (char) {
                 in 'A'..'Z' -> {
                     hasUpperCase = true
@@ -191,16 +201,16 @@ class SignUpFragment : Fragment() {
             }
         }
 
-        if(!hasUpperCase){
+        if (!hasUpperCase) {
             return "Password must contain at least one uppercase character"
         }
-        if(!hasLowerCase){
+        if (!hasLowerCase) {
             return "Password must contain at least one lowercase character"
         }
-        if(!hasNumber){
+        if (!hasNumber) {
             return "Password must contain at least one number"
         }
-        if(!hasSpecialSymbol){
+        if (!hasSpecialSymbol) {
             return "Password must contain at least one special symbol"
         }
         return "true"
@@ -208,10 +218,10 @@ class SignUpFragment : Fragment() {
 
 
     fun isValidName(name: String): Boolean {
-        if(name.isEmpty()){
+        if (name.isEmpty()) {
             return false
         }
-        for (char in name){
+        for (char in name) {
             if (char !in 'A'..'Z' && char !in 'a'..'z') {
                 return false
             }
@@ -219,15 +229,12 @@ class SignUpFragment : Fragment() {
         return true
     }
 
-    fun isValidEmail(email : String) : Boolean{
-        val indexOfAt = email.indexOf('@')
-        val indexOfDot = email.lastIndexOf('.')
-        return indexOfDot != -1 && indexOfAt != -1 && indexOfDot > indexOfAt
-    }
+    fun String.isValidEmail() =
+        !TextUtils.isEmpty(this) && Patterns.EMAIL_ADDRESS.matcher(this).matches()
 
 
-    fun getDialogueProgressBar(view : View) : AlertDialog.Builder{
-        if(builder==null){
+    fun getDialogueProgressBar(view: View): AlertDialog.Builder {
+        if (builder == null) {
             builder = AlertDialog.Builder(view.context)
             val progressBar = ProgressBar(view.context)
             val lp = LinearLayout.LayoutParams(

@@ -23,10 +23,10 @@ class WatchHistoryFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_watch_history, container, false)
 
 
-        movieRecyclerView = view.findViewById(R.id.recyclerView)
-        movieRecyclerView.layoutManager = GridLayoutManager(view.context, 3)
-
-        movieRecyclerView.adapter = RecyclerMoviesAdapter(view.context, listOf(R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist))
+//        movieRecyclerView = view.findViewById(R.id.recyclerView)
+//        movieRecyclerView.layoutManager = GridLayoutManager(view.context, 3)
+//
+//        movieRecyclerView.adapter = RecyclerMoviesAdapter(view.context, listOf(R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist))
 
 
 

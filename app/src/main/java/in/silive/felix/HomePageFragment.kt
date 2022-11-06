@@ -24,10 +24,13 @@ import kotlin.math.abs
 class HomePageFragment : Fragment() {
 
     lateinit var viewPager : ViewPager2
-    var images : MutableList<Int> = mutableListOf(R.drawable.money_heist, R.drawable.daredevil, R.drawable.money_heist, R.drawable.daredevil , R.drawable.money_heist, R.drawable.daredevil)
+    var images1 : MutableList<Int> = mutableListOf(R.drawable.money_heist, R.drawable.daredevil, R.drawable.money_heist, R.drawable.daredevil , R.drawable.money_heist, R.drawable.daredevil)
+    var images2 : MutableList<String> = mutableListOf("https://upload.wikimedia.org/wikipedia/en/1/1b/Daredevil_season_1_poster.jpg", "https://upload.wikimedia.org/wikipedia/en/1/1b/Daredevil_season_1_poster.jpg", "https://upload.wikimedia.org/wikipedia/en/1/1b/Daredevil_season_1_poster.jpg", "https://upload.wikimedia.org/wikipedia/en/1/1b/Daredevil_season_1_poster.jpg", "https://upload.wikimedia.org/wikipedia/en/1/1b/Daredevil_season_1_poster.jpg", "https://upload.wikimedia.org/wikipedia/en/1/1b/Daredevil_season_1_poster.jpg")
+
+
     lateinit var viewPagerAdapter : ViewPagerAdapter
     lateinit var movieRecyclerView: RecyclerView
-    var moviesList = listOf(MoviesList("Top Picks for you", images), MoviesList("Top Picks for you", images), MoviesList("Top Picks for you", images))
+    var moviesList = listOf(MoviesList("Top Picks for you", images2), MoviesList("Top Picks for you", images2), MoviesList("Top Picks for you", images2))
     lateinit var circles : List<ImageView>
 
 
@@ -55,7 +58,7 @@ class HomePageFragment : Fragment() {
 
         var currentPage = 0
 
-        viewPagerAdapter = ViewPagerAdapter(view.context, listOf(images.last()) + images + listOf(images.first()))
+        viewPagerAdapter = ViewPagerAdapter(view.context, listOf(images1.last()) + images1 + listOf(images1.first()))
         viewPager.adapter = viewPagerAdapter
 
         viewPager.offscreenPageLimit = 3
@@ -78,7 +81,7 @@ class HomePageFragment : Fragment() {
         viewPager.setPageTransformer(transformer)
         viewPager.setCurrentItem(1)
 
-        onInfinitePageChangeCallBack(images.size + 2)
+        onInfinitePageChangeCallBack(images1.size + 2)
 
 
 
@@ -91,6 +94,7 @@ class HomePageFragment : Fragment() {
         movieRecyclerView.adapter = parentRecyclerAdapter
 
 
+//        https://upload.wikimedia.org/wikipedia/en/1/1b/Daredevil_season_1_poster.jpg
 
         return view
     }

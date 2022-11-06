@@ -39,9 +39,9 @@ class EmailVerificationFragment : Fragment() {
     var isSending = true
     lateinit var resendEmailTxtVw : AppCompatTextView
     lateinit var emailSentTxtVw : AppCompatTextView
-    var stopTimer = false
-    val timer = Timer()
+    var timer = Timer()
     var builder : AlertDialog.Builder? = null
+    var isTimerCancelled = false
 
 
 
@@ -71,7 +71,7 @@ class EmailVerificationFragment : Fragment() {
         updateTime()
         resendBtn.alpha = 0.5f
 
-
+        isTimerCancelled = false
         timer.schedule(object : TimerTask(){
             override fun run() {
 
@@ -103,8 +103,11 @@ class EmailVerificationFragment : Fragment() {
 
                             Log.d("Ashu", response.body().toString())
 
+                            if(!isTimerCancelled){
+                                timer.cancel()
+                                isTimerCancelled = true
+                            }
 
-                            timer.cancel()
 
                             (activity as AuthenticationActivity).homePage()
                         }
@@ -187,63 +190,70 @@ class EmailVerificationFragment : Fragment() {
 
 
     override fun onPause() {
-        timer.cancel()
+        if(!isTimerCancelled){
+            timer.cancel()
+            isTimerCancelled = true
+        }
         super.onPause()
     }
 
     override fun onResume() {
-        timer.schedule(object : TimerTask(){
-            override fun run() {
+        if (isTimerCancelled) {
+            isTimerCancelled = false
+            timer = Timer()
+            timer.schedule(object : TimerTask() {
+                override fun run() {
 
 
-                val user = User(
-                    null,
-                    (activity as AuthenticationActivity).email,
-                    null,
-                    null,
-                    (activity as AuthenticationActivity).password,
-                    null
-                )
-                val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
-                val call = retrofitAPI.logIn(user)
-                Log.d("Ashu", "Ashu")
-                call.enqueue(object : Callback<User> {
-                    override fun onResponse(call: Call<User>, response: Response<User>) {
-                        if (response.body() != null) {
+                    val user = User(
+                        null,
+                        (activity as AuthenticationActivity).email,
+                        null,
+                        null,
+                        (activity as AuthenticationActivity).password,
+                        null
+                    )
+                    val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
+                    val call = retrofitAPI.logIn(user)
+                    Log.d("Ashu", "Ashu")
+                    call.enqueue(object : Callback<User> {
+                        override fun onResponse(call: Call<User>, response: Response<User>) {
+                            if (response.body() != null) {
 
 
-                            GlobalScope.launch(Dispatchers.IO) {
-                                val dataStoreManager = DataStoreManager(view!!.context)
-                                dataStoreManager.storeLogInInfo(
-                                    LogInInfo(
-                                        response.headers().get("Set-Cookie").toString(), true
+                                GlobalScope.launch(Dispatchers.IO) {
+                                    val dataStoreManager = DataStoreManager(view!!.context)
+                                    dataStoreManager.storeLogInInfo(
+                                        LogInInfo(
+                                            response.headers().get("Set-Cookie").toString(), true
+                                        )
                                     )
-                                )
+                                }
+
+                                Log.d("Ashu", response.body().toString())
+
+                                if (!isTimerCancelled)
+                                    timer.cancel()
+
+                                (activity as AuthenticationActivity).homePage()
                             }
-
-                            Log.d("Ashu", response.body().toString())
-
-
-                            timer.cancel()
-
-                            (activity as AuthenticationActivity).homePage()
                         }
-                    }
 
-                    override fun onFailure(call: Call<User>, t: Throwable) {
-                        Toast.makeText(
-                            view!!.context,
-                            "Please check your internet connection",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        Log.d("Ashu", "Please check your internet connection")
-                    }
-                })
-            }
-
+                        override fun onFailure(call: Call<User>, t: Throwable) {
+                            Toast.makeText(
+                                view!!.context,
+                                "Please check your internet connection",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            Log.d("Ashu", "Please check your internet connection")
+                        }
+                    })
+                }
 
 
-        }, 0, 3000)
+            }, 0, 3000)
+
+        }
         super.onResume()
     }
 
