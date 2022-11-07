@@ -4,6 +4,7 @@
     android:layout_height="@dimen/dp_149">
     <ImageView
         android:id="@+id/movieImgVw"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_width="@dimen/dp_105"
+        android:layout_height="@dimen/dp_149"
+        android:scaleType="fitXY"/>
 </androidx.appcompat.widget.LinearLayoutCompat>

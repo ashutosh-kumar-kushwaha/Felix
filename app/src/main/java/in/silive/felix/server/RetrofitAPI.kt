@@ -1,13 +1,8 @@
 package `in`.silive.felix.server
 
-import `in`.silive.felix.module.Email
-import `in`.silive.felix.module.ResetPasswordRequest
-import `in`.silive.felix.module.User
-import `in`.silive.felix.module.VerifyOtpRequest
+import `in`.silive.felix.module.*
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.POST
-import retrofit2.http.PUT
+import retrofit2.http.*
 
 interface RetrofitAPI {
     @POST("api/auth/login")
@@ -30,4 +25,8 @@ interface RetrofitAPI {
 
     @PUT("api/auth/resend-otp")
     fun resendOtp(@Body email:Email) : Call<String>
+
+    @GET("api/home/movies-by-category?category=Movie")
+    fun getMovieByCategory(@Header ("Authorization") token : String, @Query ("key") key : String, @Query ("value") value : String) : Call<List<CategoryResponse>>
+
 }

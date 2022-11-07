@@ -1,5 +1,6 @@
 package `in`.silive.felix
 
+import `in`.silive.felix.datastore.DataStoreManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -7,8 +8,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class HomePageActivity : AppCompatActivity() {
+
+    lateinit var token : String
 
     lateinit var bottomNavigationView : BottomNavigationView
 
@@ -32,6 +38,13 @@ class HomePageActivity : AppCompatActivity() {
                 R.id.profile -> profileFrag()
             }
             true
+        }
+
+        GlobalScope.launch(Dispatchers.IO) {
+            val dataStoreManager = DataStoreManager(this@HomePageActivity)
+            dataStoreManager.getLogInInfo().collect{
+                token = it.token
+            }
         }
 
     }

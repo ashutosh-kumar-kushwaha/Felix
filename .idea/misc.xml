@@ -18,18 +18,21 @@
         <entry key="..\:/Programming/Felix/app/src/main/res/drawable/show_hide_password.xml" value="0.2555" />
         <entry key="..\:/Programming/Felix/app/src/main/res/drawable/sign_out_profile.xml" value="0.19" />
         <entry key="..\:/Programming/Felix/app/src/main/res/drawable/textbox_background.xml" value="0.2555" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/drawable/video.xml" value="0.1565" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/drawable/watch_now_background.xml" value="0.177" />
         <entry key="..\:/Programming/Felix/app/src/main/res/drawable/wishlist_profile.xml" value="0.191" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/activity_authentication.xml" value="0.2" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/activity_home_page.xml" value="0.23842592592592593" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/activity_intro.xml" value="0.4" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/activity_splash.xml" value="0.20521590423257802" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/adapter_viewpager.xml" value="0.1453125" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/layout/add_wishlist_btn_background.xml" value="0.13723813595553655" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/bottom_navigation_bar_menu.xml" value="0.11928174433518597" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_email_verification.xml" value="0.20521590423257802" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_forgot_password.xml" value="0.25" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_home_page.xml" value="0.176" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_log_in.xml" value="0.2" />
-        <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_media_stream.xml" value="0.12056434373663959" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_media_stream.xml" value="0.35887611749680715" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_my_profile.xml" value="0.16" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_otp_verification.xml" value="0.2" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_reset_password.xml" value="0.25" />

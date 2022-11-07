@@ -1,10 +1,14 @@
 package `in`.silive.felix
 
+import `in`.silive.felix.module.CategoryResponse
 import `in`.silive.felix.module.MoviesList
 import `in`.silive.felix.recyclerview.ParentRecyclerAdapter
-import `in`.silive.felix.recyclerview.RecyclerMoviesAdapter
+import `in`.silive.felix.server.RetrofitAPI
+import `in`.silive.felix.server.ServiceBuilder
 import `in`.silive.felix.viewpager.ViewPagerAdapter
-import android.media.Image
+import android.app.AlertDialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,12 +16,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.core.widget.ImageViewCompat
+import android.widget.LinearLayout
+import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import kotlin.math.abs
 
 
@@ -25,14 +34,15 @@ class HomePageFragment : Fragment() {
 
     lateinit var viewPager : ViewPager2
     var images1 : MutableList<Int> = mutableListOf(R.drawable.money_heist, R.drawable.daredevil, R.drawable.money_heist, R.drawable.daredevil , R.drawable.money_heist, R.drawable.daredevil)
-    var images2 : MutableList<String> = mutableListOf("https://upload.wikimedia.org/wikipedia/en/1/1b/Daredevil_season_1_poster.jpg", "https://upload.wikimedia.org/wikipedia/en/1/1b/Daredevil_season_1_poster.jpg", "https://upload.wikimedia.org/wikipedia/en/1/1b/Daredevil_season_1_poster.jpg", "https://upload.wikimedia.org/wikipedia/en/1/1b/Daredevil_season_1_poster.jpg", "https://upload.wikimedia.org/wikipedia/en/1/1b/Daredevil_season_1_poster.jpg", "https://upload.wikimedia.org/wikipedia/en/1/1b/Daredevil_season_1_poster.jpg")
 
 
     lateinit var viewPagerAdapter : ViewPagerAdapter
     lateinit var movieRecyclerView: RecyclerView
-    var moviesList = listOf(MoviesList("Top Picks for you", images2), MoviesList("Top Picks for you", images2), MoviesList("Top Picks for you", images2))
     lateinit var circles : List<ImageView>
 
+
+    lateinit var progressBar: AlertDialog
+    var builder: AlertDialog.Builder? = null
 
 
 
@@ -41,7 +51,14 @@ class HomePageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+
         val view = inflater.inflate(R.layout.fragment_home_page, container, false)
+
+        progressBar = getDialogueProgressBar(view).create()
+        progressBar.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        progressBar.setCanceledOnTouchOutside(false)
+
+        progressBar.show()
 
         viewPager = view.findViewById(R.id.viewPager)
 
@@ -85,13 +102,47 @@ class HomePageFragment : Fragment() {
 
 
 
+        val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
+        val call = retrofitAPI.getMovieByCategory("Bearer "+(activity as HomePageActivity).token, "category", "Movie")
+        call.enqueue(object : Callback<List<CategoryResponse>> {
+            override fun onResponse(
+                call: Call<List<CategoryResponse>>,
+                response: Response<List<CategoryResponse>>
+            ) {
+                if(response.code()==200){
+                    var moviesList = listOf(MoviesList("Movies",
+                        response.body() as List<CategoryResponse>
+                    ), MoviesList("Movies",
+                        response.body() as List<CategoryResponse>
+                    ),MoviesList("Movies",
+                        response.body() as List<CategoryResponse>
+                    )
+                    )
 
-        movieRecyclerView = view.findViewById(R.id.recyclerView)
-        movieRecyclerView.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
+                    movieRecyclerView = view.findViewById(R.id.recyclerView)
+                    movieRecyclerView.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
 
-        val parentRecyclerAdapter = ParentRecyclerAdapter(view.context, moviesList)
+                    val parentRecyclerAdapter = ParentRecyclerAdapter(view.context, moviesList)
 
-        movieRecyclerView.adapter = parentRecyclerAdapter
+                    movieRecyclerView.adapter = parentRecyclerAdapter
+                    progressBar.dismiss()
+
+                }
+                else{
+                    Toast.makeText(view.context, response.code().toString(), Toast.LENGTH_SHORT).show()
+                    progressBar.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<List<CategoryResponse>>, t: Throwable) {
+                Toast.makeText(view.context, "Failed", Toast.LENGTH_SHORT).show()
+                progressBar.dismiss()
+            }
+
+        })
+
+
+
 
 
 //        https://upload.wikimedia.org/wikipedia/en/1/1b/Daredevil_season_1_poster.jpg
@@ -119,6 +170,20 @@ class HomePageFragment : Fragment() {
                     circles[(viewPager.currentItem-2) % circles.size].setImageResource(R.drawable.ic_circle_grey)
             }
         })
+    }
+
+    fun getDialogueProgressBar(view : View) : AlertDialog.Builder{
+        if(builder==null){
+            builder = AlertDialog.Builder(view.context)
+            val progressBar = ProgressBar(view.context)
+            val lp = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            progressBar.layoutParams = lp
+            builder!!.setView(progressBar)
+        }
+        return builder as AlertDialog.Builder
     }
 
 

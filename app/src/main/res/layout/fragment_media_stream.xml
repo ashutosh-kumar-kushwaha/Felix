@@ -4,11 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#070E1E"
     tools:context=".MediaStreamFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="#070E1E">
+
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/videoPlayer"
@@ -18,10 +21,204 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/movieTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat"
+            android:textFontWeight="600"
+            android:text="Movie Title"
+            android:textSize="@dimen/sp_21"
+            android:layout_marginStart="@dimen/dp_14"
+            android:layout_marginTop="@dimen/dp_7"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/videoPlayer"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/heartImgVw"
+            android:layout_width="@dimen/dp_18"
+            android:layout_height="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_13"
+            app:srcCompat="@drawable/heart_unliked"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/videoPlayer"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/movieDetails"
+            android:text="Year | U/A Age+ | Running Time | Category"
+            android:textSize="@dimen/sp_12"
+            android:textColor="#6B6B6B"
+            android:fontFamily="@font/montserrat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/movieTitle"
+            app:layout_constraintStart_toStartOf="@+id/movieTitle"/>
+
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/flexLayout"
+            android:layout_width="@dimen/dp_287"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_7"
+            app:layout_constraintTop_toBottomOf="@id/movieDetails"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="Sci-Fi"
+                android:fontFamily="@font/montserrat"
+                android:textSize="@dimen/sp_12"
+                android:background="@drawable/genre_background"
+                android:paddingStart="@dimen/dp_5"
+                android:paddingEnd="@dimen/dp_5"/>
+            <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="Sci-Fi"
+            android:fontFamily="@font/montserrat"
+            android:textSize="@dimen/sp_12"
+            android:background="@drawable/genre_background"
+            android:paddingStart="@dimen/dp_5"
+            android:paddingEnd="@dimen/dp_5"/><androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="Sci-Fi"
+            android:fontFamily="@font/montserrat"
+            android:textSize="@dimen/sp_12"
+            android:background="@drawable/genre_background"
+            android:paddingStart="@dimen/dp_5"
+            android:paddingEnd="@dimen/dp_5"/><androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="Sci-Fi"
+            android:fontFamily="@font/montserrat"
+            android:textSize="@dimen/sp_12"
+            android:background="@drawable/genre_background"
+            android:paddingStart="@dimen/dp_5"
+            android:paddingEnd="@dimen/dp_5"/><androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="Sci-Fi"
+            app:flexWrap="wrap"
+            android:fontFamily="@font/montserrat"
+            android:textSize="@dimen/sp_12"
+            android:background="@drawable/genre_background"
+            android:paddingStart="@dimen/dp_5"
+            android:paddingEnd="@dimen/dp_5"/>
 
 
 
 
+
+
+        </com.google.android.flexbox.FlexboxLayout>
+        
+        
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/watchNowBtn"
+            android:layout_width="@dimen/dp_140"
+            android:layout_height="@dimen/dp_35"
+            android:textSize="@dimen/sp_14"
+            android:background="@drawable/watch_now_background"
+            android:text="Watch Now"
+            android:fontFamily="@font/montserrat"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:drawableStart="@drawable/ic_play"
+            android:layout_marginTop="@dimen/dp_14"
+            android:layout_marginStart="@dimen/dp_14"
+            app:layout_constraintTop_toBottomOf="@id/flexLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            android:drawablePadding="-17dp"
+            android:paddingStart="17dp"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/addWishListBtn"
+            android:layout_width="@dimen/dp_119"
+            android:layout_height="@dimen/dp_35"
+            android:textSize="@dimen/sp_14"
+            android:background="@drawable/add_to_wishlist_btn_bg"
+            android:text="Wish List"
+            android:fontFamily="@font/montserrat"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:drawableStart="@drawable/ic_plus"
+            android:layout_marginTop="@dimen/dp_14"
+            android:layout_marginEnd="@dimen/dp_28"
+            app:layout_constraintTop_toBottomOf="@id/flexLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:drawablePadding="-20dp"
+            android:paddingStart="20dp"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/castHeadingTxtVw"
+            android:text="Cast"
+            android:fontFamily="@font/montserrat"
+            android:textColor="@color/white"
+            android:layout_marginTop="@dimen/dp_12"
+            android:layout_marginStart="@dimen/dp_15"
+            android:textSize="@dimen/sp_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/watchNowBtn"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/castTxtVw"
+            android:layout_width="@dimen/dp_286"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_15"
+            android:text="Ryan Reynolds, Walker Scobell, Zoe Saldaña, Jennifer Garner, Mark Ruffalo "
+            android:textColor="#808080"
+            android:layout_marginEnd="@dimen/dp_15"
+            android:fontFamily="@font/montserrat"
+            app:layout_constraintTop_toBottomOf="@+id/castHeadingTxtVw"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/synopsisHeadingTxtVw"
+            android:text="Synopsis"
+            android:fontFamily="@font/montserrat"
+            android:textColor="@color/white"
+            android:layout_marginTop="@dimen/dp_14"
+            android:layout_marginStart="@dimen/dp_15"
+            android:textSize="@dimen/sp_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/castTxtVw"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/synopsisTxtVw"
+            android:layout_width="@dimen/dp_286"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_15"
+            android:text="Comedy, action and sci-fi fuel this feel-good adventure about a fighter pilot who travels back in time and teams up
+with his 12-year-old self."
+            android:textColor="#808080"
+            android:layout_marginEnd="@dimen/dp_15"
+            android:fontFamily="@font/montserrat"
+            app:layout_constraintTop_toBottomOf="@+id/synopsisHeadingTxtVw"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.core.widget.NestedScrollView>
