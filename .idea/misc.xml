@@ -3,12 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Programming/Felix/app/src/main/res/drawable/add_to_wishlist_btn_bg.xml" value="0.121" />
         <entry key="..\:/Programming/Felix/app/src/main/res/drawable/bottom_navigation_bar_selector.xml" value="0.156" />
         <entry key="..\:/Programming/Felix/app/src/main/res/drawable/bottom_navigation_text_selector.xml" value="0.155" />
         <entry key="..\:/Programming/Felix/app/src/main/res/drawable/buttonbackground.xml" value="0.2555" />
         <entry key="..\:/Programming/Felix/app/src/main/res/drawable/change_password_profile.xml" value="0.19" />
         <entry key="..\:/Programming/Felix/app/src/main/res/drawable/ellipse_8.xml" value="0.191" />
         <entry key="..\:/Programming/Felix/app/src/main/res/drawable/forgot_password.xml" value="0.191" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/drawable/genre_background.xml" value="0.121" />
         <entry key="..\:/Programming/Felix/app/src/main/res/drawable/history_profile.xml" value="0.191" />
         <entry key="..\:/Programming/Felix/app/src/main/res/drawable/home_btn.xml" value="0.156" />
         <entry key="..\:/Programming/Felix/app/src/main/res/drawable/ic_back.xml" value="0.2165" />

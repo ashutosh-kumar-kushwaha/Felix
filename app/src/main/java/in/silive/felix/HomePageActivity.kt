@@ -64,6 +64,11 @@ class HomePageActivity : AppCompatActivity() {
 //        replaceFrag(myProfileFrag, "Profile")
 //    }
 
+    fun mediaStreamingFrag(){
+        val mediaStreamFragment = MediaStreamFragment()
+        replaceFrag(mediaStreamFragment, "Profile")
+    }
+
     fun profileFrag(){
         val myProfileFrag = MyProfileFragment()
         replaceFrag(myProfileFrag, "Profile")

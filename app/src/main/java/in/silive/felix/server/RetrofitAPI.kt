@@ -26,7 +26,16 @@ interface RetrofitAPI {
     @PUT("api/auth/resend-otp")
     fun resendOtp(@Body email:Email) : Call<String>
 
-    @GET("api/home/movies-by-category?category=Movie")
-    fun getMovieByCategory(@Header ("Authorization") token : String, @Query ("key") key : String, @Query ("value") value : String) : Call<List<CategoryResponse>>
+    @GET("api/home/movies-by-category")
+    fun getMovieByCategory(@Header ("Authorization") token : String, @Query ("category") category : String) : Call<List<CategoryResponse>>
+
+    @GET("api/home/wishlist")
+    fun getWishList(@Header ("Authorization") token: String) : Call<List<CategoryResponse>>
+
+    @GET("api/history/get")
+    fun getHistory(@Header ("Authorization") token: String) : Call<List<CategoryResponse>>
+
+    @GET("api/media-streaming")
+    fun getMediaStreamingDetails(@Header ("Authorization") token : String, @Query ("movieId") movieId : String) : Call<MediaStreamingResponse>
 
 }
