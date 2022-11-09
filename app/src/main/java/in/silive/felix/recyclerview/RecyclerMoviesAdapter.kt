@@ -29,8 +29,8 @@ class RecyclerMoviesAdapter(val context: Context, val movies: List<CategoryRespo
         override fun onClick(p0: View?){
             val position = adapterPosition
             if(position != RecyclerView.NO_POSITION){
-                clickListener.onItemClick(position)
-                movies[position].movieId
+                clickListener.onItemClick(position, movies[position].movieId)
+
             }
         }
 

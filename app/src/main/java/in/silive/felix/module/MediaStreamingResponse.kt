@@ -12,5 +12,6 @@ class MediaStreamingResponse (
     @SerializedName("movieLength") val movieLength : String?,
     @SerializedName("genres") val genres : List<Genre>,
     @SerializedName("coverImageServingPath") val coverImageServingPath : String?,
-    @SerializedName("streamMoviePath") val streamMoviePath : String?
+    @SerializedName("streamMoviePath") val streamMoviePath : String?,
+    @SerializedName("addedToWishlist") val addedToWishlist : Boolean?
         )

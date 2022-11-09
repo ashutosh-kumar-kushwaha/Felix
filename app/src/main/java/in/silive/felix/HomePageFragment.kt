@@ -215,7 +215,8 @@ class HomePageFragment : Fragment(), ItemClickListener{
         return builder as AlertDialog.Builder
     }
 
-    override fun onItemClick(position: Int) {
+    override fun onItemClick(position: Int, movieId : Int) {
+        (activity as HomePageActivity).movieId = movieId
         (activity as HomePageActivity).mediaStreamingFrag()
     }
 

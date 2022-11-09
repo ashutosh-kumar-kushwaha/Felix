@@ -2,18 +2,24 @@ package `in`.silive.felix
 
 import `in`.silive.felix.module.CategoryResponse
 import `in`.silive.felix.module.MediaStreamingResponse
+import `in`.silive.felix.module.MovieId
 import `in`.silive.felix.module.MoviesList
 import `in`.silive.felix.recyclerview.ItemClickListener
 import `in`.silive.felix.recyclerview.ParentRecyclerAdapter
 import `in`.silive.felix.server.RetrofitAPI
 import `in`.silive.felix.server.ServiceBuilder
+import android.app.Service
+import android.graphics.Movie
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.exoplayer2.ExoPlayer
@@ -34,8 +40,11 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
     lateinit var synopsisTxtVw : AppCompatTextView
     lateinit var videoPlayer : StyledPlayerView
     lateinit var exoPlayer : ExoPlayer
+    lateinit var wishListBtn : AppCompatButton
     var isVPlaying = false
     lateinit var movieRecyclerView: RecyclerView
+    var isLiked : Boolean? = false
+    var isAddedToWishlist : Boolean? = false
 
 
 
@@ -53,12 +62,14 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
         castTxtVw = view.findViewById(R.id.castTxtVw)
         synopsisTxtVw = view.findViewById(R.id.synopsisTxtVw)
         videoPlayer = view.findViewById(R.id.videoPlayer)
+        wishListBtn = view.findViewById(R.id.wishListBtn)
+
 
 
         val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
         val call = retrofitAPI.getMediaStreamingDetails(
             "Bearer " + (activity as HomePageActivity).token,
-            "4")
+            (activity as HomePageActivity).movieId.toString())
 
         call.enqueue(object : Callback<MediaStreamingResponse>{
             override fun onResponse(
@@ -73,6 +84,21 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
                 movieDetails.text = "${details?.movieYear} | ${details?.movieRestriction} | ${details?.movieLength}"
                 castTxtVw.text = details?.movieCast
                 synopsisTxtVw.text = details?.movieDescription
+                isAddedToWishlist = details?.addedToWishlist
+
+                if(isAddedToWishlist == true){
+                    wishListBtn.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(wishListBtn.context, R.drawable.ic_cross), null, null, null)
+                }
+
+                wishListBtn.setOnClickListener{
+                    if(isAddedToWishlist == true){
+                        removeFromWishlist()
+                    }
+                    else{
+                        addToWishList()
+                    }
+                }
+
 
 
                 videoPlayer.player = exoPlayer
@@ -83,6 +109,8 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
                 exoPlayer.prepare()
                 exoPlayer.play()
 
+
+
                 exoPlayer.addListener(object  : Player.Listener{
                     override fun onIsPlayingChanged(isPlaying: Boolean) {
                         super.onIsPlayingChanged(isPlaying)
@@ -92,49 +120,53 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
                 })
 
 
-                val call2 = retrofitAPI.getMovieByCategory(
-                    "Bearer " + (activity as HomePageActivity).token,
-                    "Movie"
-                )
 
-                call2.enqueue(object : Callback<List<CategoryResponse>>{
-                    override fun onResponse(
-                        call: Call<List<CategoryResponse>>,
-                        response: Response<List<CategoryResponse>>
-                    ) {
-
-                        var moviesList = listOf(
-                            MoviesList(
-                                "Movies",
-                                response.body() as List<CategoryResponse>
-                            ), MoviesList(
-                                "Movies",
-                                response.body() as List<CategoryResponse>
-                            ), MoviesList(
-                                "Movies",
-                                response.body() as List<CategoryResponse>
-                            )
-                        )
-                        movieRecyclerView = view.findViewById(R.id.recyclerView)
-                        movieRecyclerView.layoutManager =
-                            LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
-
-                        val parentRecyclerAdapter = ParentRecyclerAdapter(view.context, moviesList, this@MediaStreamFragment)
-
-                        movieRecyclerView.adapter = parentRecyclerAdapter
-                    }
-
-                    override fun onFailure(call: Call<List<CategoryResponse>>, t: Throwable) {
-                        TODO("Not yet implemented")
-                    }
-
-                })
 
 
             }
 
             override fun onFailure(call: Call<MediaStreamingResponse>, t: Throwable) {
-                TODO("Not yet implemented")
+                Toast.makeText(view.context, "Failed to load movie data", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+
+
+
+        val call2 = retrofitAPI.getMovieByCategory(
+            "Bearer " + (activity as HomePageActivity).token,
+            "Movie"
+        )
+
+        call2.enqueue(object : Callback<List<CategoryResponse>>{
+            override fun onResponse(
+                call: Call<List<CategoryResponse>>,
+                response: Response<List<CategoryResponse>>
+            ) {
+
+                var moviesList = listOf(
+                    MoviesList(
+                        "Movies",
+                        response.body() as List<CategoryResponse>
+                    ), MoviesList(
+                        "Movies",
+                        response.body() as List<CategoryResponse>
+                    ), MoviesList(
+                        "Movies",
+                        response.body() as List<CategoryResponse>
+                    )
+                )
+                movieRecyclerView = view.findViewById(R.id.recyclerView)
+                movieRecyclerView.layoutManager =
+                    LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
+
+                val parentRecyclerAdapter = ParentRecyclerAdapter(view.context, moviesList, this@MediaStreamFragment)
+
+                movieRecyclerView.adapter = parentRecyclerAdapter
+            }
+
+            override fun onFailure(call: Call<List<CategoryResponse>>, t: Throwable) {
+                Toast.makeText(view.context, "Failed to load similar movies", Toast.LENGTH_SHORT).show()
             }
 
         })
@@ -162,8 +194,43 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
 
     }
 
-    override fun onItemClick(position: Int) {
-        TODO("Not yet implemented")
+    override fun onItemClick(position: Int, movieId : Int) {
+        (activity as HomePageActivity).movieId = movieId
+        (activity as HomePageActivity).mediaStreamingFrag()
+    }
+
+    fun addToWishList(){
+        val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
+        val call = retrofitAPI.addToWishList("Bearer " + (activity as HomePageActivity).token, MovieId((activity as HomePageActivity).movieId))
+        call.enqueue(object : Callback<String>{
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                Toast.makeText(requireContext(), response.body().toString(), Toast.LENGTH_SHORT).show()
+                wishListBtn.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(wishListBtn.context, R.drawable.ic_cross), null, null, null)
+                isAddedToWishlist = true
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(requireContext(), "Failed to add to wish list", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
+
+    fun removeFromWishlist(){
+        val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
+        val call = retrofitAPI.removeFromWishList("Bearer " + (activity as HomePageActivity).token, (activity as HomePageActivity).movieId.toString())
+        call.enqueue(object : Callback<String>{
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                Toast.makeText(requireContext(), response.body().toString(), Toast.LENGTH_SHORT).show()
+                wishListBtn.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(wishListBtn.context, R.drawable.ic_plus), null, null, null)
+                isAddedToWishlist = false
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(requireContext(), "Failed to remove from wish list", Toast.LENGTH_SHORT).show()
+            }
+
+        })
     }
 
 

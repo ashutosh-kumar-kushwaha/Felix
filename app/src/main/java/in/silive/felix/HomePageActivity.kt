@@ -3,6 +3,7 @@ package `in`.silive.felix
 import `in`.silive.felix.datastore.DataStoreManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -15,7 +16,7 @@ import kotlinx.coroutines.launch
 class HomePageActivity : AppCompatActivity() {
 
     lateinit var token : String
-
+    var movieId : Int = -1
     lateinit var bottomNavigationView : BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +45,7 @@ class HomePageActivity : AppCompatActivity() {
             val dataStoreManager = DataStoreManager(this@HomePageActivity)
             dataStoreManager.getLogInInfo().collect{
                 token = it.token
+                Log.d("Ashu", it.token)
             }
         }
 

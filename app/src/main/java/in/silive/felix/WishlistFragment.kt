@@ -1,6 +1,8 @@
 package `in`.silive.felix
 
 import `in`.silive.felix.module.CategoryResponse
+import `in`.silive.felix.recyclerview.ChildClickListener
+import `in`.silive.felix.recyclerview.ItemClickListener
 import `in`.silive.felix.recyclerview.RecyclerMoviesAdapter
 import `in`.silive.felix.server.RetrofitAPI
 import `in`.silive.felix.server.ServiceBuilder
@@ -8,6 +10,7 @@ import android.app.AlertDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +25,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class WishlistFragment : Fragment() {
+class WishlistFragment : Fragment() , ChildClickListener{
 
 
     lateinit var movieRecyclerView : RecyclerView
@@ -77,12 +80,14 @@ class WishlistFragment : Fragment() {
                             .show()
                     }
 
+                    Log.d("Ashu",res.toString())
+
                     movieRecyclerView = view.findViewById(R.id.recyclerView)
                     movieRecyclerView.layoutManager =
                         GridLayoutManager(view.context, 3)
 
 
-//                    movieRecyclerView.adapter = RecyclerMoviesAdapter(view.context, response.body() as List<CategoryResponse>)
+                    movieRecyclerView.adapter = RecyclerMoviesAdapter(view.context, response.body() as List<CategoryResponse>, this@WishlistFragment)
                     progressBar.dismiss()
 
                 } else {
@@ -106,6 +111,11 @@ class WishlistFragment : Fragment() {
 
 
         return view
+    }
+
+    override fun onItemClick(position: Int, movieId : Int) {
+        (activity as HomePageActivity).movieId = movieId
+        (activity as HomePageActivity).mediaStreamingFrag()
     }
 
 

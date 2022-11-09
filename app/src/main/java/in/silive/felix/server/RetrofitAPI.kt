@@ -38,4 +38,9 @@ interface RetrofitAPI {
     @GET("api/media-streaming")
     fun getMediaStreamingDetails(@Header ("Authorization") token : String, @Query ("movieId") movieId : String) : Call<MediaStreamingResponse>
 
+    @POST("api/home/add-to-wishlist")
+    fun addToWishList(@Header ("Authorization") token : String, @Body movieId: MovieId) : Call<String>
+
+    @DELETE("api/home/remove-from-wishlist")
+    fun removeFromWishList(@Header ("Authorization") token : String, @Query("movieId") movieId: String) : Call<String>
 }

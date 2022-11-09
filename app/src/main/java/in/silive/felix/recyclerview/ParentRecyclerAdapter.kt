@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -36,8 +35,8 @@ class ParentRecyclerAdapter(val context: Context, val moviesList : List<MoviesLi
     }
 
 
-    override fun onItemClick(position: Int) {
-        itemClickListener.onItemClick(position)
+    override fun onItemClick(position: Int, movieId : Int) {
+        itemClickListener.onItemClick(position, movieId)
     }
 
 
