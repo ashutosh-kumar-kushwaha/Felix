@@ -13,7 +13,9 @@
         android:background="#070E1E">
 
 
-        <androidx.appcompat.widget.AppCompatImageView
+
+
+        <com.google.android.exoplayer2.ui.StyledPlayerView
             android:id="@+id/videoPlayer"
             android:layout_width="@dimen/dp_315"
             android:layout_height="@dimen/dp_205"
@@ -218,6 +220,18 @@ with his 12-year-old self."
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_14"
+            android:layout_marginTop="@dimen/dp_11"
+            android:clipToPadding="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/synopsisTxtVw" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
