@@ -49,9 +49,10 @@
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_sign_up.xml" value="0.2" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_watch_history.xml" value="0.13809320222317228" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_wishlist.xml" value="0.1" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/layout/history_item.xml" value="0.7635933806146572" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/image_container.xml" value="0.12013681060282172" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/item.xml" value="0.11928174433518597" />
-        <entry key="..\:/Programming/Felix/app/src/main/res/layout/movie.xml" value="0.10047028644719966" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/layout/movie.xml" value="0.264" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/nested_recycler_view.xml" value="0.20436083796494228" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/parent_recycler_view.xml" value="0.12013681060282172" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/search_bg.xml" value="0.20521590423257802" />

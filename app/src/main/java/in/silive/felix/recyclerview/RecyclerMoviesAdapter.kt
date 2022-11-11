@@ -30,7 +30,6 @@ class RecyclerMoviesAdapter(val context: Context, val movies: List<CategoryRespo
             val position = adapterPosition
             if(position != RecyclerView.NO_POSITION){
                 clickListener.onItemClick(position, movies[position].movieId)
-
             }
         }
 

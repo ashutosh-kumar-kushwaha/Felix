@@ -19,6 +19,7 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
 import retrofit2.Callback
@@ -83,8 +84,10 @@ class WishlistFragment : Fragment() , ChildClickListener{
                     Log.d("Ashu",res.toString())
 
                     movieRecyclerView = view.findViewById(R.id.recyclerView)
-                    movieRecyclerView.layoutManager =
-                        GridLayoutManager(view.context, 3)
+//                    movieRecyclerView.layoutManager =
+//                        GridLayoutManager(view.context, 3)
+
+                    movieRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
 
                     movieRecyclerView.adapter = RecyclerMoviesAdapter(view.context, response.body() as List<CategoryResponse>, this@WishlistFragment)

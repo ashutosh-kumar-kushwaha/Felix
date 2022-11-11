@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dp_100"
+    android:layout_height="@dimen/dp_136"
+    app:cardCornerRadius="@dimen/dp_3"
+    android:background="#070E1E"
+    android:padding="@dimen/dp_6"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="@dimen/dp_88"
+        android:layout_height="@dimen/dp_124"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:id="@+id/crossImgVw"
+            android:layout_width="@dimen/dp_23"
+            android:layout_height="@dimen/dp_23"
+            android:layout_alignParentEnd="true"
+            android:elevation="@dimen/dp_10"
+            android:padding="@dimen/dp_5"
+            android:src="@drawable/ic_cross" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="@dimen/dp_88"
+            android:layout_height="@dimen/dp_124">
+
+            <ImageView
+                android:id="@+id/movieImgVw"
+                android:layout_width="@dimen/dp_88"
+                android:layout_height="@dimen/dp_124"
+                android:scaleType="fitXY"/>
+        </androidx.cardview.widget.CardView>
+
+
+    </RelativeLayout>
+
+</LinearLayout>

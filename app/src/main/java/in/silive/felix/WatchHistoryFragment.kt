@@ -2,6 +2,7 @@ package `in`.silive.felix
 
 import `in`.silive.felix.module.CategoryResponse
 import `in`.silive.felix.recyclerview.ChildClickListener
+import `in`.silive.felix.recyclerview.RecyclerHistoryAdapter
 import `in`.silive.felix.recyclerview.RecyclerMoviesAdapter
 import `in`.silive.felix.server.RetrofitAPI
 import `in`.silive.felix.server.ServiceBuilder
@@ -83,7 +84,7 @@ class WatchHistoryFragment : Fragment(), ChildClickListener{
                         GridLayoutManager(view.context, 3)
 
 
-                    movieRecyclerView.adapter = RecyclerMoviesAdapter(view.context, response.body() as List<CategoryResponse>, this@WatchHistoryFragment)
+                    movieRecyclerView.adapter = RecyclerHistoryAdapter(view.context, response.body() as List<CategoryResponse>)
                     progressBar.dismiss()
 
                 } else {
