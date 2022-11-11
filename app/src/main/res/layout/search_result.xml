@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.flexbox.FlexboxLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/dp_287"
     android:layout_height="@dimen/dp_53"
+    android:background="#191919"
+    app:flexDirection="row"
+    app:justifyContent="space_between"
+    app:alignItems="center"
+    android:layout_marginBottom="@dimen/dp_14"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal">
 
@@ -13,10 +18,17 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/movieTitleTxtVw"
+        android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="@dimen/sp_12"
         android:fontFamily="@font/montserrat"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/dp_156"
         android:layout_height="wrap_content"/>
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:layout_width="@dimen/dp_28"
+        android:background="@drawable/ic_play"
+        android:layout_marginEnd="@dimen/dp_14"
+        android:layout_height="@dimen/dp_28"/>
+
+</com.google.android.flexbox.FlexboxLayout>

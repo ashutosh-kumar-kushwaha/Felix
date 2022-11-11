@@ -87,5 +87,12 @@ class SearchFragment : Fragment() {
 
 
         })
+
+
     }
+
+//    override fun onDestroyView() {
+//        searchView.isIconified = false
+//        super.onDestroyView()
+//    }
 }
