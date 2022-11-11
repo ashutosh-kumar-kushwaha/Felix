@@ -120,7 +120,7 @@ class LogInFragment : Fragment() {
                                 val dataStoreManager = DataStoreManager(view.context)
                                 dataStoreManager.storeLogInInfo(
                                     LogInInfo(
-                                        response.headers().get("Set-Cookie").toString(), true
+                                        response.headers().get("Set-Cookie").toString(), true, response.body()?.firstName.toString() + " " + response.body()?.lastName.toString(), response.body()?.email.toString(), response.body()?.role.toString()
                                     )
                                 )
                             }

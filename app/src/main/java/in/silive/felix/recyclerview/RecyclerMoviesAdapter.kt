@@ -17,7 +17,6 @@ import coil.load
 class RecyclerMoviesAdapter(val context: Context, val movies: List<CategoryResponse>, val clickListener: ChildClickListener) : RecyclerView.Adapter<RecyclerMoviesAdapter.ViewHolder>(){
 
 
-    lateinit var mCommunicator : FragmentCommunication
 
     inner class ViewHolder(val itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener{
         val movieImgVw : ImageView = itemView.findViewById(R.id.movieImgVw)

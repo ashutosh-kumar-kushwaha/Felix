@@ -28,11 +28,12 @@ class MyProfileFragment : Fragment() {
     ): View? {
 
         val view = inflater.inflate(R.layout.fragment_my_profile, container, false)
+
         signOutBtn = view.findViewById(R.id.signOutBtn)
         signOutBtn.setOnClickListener{
 
             val alertDialogBuilder = AlertDialog.Builder(view.context)
-            alertDialogBuilder.setTitle("Confirm sign out?").setMessage("Do you want to sign out?").setPositiveButton("Yes", DialogInterface.OnClickListener { _, _ -> signOut(view) }).setNegativeButton("Cancel", DialogInterface.OnClickListener { _, _ ->  })
+            alertDialogBuilder.setTitle("Confirm sign out?").setMessage("Do you want to sign out?").setPositiveButton("Yes", DialogInterface.OnClickListener { _, _ -> (activity as HomePageActivity).signOut() }).setNegativeButton("Cancel", DialogInterface.OnClickListener { _, _ ->  })
             val alert = alertDialogBuilder.create()
             alert.setCanceledOnTouchOutside(false)
             alert.show()
@@ -40,15 +41,5 @@ class MyProfileFragment : Fragment() {
         return view
     }
 
-
-    fun signOut(view: View){
-        lifecycleScope.launch(Dispatchers.IO) {
-            val dataStoreManager = DataStoreManager(view.context)
-            dataStoreManager.storeLogInInfo(LogInInfo("", false))
-        }
-        val intent = Intent(view.context, AuthenticationActivity::class.java)
-        startActivity(intent)
-        activity?.finish()
-    }
 
 }

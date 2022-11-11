@@ -3,7 +3,6 @@ package `in`.silive.felix.recyclerview
 import `in`.silive.felix.R
 import `in`.silive.felix.module.CategoryResponse
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +10,25 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 
-class RecyclerHistoryAdapter(val context: Context, val movies : List<CategoryResponse>) : RecyclerView.Adapter<RecyclerHistoryAdapter.ViewHolder>() {
+class RecyclerHistoryAdapter(val context: Context, val movies : List<CategoryResponse>, val historyClickListener: HistoryClickListener) : RecyclerView.Adapter<RecyclerHistoryAdapter.ViewHolder>() {
 
-    class ViewHolder(val itemView : View) : RecyclerView.ViewHolder(itemView) {
+
+
+    inner class ViewHolder(val itemView : View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val movieImgVw : ImageView = itemView.findViewById(R.id.movieImgVw)
         val crossImgVw : ImageView = itemView.findViewById(R.id.crossImgVw)
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            val position = adapterPosition
+            if(position != RecyclerView.NO_POSITION){
+                historyClickListener.onItemClick(position, movies[position].movieId)
+            }
+        }
+
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -25,9 +38,16 @@ class RecyclerHistoryAdapter(val context: Context, val movies : List<CategoryRes
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.movieImgVw.load(movies[position].coverImageServingPath)
+        holder.crossImgVw.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                historyClickListener.onDeleteClick(position, movies[position].movieId)
+            }
+
+        })
     }
 
     override fun getItemCount(): Int {
         return movies.size
     }
 }
+

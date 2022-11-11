@@ -21,6 +21,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -92,11 +93,11 @@ class EmailVerificationFragment : Fragment() {
                         if (response.body() != null) {
 
 
-                            GlobalScope.launch(Dispatchers.IO) {
+                            lifecycleScope.launch(Dispatchers.IO) {
                                 val dataStoreManager = DataStoreManager(view.context)
                                 dataStoreManager.storeLogInInfo(
                                     LogInInfo(
-                                        response.headers().get("Set-Cookie").toString(), true
+                                        response.headers().get("Set-Cookie").toString(), true, response.body()?.firstName.toString() + " " + response.body()?.lastName.toString(), response.body()?.email.toString(), response.body()?.role.toString()
                                     )
                                 )
                             }
@@ -221,11 +222,11 @@ class EmailVerificationFragment : Fragment() {
                             if (response.body() != null) {
 
 
-                                GlobalScope.launch(Dispatchers.IO) {
+                                lifecycleScope.launch(Dispatchers.IO) {
                                     val dataStoreManager = DataStoreManager(view!!.context)
                                     dataStoreManager.storeLogInInfo(
                                         LogInInfo(
-                                            response.headers().get("Set-Cookie").toString(), true
+                                            response.headers().get("Set-Cookie").toString(), true, response.body()?.firstName.toString() + " " + response.body()?.lastName.toString(), response.body()?.email.toString(), response.body()?.role.toString()
                                         )
                                     )
                                 }

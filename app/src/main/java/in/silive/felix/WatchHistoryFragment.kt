@@ -1,15 +1,19 @@
 package `in`.silive.felix
 
 import `in`.silive.felix.module.CategoryResponse
+import `in`.silive.felix.module.MovieId
 import `in`.silive.felix.recyclerview.ChildClickListener
+import `in`.silive.felix.recyclerview.HistoryClickListener
 import `in`.silive.felix.recyclerview.RecyclerHistoryAdapter
 import `in`.silive.felix.recyclerview.RecyclerMoviesAdapter
 import `in`.silive.felix.server.RetrofitAPI
 import `in`.silive.felix.server.ServiceBuilder
 import android.app.AlertDialog
+import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -24,7 +28,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class WatchHistoryFragment : Fragment(), ChildClickListener{
+class WatchHistoryFragment : Fragment(), HistoryClickListener{
 
 
     lateinit var movieRecyclerView : RecyclerView
@@ -59,47 +63,9 @@ class WatchHistoryFragment : Fragment(), ChildClickListener{
 
         progressBar.show()
 
-        val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
-        val call = retrofitAPI.getHistory(
-            "Bearer " + (activity as HomePageActivity).token
-        )
+        movieRecyclerView = view.findViewById(R.id.recyclerView)
 
-        call.enqueue(object : Callback<List<CategoryResponse>> {
-            override fun onResponse(
-                call: Call<List<CategoryResponse>>,
-                response: Response<List<CategoryResponse>>
-            ) {
-
-                if (response.code() == 200) {
-
-                    val res = response.body() as List<CategoryResponse>
-
-                    if(res.isEmpty()){
-                        Toast.makeText(view.context, "Your History is Empty", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-
-                    movieRecyclerView = view.findViewById(R.id.recyclerView)
-                    movieRecyclerView.layoutManager =
-                        GridLayoutManager(view.context, 3)
-
-
-                    movieRecyclerView.adapter = RecyclerHistoryAdapter(view.context, response.body() as List<CategoryResponse>)
-                    progressBar.dismiss()
-
-                } else {
-                    Toast.makeText(view.context, response.code().toString(), Toast.LENGTH_SHORT)
-                        .show()
-                    progressBar.dismiss()
-                }
-            }
-
-            override fun onFailure(call: Call<List<CategoryResponse>>, t: Throwable) {
-                Toast.makeText(view.context, "Failed", Toast.LENGTH_SHORT).show()
-                progressBar.dismiss()
-            }
-
-        })
+        getHistory()
 
 
 //        movieRecyclerView = view.findViewById(R.id.recyclerView)
@@ -116,5 +82,93 @@ class WatchHistoryFragment : Fragment(), ChildClickListener{
     override fun onItemClick(position: Int, movieId: Int) {
         (activity as HomePageActivity).movieId = movieId
         (activity as HomePageActivity).mediaStreamingFrag()
+    }
+
+    override fun onDeleteClick(position: Int, movieId: Int) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Confirm Delete").setMessage("Do you want to delete this movie from Wish List?").setPositiveButton("Yes", DialogInterface.OnClickListener { _, _ -> deleteMovie(movieId) }).setNegativeButton("Cancel", DialogInterface.OnClickListener { _, _ ->  })
+        val alertDialog = builder.create()
+        alertDialog.show()
+    }
+
+    fun deleteMovie(movieId: Int){
+
+        val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
+        val call = retrofitAPI.removeFromHistory("Bearer " + (activity as HomePageActivity).token, movieId.toString())
+        call.enqueue(object : Callback<String>{
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if(response.code()==200){
+                    Toast.makeText(requireContext(), response.body().toString(), Toast.LENGTH_SHORT).show()
+                    getHistory()
+                }
+                else if(response.code()==401){
+                    (activity as HomePageActivity).signOut()
+                }
+                else if(response.code()==500){
+                    Toast.makeText(requireContext(), "Internal Server Error\nPlease try again", Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(requireContext(), "Failed to delete history", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+
+    }
+
+    fun getHistory(){
+        val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
+        val call = retrofitAPI.getHistory(
+            "Bearer " + (activity as HomePageActivity).token
+        )
+
+        call.enqueue(object : Callback<List<CategoryResponse>> {
+            override fun onResponse(
+                call: Call<List<CategoryResponse>>,
+                response: Response<List<CategoryResponse>>
+            ) {
+
+                if (response.code() == 200) {
+
+                    val res = response.body() as List<CategoryResponse>
+
+                    if(res.isEmpty()){
+                        Toast.makeText(requireContext(), "Your History is Empty", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+
+
+                    movieRecyclerView.layoutManager =
+                        GridLayoutManager(requireContext(), 3)
+
+
+                    movieRecyclerView.adapter = RecyclerHistoryAdapter(requireContext(), response.body() as List<CategoryResponse>, this@WatchHistoryFragment)
+                    progressBar.dismiss()
+
+                }
+                else if(response.code()==401){
+                    (activity as HomePageActivity).signOut()
+                }
+                else if(response.code()==500){
+                    Toast.makeText(requireContext(), "Internal Server Error\nPlease try again", Toast.LENGTH_SHORT).show()
+                }
+                else {
+                    Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT)
+                        .show()
+                    progressBar.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<List<CategoryResponse>>, t: Throwable) {
+                Toast.makeText(requireContext(), "Failed to load history", Toast.LENGTH_SHORT).show()
+                progressBar.dismiss()
+            }
+
+        })
+
     }
 }

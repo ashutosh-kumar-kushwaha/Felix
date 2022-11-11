@@ -1,12 +1,12 @@
 package `in`.silive.felix
 
 import `in`.silive.felix.module.CategoryResponse
-import `in`.silive.felix.recyclerview.ChildClickListener
-import `in`.silive.felix.recyclerview.ItemClickListener
-import `in`.silive.felix.recyclerview.RecyclerMoviesAdapter
+import `in`.silive.felix.recyclerview.*
 import `in`.silive.felix.server.RetrofitAPI
 import `in`.silive.felix.server.ServiceBuilder
 import android.app.AlertDialog
+import android.app.Service
+import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -18,6 +18,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.annotation.RestrictTo
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,8 +27,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class WishlistFragment : Fragment() , ChildClickListener{
-
+class WishlistFragment : Fragment() , HistoryClickListener{
 
     lateinit var movieRecyclerView : RecyclerView
     lateinit var progressBar: AlertDialog
@@ -84,13 +84,10 @@ class WishlistFragment : Fragment() , ChildClickListener{
                     Log.d("Ashu",res.toString())
 
                     movieRecyclerView = view.findViewById(R.id.recyclerView)
-//                    movieRecyclerView.layoutManager =
-//                        GridLayoutManager(view.context, 3)
+                    movieRecyclerView.layoutManager =
+                        GridLayoutManager(view.context, 3)
 
-                    movieRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-
-
-                    movieRecyclerView.adapter = RecyclerMoviesAdapter(view.context, response.body() as List<CategoryResponse>, this@WishlistFragment)
+                    movieRecyclerView.adapter = RecyclerHistoryAdapter(view.context, response.body() as List<CategoryResponse>, this@WishlistFragment)
                     progressBar.dismiss()
 
                 } else {
@@ -121,5 +118,16 @@ class WishlistFragment : Fragment() , ChildClickListener{
         (activity as HomePageActivity).mediaStreamingFrag()
     }
 
+    override fun onDeleteClick(position: Int, movieId: Int) {
+        Toast.makeText(requireContext(), "Delete", Toast.LENGTH_SHORT).show()
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Confirm Delete").setMessage("Do you want to delete this movie from Wish List?").setPositiveButton("Yes", DialogInterface.OnClickListener { _, _ -> deleteMovie(movieId) }).setNegativeButton("Cancel", DialogInterface.OnClickListener { _, _ ->  })
+    }
+
+
+    fun deleteMovie(movieId : Int){
+        val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
+
+    }
 
 }

@@ -55,4 +55,7 @@ interface RetrofitAPI {
 
     @POST("api/history/add")
     fun addToHistory(@Header ("Authorization") token: String, @Body movieId: MovieId) : Call<String>
+
+    @DELETE("api/history/delete")
+    fun removeFromHistory(@Header ("Authorization") token : String, @Query("movieId") movieId : String) : Call<String>
 }

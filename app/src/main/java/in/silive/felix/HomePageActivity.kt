@@ -1,6 +1,7 @@
 package `in`.silive.felix
 
 import `in`.silive.felix.datastore.DataStoreManager
+import `in`.silive.felix.module.LogInInfo
 import android.content.Intent
 import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
@@ -184,5 +185,17 @@ class HomePageActivity : AppCompatActivity() {
         searchView.onActionViewCollapsed()
 
         super.onBackPressed()
+    }
+
+
+
+    fun signOut(){
+        lifecycleScope.launch(Dispatchers.IO) {
+            val dataStoreManager = DataStoreManager(this@HomePageActivity)
+            dataStoreManager.storeLogInInfo(LogInInfo("", false, "", "", ""))
+        }
+        val intent = Intent(this, AuthenticationActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }
