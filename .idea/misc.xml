@@ -35,7 +35,8 @@
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/adapter_viewpager.xml" value="0.1453125" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/add_wishlist_btn_background.xml" value="0.13723813595553655" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/bottom_navigation_bar_menu.xml" value="0.11928174433518597" />
-        <entry key="..\:/Programming/Felix/app/src/main/res/layout/exo_player_control_view.xml" value="0.20521590423257802" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/layout/exo_player_control_view.xml" value="0.2" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_admin.xml" value="0.2" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_email_verification.xml" value="0.20521590423257802" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_forgot_password.xml" value="0.25" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_home_page.xml" value="0.176" />

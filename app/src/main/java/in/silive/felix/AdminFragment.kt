@@ -12,8 +12,10 @@ class AdminFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin, container, false)
+
+        val view = inflater.inflate(R.layout.fragment_admin, container, false)
+
+        return view
     }
 
 }

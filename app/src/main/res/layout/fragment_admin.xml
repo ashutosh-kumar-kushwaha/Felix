@@ -1,14 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdminFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".AdminFragment"
+    android:background="#070E1E">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/newMovieBtn"
+        android:layout_width="@dimen/dp_287"
+        android:layout_height="@dimen/dp_56"
+        android:background="@drawable/profile_options_bg"
+        android:drawableStart="@drawable/wishlist_profile"
+        android:textColor="@color/white"
+        android:text="New Movie"
+        android:textAllCaps="false"
+        app:maxImageSize="@dimen/dp_17"
+        android:textSize="@dimen/sp_14"
+        android:paddingStart="@dimen/dp_11"
+        android:textAlignment="textStart"
+        android:fontFamily="@font/montserrat"
+        android:drawablePadding="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_14"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/deleteMovieBtn"
+        android:layout_width="@dimen/dp_287"
+        android:layout_height="@dimen/dp_56"
+        android:background="@drawable/profile_options_bg"
+        android:drawableStart="@drawable/wishlist_profile"
+        android:textColor="@color/white"
+        android:text="Delete Movie"
+        android:textAllCaps="false"
+        app:maxImageSize="@dimen/dp_17"
+        android:textSize="@dimen/sp_14"
+        android:paddingStart="@dimen/dp_11"
+        android:textAlignment="textStart"
+        android:fontFamily="@font/montserrat"
+        android:drawablePadding="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_14"
+        app:layout_constraintTop_toBottomOf="@+id/newMovieBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/editMovieBtn"
+        android:layout_width="@dimen/dp_287"
+        android:layout_height="@dimen/dp_56"
+        android:background="@drawable/profile_options_bg"
+        android:drawableStart="@drawable/wishlist_profile"
+        android:textColor="@color/white"
+        android:text="Edit Movie"
+        android:textAllCaps="false"
+        app:maxImageSize="@dimen/dp_17"
+        android:textSize="@dimen/sp_14"
+        android:paddingStart="@dimen/dp_11"
+        android:textAlignment="textStart"
+        android:fontFamily="@font/montserrat"
+        android:drawablePadding="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_14"
+        app:layout_constraintTop_toBottomOf="@+id/deleteMovieBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/newCategoryBtn"
+        android:layout_width="@dimen/dp_287"
+        android:layout_height="@dimen/dp_56"
+        android:background="@drawable/profile_options_bg"
+        android:drawableStart="@drawable/wishlist_profile"
+        android:textColor="@color/white"
+        android:text="New Category"
+        android:textAllCaps="false"
+        app:maxImageSize="@dimen/dp_17"
+        android:textSize="@dimen/sp_14"
+        android:paddingStart="@dimen/dp_11"
+        android:textAlignment="textStart"
+        android:fontFamily="@font/montserrat"
+        android:drawablePadding="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_14"
+        app:layout_constraintTop_toBottomOf="@+id/editMovieBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/newAdminBtn"
+        android:layout_width="@dimen/dp_287"
+        android:layout_height="@dimen/dp_56"
+        android:background="@drawable/profile_options_bg"
+        android:drawableStart="@drawable/wishlist_profile"
+        android:textColor="@color/white"
+        android:text="New Admin"
+        android:textAllCaps="false"
+        app:maxImageSize="@dimen/dp_17"
+        android:textSize="@dimen/sp_14"
+        android:paddingStart="@dimen/dp_11"
+        android:textAlignment="textStart"
+        android:fontFamily="@font/montserrat"
+        android:drawablePadding="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_14"
+        app:layout_constraintTop_toBottomOf="@+id/newCategoryBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
