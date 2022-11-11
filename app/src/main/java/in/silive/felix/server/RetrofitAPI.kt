@@ -43,4 +43,13 @@ interface RetrofitAPI {
 
     @DELETE("api/home/remove-from-wishlist")
     fun removeFromWishList(@Header ("Authorization") token : String, @Query("movieId") movieId: String) : Call<String>
+
+    @POST("api/home/add-to-liked")
+    fun like(@Header ("Authorization") token: String, @Body movieId: MovieId) : Call<String>
+
+    @DELETE("api/home/delete-from-liked")
+    fun removeLike(@Header ("Authorization") token: String, @Query("movieId") movieId: String) : Call<String>
+
+    @GET("api/home/search")
+    fun search(@Header ("Authorization") token: String, @Query("searchText") searchText : String) : Call<List<SearchResponseItem>>
 }

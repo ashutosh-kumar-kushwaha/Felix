@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dp_287"
+    android:layout_height="@dimen/dp_53"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/movieImgVw"
+        android:layout_width="@dimen/dp_75"
+        android:scaleType="fitXY"
+        android:layout_height="match_parent"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/movieTitleTxtVw"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_12"
+        android:fontFamily="@font/montserrat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

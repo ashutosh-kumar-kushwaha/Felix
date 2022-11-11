@@ -11,7 +11,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/toolbarContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?android:attr/actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -25,6 +25,8 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Dark">
 
+
+
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="@dimen/dp_47"
                 android:layout_height="@dimen/dp_22"
@@ -32,13 +34,55 @@
                 app:srcCompat="@drawable/ic_felix" />
 
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="@dimen/dp_16"
-                android:layout_height="@dimen/dp_16"
-                android:layout_marginEnd="@dimen/dp_22"
-                android:layout_gravity="end"
-                app:srcCompat="@drawable/ic_search" />
 
+
+
+<!--            <androidx.appcompat.widget.AppCompatImageView-->
+<!--                android:id="@+id/searchBtn"-->
+<!--                android:layout_width="@dimen/dp_16"-->
+<!--                android:layout_height="@dimen/dp_16"-->
+<!--                android:layout_marginEnd="@dimen/dp_22"-->
+<!--                android:layout_gravity="end"-->
+<!--                app:srcCompat="@drawable/ic_search" />-->
+
+<!--            <androidx.appcompat.widget.LinearLayoutCompat-->
+<!--                android:visibility="gone"-->
+<!--                android:id="@+id/searchLinearLayout"-->
+<!--                android:layout_width="@dimen/dp_226"-->
+<!--                android:layout_height="@dimen/dp_31"-->
+<!--                android:layout_gravity="end"-->
+<!--                android:background="@drawable/search_bg"-->
+<!--                android:layout_marginEnd="@dimen/dp_14">-->
+
+<!--                <EditText-->
+<!--                    android:id="@+id/searchETxt"-->
+<!--                    android:layout_width="@dimen/dp_202"-->
+<!--                    android:layout_height="@dimen/dp_31"-->
+<!--                    android:fontFamily="@font/montserrat"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:background="@drawable/transparent"-->
+<!--                    android:textSize="@dimen/sp_12"/>-->
+<!--                <androidx.appcompat.widget.AppCompatImageView-->
+<!--                    android:layout_width="@dimen/dp_17"-->
+<!--                    android:layout_height="@dimen/dp_17"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    app:srcCompat="@drawable/ic_search" />-->
+<!--            </androidx.appcompat.widget.LinearLayoutCompat>-->
+
+
+
+
+
+            <SearchView
+                android:id="@+id/searchView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:iconifiedByDefault="true"
+                android:layout_gravity="end"
+                android:layoutDirection="rtl"
+                android:searchIcon="@drawable/search_icon"
+
+                android:queryHint="Search"/>
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -48,8 +92,6 @@
                 android:text="Categories"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_12" />
-
-
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>

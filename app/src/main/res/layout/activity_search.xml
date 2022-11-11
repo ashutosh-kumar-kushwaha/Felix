@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SearchActivity"
+    android:background="#070E1E">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/toolbarContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#070E1E"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/dp_47"
+                android:layout_height="@dimen/dp_22"
+                android:layout_marginStart="@dimen/dp_20"
+                app:srcCompat="@drawable/ic_felix" />
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/searchLinearLayout"
+                android:layout_width="@dimen/dp_226"
+                android:layout_height="@dimen/dp_31"
+                android:layout_gravity="end"
+                android:background="@drawable/search_bg"
+                android:layout_marginEnd="@dimen/dp_14">
+                <EditText
+                    android:id="@+id/searchETxt"
+                    android:layout_width="@dimen/dp_202"
+                    android:layout_height="@dimen/dp_31"
+                    android:fontFamily="@font/montserrat"
+                    android:textColor="@color/white"
+                    android:background="@drawable/transparent"
+                    android:textSize="@dimen/sp_12"/>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/dp_17"
+                android:layout_height="@dimen/dp_17"
+                android:layout_gravity="center_vertical"
+                app:srcCompat="@drawable/ic_search" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_14"
+        android:layout_marginEnd="@dimen/dp_14"
+        android:layout_marginTop="@dimen/dp_21"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:background="#070E1E"
+        app:menu="@menu/bottom_menu_user"
+        app:itemIconTint="@drawable/bottom_navigation_bar_selector"
+        app:itemTextColor="@drawable/bottom_navigation_bar_selector"
+        app:labelVisibilityMode="labeled"
+        app:itemHorizontalTranslationEnabled="false"
+        android:theme="@style/Widget.BottomNavigationView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

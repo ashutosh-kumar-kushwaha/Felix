@@ -13,8 +13,6 @@
         android:background="#070E1E">
 
 
-
-
         <com.google.android.exoplayer2.ui.StyledPlayerView
             android:id="@+id/videoPlayer"
             android:layout_width="@dimen/dp_315"
@@ -65,62 +63,10 @@
             android:layout_width="@dimen/dp_287"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_7"
-            app:layout_constraintTop_toBottomOf="@id/movieDetails"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:text="Sci-Fi"
-                android:fontFamily="@font/montserrat"
-                android:textSize="@dimen/sp_12"
-                android:background="@drawable/genre_background"
-                android:paddingStart="@dimen/dp_5"
-                android:paddingEnd="@dimen/dp_5"/>
-            <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="Sci-Fi"
-            android:fontFamily="@font/montserrat"
-            android:textSize="@dimen/sp_12"
-            android:background="@drawable/genre_background"
-            android:paddingStart="@dimen/dp_5"
-            android:paddingEnd="@dimen/dp_5"/><androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="Sci-Fi"
-            android:fontFamily="@font/montserrat"
-            android:textSize="@dimen/sp_12"
-            android:background="@drawable/genre_background"
-            android:paddingStart="@dimen/dp_5"
-            android:paddingEnd="@dimen/dp_5"/><androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="Sci-Fi"
-            android:fontFamily="@font/montserrat"
-            android:textSize="@dimen/sp_12"
-            android:background="@drawable/genre_background"
-            android:paddingStart="@dimen/dp_5"
-            android:paddingEnd="@dimen/dp_5"/><androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="Sci-Fi"
             app:flexWrap="wrap"
-            android:fontFamily="@font/montserrat"
-            android:textSize="@dimen/sp_12"
-            android:background="@drawable/genre_background"
-            android:paddingStart="@dimen/dp_5"
-            android:paddingEnd="@dimen/dp_5"/>
-
-
-
-
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/movieDetails">
 
 
         </com.google.android.flexbox.FlexboxLayout>
