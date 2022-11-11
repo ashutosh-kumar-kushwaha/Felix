@@ -12,8 +12,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class MyProfileFragment : Fragment() {
@@ -41,7 +42,7 @@ class MyProfileFragment : Fragment() {
 
 
     fun signOut(view: View){
-        GlobalScope.launch(Dispatchers.IO) {
+        lifecycleScope.launch(Dispatchers.IO) {
             val dataStoreManager = DataStoreManager(view.context)
             dataStoreManager.storeLogInInfo(LogInInfo("", false))
         }

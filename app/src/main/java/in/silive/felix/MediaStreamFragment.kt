@@ -57,6 +57,7 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
     var isChangingLike = false
     lateinit var genres : List<Genre>
     lateinit var flexLayout : FlexboxLayout
+    var isAddedToHistory = false
 
 
     override fun onCreateView(
@@ -167,7 +168,10 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
                     override fun onIsPlayingChanged(isPlaying: Boolean) {
                         super.onIsPlayingChanged(isPlaying)
                         isVPlaying = !isVPlaying
-                        Log.d("Ashu", isVPlaying.toString())
+                        if(!isAddedToHistory){
+                            addToHistory()
+                            isAddedToHistory = true
+                        }
                     }
                 })
 
@@ -225,6 +229,26 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
 
 
         return view
+    }
+
+    fun addToHistory() {
+        val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
+        val call = retrofitAPI.addToHistory("Bearer " + (activity as HomePageActivity).token, MovieId((activity as HomePageActivity).movieId))
+        call.enqueue(object : Callback<String>{
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if(response.code() == 200){
+                    Toast.makeText(requireContext(), response.body().toString(), Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
     override fun onStop() {

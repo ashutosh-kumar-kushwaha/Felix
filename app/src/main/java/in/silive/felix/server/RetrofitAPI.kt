@@ -52,4 +52,7 @@ interface RetrofitAPI {
 
     @GET("api/home/search")
     fun search(@Header ("Authorization") token: String, @Query("searchText") searchText : String) : Call<List<SearchResponseItem>>
+
+    @POST("api/history/add")
+    fun addToHistory(@Header ("Authorization") token: String, @Body movieId: MovieId) : Call<String>
 }

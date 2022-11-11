@@ -13,12 +13,13 @@ import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class HomePageActivity : AppCompatActivity() {
@@ -65,7 +66,7 @@ class HomePageActivity : AppCompatActivity() {
             true
         }
 
-        GlobalScope.launch(Dispatchers.IO) {
+        lifecycleScope.launch(Dispatchers.IO) {
             val dataStoreManager = DataStoreManager(this@HomePageActivity)
             dataStoreManager.getLogInInfo().collect{
                 token = it.token
@@ -74,8 +75,7 @@ class HomePageActivity : AppCompatActivity() {
         }
 
 
-
-
+        
 
         searchView = findViewById(R.id.searchView)
 
@@ -178,4 +178,11 @@ class HomePageActivity : AppCompatActivity() {
 //        }
 //        return super.onOptionsItemSelected(item)
 //    }
+
+    override fun onBackPressed() {
+
+        searchView.onActionViewCollapsed()
+
+        super.onBackPressed()
+    }
 }

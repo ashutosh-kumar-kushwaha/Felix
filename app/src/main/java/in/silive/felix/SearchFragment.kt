@@ -39,21 +39,29 @@ class SearchFragment : Fragment() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(p0: String?): Boolean {
 //                Toast.makeText(this@HomePageActivity, p0, Toast.LENGTH_SHORT).show()
-                if(p0 != null){
+                if(p0 != null && p0 !=""){
                     searchItems(p0)
                     return true
                 }
-
+                if(p0 == ""){
+                    val recyclerAdapter = RecyclerSearchAdapter(requireContext(), listOf())
+                    recyclerView.adapter = recyclerAdapter
+                }
 
                 return false
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
 //                Toast.makeText(this@HomePageActivity, p0, Toast.LENGTH_SHORT).show()
-                if(p0 != null){
+                if(p0 != null && p0 !=""){
 //                    Toast.makeText(view.context, p0, Toast.LENGTH_SHORT).show()
                     searchItems(p0)
                     return true
+                }
+
+                if(p0 == ""){
+                    val recyclerAdapter = RecyclerSearchAdapter(requireContext(), listOf())
+                    recyclerView.adapter = recyclerAdapter
                 }
 
                 return false
@@ -95,4 +103,5 @@ class SearchFragment : Fragment() {
 //        searchView.isIconified = false
 //        super.onDestroyView()
 //    }
+
 }

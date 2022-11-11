@@ -80,6 +80,7 @@
                 android:iconifiedByDefault="true"
                 android:layout_gravity="end"
                 android:layoutDirection="rtl"
+                android:submitBackground="@drawable/search_bg"
                 android:searchIcon="@drawable/search_icon"
 
                 android:queryHint="Search"/>

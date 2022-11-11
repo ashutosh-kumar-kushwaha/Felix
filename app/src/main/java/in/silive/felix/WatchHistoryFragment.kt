@@ -1,6 +1,7 @@
 package `in`.silive.felix
 
 import `in`.silive.felix.module.CategoryResponse
+import `in`.silive.felix.recyclerview.ChildClickListener
 import `in`.silive.felix.recyclerview.RecyclerMoviesAdapter
 import `in`.silive.felix.server.RetrofitAPI
 import `in`.silive.felix.server.ServiceBuilder
@@ -22,7 +23,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class WatchHistoryFragment : Fragment(){
+class WatchHistoryFragment : Fragment(), ChildClickListener{
 
 
     lateinit var movieRecyclerView : RecyclerView
@@ -82,7 +83,7 @@ class WatchHistoryFragment : Fragment(){
                         GridLayoutManager(view.context, 3)
 
 
-//                    movieRecyclerView.adapter = RecyclerMoviesAdapter(view.context, response.body() as List<CategoryResponse>, view.context)
+                    movieRecyclerView.adapter = RecyclerMoviesAdapter(view.context, response.body() as List<CategoryResponse>, this@WatchHistoryFragment)
                     progressBar.dismiss()
 
                 } else {
@@ -109,5 +110,10 @@ class WatchHistoryFragment : Fragment(){
 
 
         return view
+    }
+
+    override fun onItemClick(position: Int, movieId: Int) {
+        (activity as HomePageActivity).movieId = movieId
+        (activity as HomePageActivity).mediaStreamingFrag()
     }
 }

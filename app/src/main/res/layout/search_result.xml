@@ -27,7 +27,7 @@
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:layout_width="@dimen/dp_28"
-        android:background="@drawable/ic_play"
+        android:background="@drawable/play"
         android:layout_marginEnd="@dimen/dp_14"
         android:layout_height="@dimen/dp_28"/>
 

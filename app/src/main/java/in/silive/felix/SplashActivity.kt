@@ -16,20 +16,25 @@ import androidx.core.content.res.ResourcesCompat
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-class SplashActivity : Activity() {
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.GlobalScope
+
+class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
         var intent = Intent(this@SplashActivity, IntroActivity::class.java)
 
-        GlobalScope.launch(Dispatchers.IO) {
+
+
+        lifecycleScope.launch(Dispatchers.IO) {
             val dataStoreManager = DataStoreManager(this@SplashActivity)
             dataStoreManager.getLogInInfo().collect{
                 if(it.logInState){
