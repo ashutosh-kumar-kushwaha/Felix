@@ -1,7 +1,7 @@
 package `in`.silive.felix.recyclerview
 
 import `in`.silive.felix.R
-import `in`.silive.felix.module.MoviesList
+import `in`.silive.felix.module.Category
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class ParentRecyclerAdapter(val context: Context, val moviesList : List<MoviesList>, val itemClickListener: ItemClickListener) : RecyclerView.Adapter<ParentRecyclerAdapter.ViewHolder>(), ChildClickListener {
+class ParentRecyclerAdapter(val context: Context, val moviesList : List<Category>, val itemClickListener: ItemClickListener) : RecyclerView.Adapter<ParentRecyclerAdapter.ViewHolder>(), ChildClickListener {
 
 
     class ViewHolder(val itemView : View) : RecyclerView.ViewHolder(itemView) {

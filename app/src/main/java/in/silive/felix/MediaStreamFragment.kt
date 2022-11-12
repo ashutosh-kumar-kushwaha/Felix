@@ -5,34 +5,24 @@ import `in`.silive.felix.recyclerview.ItemClickListener
 import `in`.silive.felix.recyclerview.ParentRecyclerAdapter
 import `in`.silive.felix.server.RetrofitAPI
 import `in`.silive.felix.server.ServiceBuilder
-import android.app.ActionBar
-import android.app.Service
 import android.graphics.Color
-import android.graphics.Movie
-import android.media.Image
 import android.os.Bundle
-import android.util.Log
 import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.view.marginStart
-import androidx.core.view.setMargins
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.ui.PlayerControlView
-import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.google.android.flexbox.FlexboxLayout
 import retrofit2.Call
@@ -190,22 +180,22 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
             "Movie"
         )
 
-        call2.enqueue(object : Callback<List<CategoryResponse>> {
+        call2.enqueue(object : Callback<List<Movie>> {
             override fun onResponse(
-                call: Call<List<CategoryResponse>>,
-                response: Response<List<CategoryResponse>>
+                call: Call<List<Movie>>,
+                response: Response<List<Movie>>
             ) {
 
-                var moviesList = listOf(
-                    MoviesList(
+                var movie = listOf(
+                    Category(
                         "Movies",
-                        response.body() as List<CategoryResponse>
-                    ), MoviesList(
+                        response.body() as List<Movie>
+                    ), Category(
                         "Movies",
-                        response.body() as List<CategoryResponse>
-                    ), MoviesList(
+                        response.body() as List<Movie>
+                    ), Category(
                         "Movies",
-                        response.body() as List<CategoryResponse>
+                        response.body() as List<Movie>
                     )
                 )
                 movieRecyclerView = view.findViewById(R.id.recyclerView)
@@ -213,12 +203,12 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
                     LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
 
                 val parentRecyclerAdapter =
-                    ParentRecyclerAdapter(view.context, moviesList, this@MediaStreamFragment)
+                    ParentRecyclerAdapter(view.context, movie, this@MediaStreamFragment)
 
                 movieRecyclerView.adapter = parentRecyclerAdapter
             }
 
-            override fun onFailure(call: Call<List<CategoryResponse>>, t: Throwable) {
+            override fun onFailure(call: Call<List<Movie>>, t: Throwable) {
                 Toast.makeText(view.context, "Failed to load similar movies", Toast.LENGTH_SHORT)
                     .show()
             }
@@ -245,7 +235,7 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
-                TODO("Not yet implemented")
+                Toast.makeText(requireContext(), "Failed to add to history", Toast.LENGTH_SHORT).show()
             }
 
         })

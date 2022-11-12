@@ -1,11 +1,10 @@
 package `in`.silive.felix
 
-import `in`.silive.felix.module.CategoryResponse
+import `in`.silive.felix.module.Movie
 import `in`.silive.felix.recyclerview.*
 import `in`.silive.felix.server.RetrofitAPI
 import `in`.silive.felix.server.ServiceBuilder
 import android.app.AlertDialog
-import android.app.Service
 import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -18,9 +17,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.annotation.RestrictTo
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
 import retrofit2.Callback
@@ -126,15 +123,15 @@ class WishlistFragment : Fragment() , HistoryClickListener{
             "Bearer " + (activity as HomePageActivity).token
         )
 
-        call.enqueue(object : Callback<List<CategoryResponse>> {
+        call.enqueue(object : Callback<List<Movie>> {
             override fun onResponse(
-                call: Call<List<CategoryResponse>>,
-                response: Response<List<CategoryResponse>>
+                call: Call<List<Movie>>,
+                response: Response<List<Movie>>
             ) {
 
                 if (response.code() == 200) {
 
-                    val res = response.body() as List<CategoryResponse>
+                    val res = response.body() as List<Movie>
 
                     if(res.isEmpty()){
                         Toast.makeText(requireContext(), "Your Wish List is Empty", Toast.LENGTH_SHORT)
@@ -145,7 +142,7 @@ class WishlistFragment : Fragment() , HistoryClickListener{
                     movieRecyclerView.layoutManager =
                         GridLayoutManager(requireContext(), 3)
 
-                    movieRecyclerView.adapter = RecyclerHistoryAdapter(requireContext(), response.body() as List<CategoryResponse>, this@WishlistFragment)
+                    movieRecyclerView.adapter = RecyclerHistoryAdapter(requireContext(), response.body() as List<Movie>, this@WishlistFragment)
                     progressBar.dismiss()
 
                 }
@@ -160,7 +157,7 @@ class WishlistFragment : Fragment() , HistoryClickListener{
                 }
             }
 
-            override fun onFailure(call: Call<List<CategoryResponse>>, t: Throwable) {
+            override fun onFailure(call: Call<List<Movie>>, t: Throwable) {
                 Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show()
                 progressBar.dismiss()
             }

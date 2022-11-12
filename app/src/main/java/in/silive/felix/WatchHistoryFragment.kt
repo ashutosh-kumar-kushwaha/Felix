@@ -1,11 +1,8 @@
 package `in`.silive.felix
 
-import `in`.silive.felix.module.CategoryResponse
-import `in`.silive.felix.module.MovieId
-import `in`.silive.felix.recyclerview.ChildClickListener
+import `in`.silive.felix.module.Movie
 import `in`.silive.felix.recyclerview.HistoryClickListener
 import `in`.silive.felix.recyclerview.RecyclerHistoryAdapter
-import `in`.silive.felix.recyclerview.RecyclerMoviesAdapter
 import `in`.silive.felix.server.RetrofitAPI
 import `in`.silive.felix.server.ServiceBuilder
 import android.app.AlertDialog
@@ -13,7 +10,6 @@ import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -124,15 +120,15 @@ class WatchHistoryFragment : Fragment(), HistoryClickListener{
             "Bearer " + (activity as HomePageActivity).token
         )
 
-        call.enqueue(object : Callback<List<CategoryResponse>> {
+        call.enqueue(object : Callback<List<Movie>> {
             override fun onResponse(
-                call: Call<List<CategoryResponse>>,
-                response: Response<List<CategoryResponse>>
+                call: Call<List<Movie>>,
+                response: Response<List<Movie>>
             ) {
 
                 if (response.code() == 200) {
 
-                    val res = response.body() as List<CategoryResponse>
+                    val res = response.body() as List<Movie>
 
                     if(res.isEmpty()){
                         Toast.makeText(requireContext(), "Your History is Empty", Toast.LENGTH_SHORT)
@@ -144,7 +140,7 @@ class WatchHistoryFragment : Fragment(), HistoryClickListener{
                         GridLayoutManager(requireContext(), 3)
 
 
-                    movieRecyclerView.adapter = RecyclerHistoryAdapter(requireContext(), response.body() as List<CategoryResponse>, this@WatchHistoryFragment)
+                    movieRecyclerView.adapter = RecyclerHistoryAdapter(requireContext(), response.body() as List<Movie>, this@WatchHistoryFragment)
                     progressBar.dismiss()
 
                 }
@@ -161,7 +157,7 @@ class WatchHistoryFragment : Fragment(), HistoryClickListener{
                 }
             }
 
-            override fun onFailure(call: Call<List<CategoryResponse>>, t: Throwable) {
+            override fun onFailure(call: Call<List<Movie>>, t: Throwable) {
                 Toast.makeText(requireContext(), "Failed to load history", Toast.LENGTH_SHORT).show()
                 progressBar.dismiss()
             }

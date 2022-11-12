@@ -2,19 +2,16 @@ package `in`.silive.felix.recyclerview
 
 
 import `in`.silive.felix.R
-import `in`.silive.felix.communication.FragmentCommunication
-import `in`.silive.felix.module.CategoryResponse
+import `in`.silive.felix.module.Movie
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 
-class RecyclerMoviesAdapter(val context: Context, val movies: List<CategoryResponse>, val clickListener: ChildClickListener) : RecyclerView.Adapter<RecyclerMoviesAdapter.ViewHolder>(){
+class RecyclerMoviesAdapter(val context: Context, val movies: List<Movie>, val clickListener: ChildClickListener) : RecyclerView.Adapter<RecyclerMoviesAdapter.ViewHolder>(){
 
 
 

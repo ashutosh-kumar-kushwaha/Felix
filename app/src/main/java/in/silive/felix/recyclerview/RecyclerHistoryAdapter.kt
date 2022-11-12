@@ -1,7 +1,7 @@
 package `in`.silive.felix.recyclerview
 
 import `in`.silive.felix.R
-import `in`.silive.felix.module.CategoryResponse
+import `in`.silive.felix.module.Movie
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +10,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 
-class RecyclerHistoryAdapter(val context: Context, val movies : List<CategoryResponse>, val historyClickListener: HistoryClickListener) : RecyclerView.Adapter<RecyclerHistoryAdapter.ViewHolder>() {
+class RecyclerHistoryAdapter(val context: Context, val movies : List<Movie>, val historyClickListener: HistoryClickListener) : RecyclerView.Adapter<RecyclerHistoryAdapter.ViewHolder>() {
 
 
 

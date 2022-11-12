@@ -3,18 +3,12 @@ package `in`.silive.felix
 import `in`.silive.felix.datastore.DataStoreManager
 import `in`.silive.felix.module.LogInInfo
 import android.content.Intent
-import android.opengl.Visibility
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView
-import android.widget.Toast
-import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.LinearLayoutCompat
-import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -36,6 +30,7 @@ class HomePageActivity : AppCompatActivity() {
     lateinit var searchView: SearchView
     var searchText : String = ""
     lateinit var frag : Fragment
+    lateinit var categoriesBtn : AppCompatImageView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +44,11 @@ class HomePageActivity : AppCompatActivity() {
         ft.commit()
 
 
+        categoriesBtn = findViewById(R.id.categoriesBtn)
+
+        categoriesBtn.setOnClickListener{
+
+        }
 
 //        searchBtn = findViewById(R.id.searchBtn)
 //
@@ -130,6 +130,11 @@ class HomePageActivity : AppCompatActivity() {
     private fun replaceFrag(fragment : Fragment, name : String){
         val fm : FragmentManager = supportFragmentManager
         val ft : FragmentTransaction = fm.beginTransaction()
+        if(name == "Profile" || name == "Wishlist" || name == "History" || name == "Home"){
+            for (i in 0 until fm.backStackEntryCount) {
+                fm.popBackStack()
+            }
+        }
         ft.addToBackStack(name)
         ft.add(R.id.container, fragment)
         ft.commit()
@@ -142,7 +147,7 @@ class HomePageActivity : AppCompatActivity() {
 
     fun mediaStreamingFrag(){
         val mediaStreamFragment = MediaStreamFragment()
-        replaceFrag(mediaStreamFragment, "Profile")
+        replaceFrag(mediaStreamFragment, "Media")
     }
 
     fun profileFrag(){
@@ -152,7 +157,7 @@ class HomePageActivity : AppCompatActivity() {
 
     fun homeFrag(){
         val homeFrag = HomePageFragment()
-        replaceFrag(homeFrag, "Profile")
+        replaceFrag(homeFrag, "Home")
     }
 
     fun wishlistFrag(){

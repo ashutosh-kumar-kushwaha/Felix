@@ -27,13 +27,13 @@ interface RetrofitAPI {
     fun resendOtp(@Body email:Email) : Call<String>
 
     @GET("api/home/movies-by-category")
-    fun getMovieByCategory(@Header ("Authorization") token : String, @Query ("category") category : String) : Call<List<CategoryResponse>>
+    fun getMovieByCategory(@Header ("Authorization") token : String, @Query ("category") category : String) : Call<List<Movie>>
 
     @GET("api/home/wishlist")
-    fun getWishList(@Header ("Authorization") token: String) : Call<List<CategoryResponse>>
+    fun getWishList(@Header ("Authorization") token: String) : Call<List<Movie>>
 
     @GET("api/history/get")
-    fun getHistory(@Header ("Authorization") token: String) : Call<List<CategoryResponse>>
+    fun getHistory(@Header ("Authorization") token: String) : Call<List<Movie>>
 
     @GET("api/media-streaming")
     fun getMediaStreamingDetails(@Header ("Authorization") token : String, @Query ("movieId") movieId : String) : Call<MediaStreamingResponse>
@@ -58,4 +58,8 @@ interface RetrofitAPI {
 
     @DELETE("api/history/delete")
     fun removeFromHistory(@Header ("Authorization") token : String, @Query("movieId") movieId : String) : Call<String>
+
+    @GET("api/home/trending")
+    fun trending(@Header("Authorization") token : String) : Call<List<Movie>>
+
 }
