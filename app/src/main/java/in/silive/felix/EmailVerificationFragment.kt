@@ -43,6 +43,7 @@ class EmailVerificationFragment : Fragment() {
     var timer = Timer()
     var builder : AlertDialog.Builder? = null
     var isTimerCancelled = false
+    lateinit var progressBar : AlertDialog
 
 
 
@@ -57,7 +58,7 @@ class EmailVerificationFragment : Fragment() {
         resendEmailTxtVw = view.findViewById(R.id.resendMailTxtVw)
         resendBtn = view.findViewById(R.id.resendBtn)
 
-        val progressBar = getDialogueProgressBar(view).create()
+        progressBar = getDialogueProgressBar(view).create()
         progressBar.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         progressBar.setCanceledOnTouchOutside(false)
 
@@ -76,53 +77,8 @@ class EmailVerificationFragment : Fragment() {
         timer.schedule(object : TimerTask(){
             override fun run() {
 
+                    //
 
-                val user = User(
-                    null,
-                    (activity as AuthenticationActivity).email,
-                    null,
-                    null,
-                    (activity as AuthenticationActivity).password,
-                    null
-                )
-                val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
-                val call = retrofitAPI.logIn(user)
-                Log.d("Ashu", "Ashu")
-                call.enqueue(object : Callback<User> {
-                    override fun onResponse(call: Call<User>, response: Response<User>) {
-                        if (response.body() != null) {
-
-
-                            lifecycleScope.launch(Dispatchers.IO) {
-                                val dataStoreManager = DataStoreManager(view.context)
-                                dataStoreManager.storeLogInInfo(
-                                    LogInInfo(
-                                        response.headers().get("Set-Cookie").toString(), true, response.body()?.firstName.toString() + " " + response.body()?.lastName.toString(), response.body()?.email.toString(), response.body()?.role.toString()
-                                    )
-                                )
-                            }
-
-                            Log.d("Ashu", response.body().toString())
-
-                            if(!isTimerCancelled){
-                                timer.cancel()
-                                isTimerCancelled = true
-                            }
-
-
-                            (activity as AuthenticationActivity).homePage()
-                        }
-                    }
-
-                    override fun onFailure(call: Call<User>, t: Throwable) {
-                        Toast.makeText(
-                            view.context,
-                            "Please check your internet connection",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        Log.d("Ashu", "Please check your internet connection")
-                    }
-                })
             }
 
 
@@ -132,6 +88,54 @@ class EmailVerificationFragment : Fragment() {
         return view
     }
 
+    fun logIn(){
+        val user = User(null, (activity as AuthenticationActivity).email, null, null, (activity as AuthenticationActivity).password, null)
+        val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
+        val call = retrofitAPI.logIn(user)
+
+        call.enqueue(object : Callback<User> {
+            override fun onResponse(call: Call<User>, response: Response<User>) {
+
+                if(response.code() == 200) {
+//                        Toast.makeText(requireContext(), "Hello " + response.body()?.firstName.toString() + "!\nRole = " + response.body()?.role.toString(), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        response.headers().get("Set-Cookie").toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    lifecycleScope.launch(Dispatchers.IO) {
+                        val dataStoreManager = DataStoreManager(requireContext())
+                        dataStoreManager.storeLogInInfo(
+                            LogInInfo(
+                                response.headers().get("Set-Cookie").toString(), true, response.body()?.firstName.toString() + " " + response.body()?.lastName.toString(), response.body()?.email.toString(), response.body()?.role.toString()
+                            )
+                        )
+                    }
+
+//                        runBlocking { view?.let { DataStoreManager(it.context).storeLogInInfo(
+//                            LogInInfo(response.headers().get("Set-Cookie").toString(), true)
+//                        ) } }
+
+                    (activity as AuthenticationActivity).homePage()
+                }
+                else if(response.code() != 500 && response.code() != 401){
+                    Toast.makeText(
+                        requireContext(),
+                        response.code().toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                progressBar.dismiss()
+            }
+
+            override fun onFailure(call: Call<User>, t: Throwable) {
+
+                progressBar.dismiss()
+            }
+        })
+    }
 
     fun resendEmail(){
         isSending = true
@@ -150,7 +154,7 @@ class EmailVerificationFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
-                Toast.makeText(view?.context, "Failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(view?.context, "Failed to resend link. Please try again.", Toast.LENGTH_SHORT).show()
                 Log.d("Ashu", "Here")
                 isSending = false
             }
@@ -205,50 +209,8 @@ class EmailVerificationFragment : Fragment() {
             timer.schedule(object : TimerTask() {
                 override fun run() {
 
+                    logIn()
 
-                    val user = User(
-                        null,
-                        (activity as AuthenticationActivity).email,
-                        null,
-                        null,
-                        (activity as AuthenticationActivity).password,
-                        null
-                    )
-                    val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
-                    val call = retrofitAPI.logIn(user)
-                    Log.d("Ashu", "Ashu")
-                    call.enqueue(object : Callback<User> {
-                        override fun onResponse(call: Call<User>, response: Response<User>) {
-                            if (response.body() != null) {
-
-
-                                lifecycleScope.launch(Dispatchers.IO) {
-                                    val dataStoreManager = DataStoreManager(view!!.context)
-                                    dataStoreManager.storeLogInInfo(
-                                        LogInInfo(
-                                            response.headers().get("Set-Cookie").toString(), true, response.body()?.firstName.toString() + " " + response.body()?.lastName.toString(), response.body()?.email.toString(), response.body()?.role.toString()
-                                        )
-                                    )
-                                }
-
-                                Log.d("Ashu", response.body().toString())
-
-                                if (!isTimerCancelled)
-                                    timer.cancel()
-
-                                (activity as AuthenticationActivity).homePage()
-                            }
-                        }
-
-                        override fun onFailure(call: Call<User>, t: Throwable) {
-                            Toast.makeText(
-                                view!!.context,
-                                "Please check your internet connection",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            Log.d("Ashu", "Please check your internet connection")
-                        }
-                    })
                 }
 
 
@@ -260,8 +222,8 @@ class EmailVerificationFragment : Fragment() {
 
     fun getDialogueProgressBar(view : View) : AlertDialog.Builder{
         if(builder==null){
-            builder = AlertDialog.Builder(view.context)
-            val progressBar = ProgressBar(view.context)
+            builder = AlertDialog.Builder(requireContext())
+            val progressBar = ProgressBar(requireContext())
             val lp = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT

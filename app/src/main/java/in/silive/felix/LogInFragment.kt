@@ -101,14 +101,14 @@ class LogInFragment : Fragment() {
 
                 call.enqueue(object : Callback<User> {
                     override fun onResponse(call: Call<User>, response: Response<User>) {
-                        if (response.body() == null) {
+                        if (response.code() == 401) {
                             Toast.makeText(
                                 view.context,
                                 "Invalid Email or Password",
                                 Toast.LENGTH_SHORT
                             ).show()
 
-                        } else {
+                        } else if(response.code() == 200) {
 //                        Toast.makeText(view.context, "Hello " + response.body()?.firstName.toString() + "!\nRole = " + response.body()?.role.toString(), Toast.LENGTH_SHORT).show()
                             Toast.makeText(
                                 view.context,
@@ -129,13 +129,23 @@ class LogInFragment : Fragment() {
 //                            LogInInfo(response.headers().get("Set-Cookie").toString(), true)
 //                        ) } }
 
-
-                            Log.d("Ashu", response.headers().get("Set-Cookie").toString())
-
-                            Log.i("Ashu", response.headers().toString())
-
                             (activity as AuthenticationActivity).homePage()
                         }
+                        else if(response.code() == 500){
+                            Toast.makeText(
+                                view.context,
+                                "Internal server error\nPlease try again",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        else{
+                            Toast.makeText(
+                                view.context,
+                                response.code().toString(),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
                         progressBar.dismiss()
                     }
 

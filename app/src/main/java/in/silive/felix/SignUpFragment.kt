@@ -62,9 +62,6 @@ class SignUpFragment : Fragment() {
 
         createAccBtn.setOnClickListener {
 
-
-
-
             var firstName = firstNameETxt.text.toString()
             var lastName = lastNameETxt.text.toString()
             var email = emailETxt.text.toString()
@@ -109,38 +106,54 @@ class SignUpFragment : Fragment() {
 
                 call.enqueue(object : Callback<String> {
                     override fun onResponse(call: Call<String>, response: Response<String>) {
-                        Toast.makeText(view.context, response.body().toString(), Toast.LENGTH_SHORT)
-                            .show()
-                        if (response.code() == 200) {
-                            if (response.body() == "Please verify your email first.") {
 
-                                val call2 = retrofitAPI.resendVerificationLink(Email(email))
-                                call2.enqueue(object : Callback<String> {
-                                    override fun onResponse(
-                                        call: Call<String>,
-                                        response: Response<String>
-                                    ) {
-                                        if (response.code() == 200) {
-//                                                                Toast.makeText(view.context, response.body(), Toast.LENGTH_SHORT).show()
-                                            (activity as AuthenticationActivity).email = email
-                                            (activity as AuthenticationActivity).password =
-                                                password1
-                                            (activity as AuthenticationActivity).emailVerifyFrag()
-                                        }
+                        if (response.code() == 401) {
+
+
+                            val call2 = retrofitAPI.resendVerificationLink(Email(email))
+                            call2.enqueue(object : Callback<String> {
+                                override fun onResponse(
+                                    call: Call<String>,
+                                    response: Response<String>
+                                ) {
+                                    if (response.code() == 200) {
+//
+                                        (activity as AuthenticationActivity).email = email
+                                        (activity as AuthenticationActivity).password =
+                                            password1
+                                        (activity as AuthenticationActivity).emailVerifyFrag()
                                     }
-
-                                    override fun onFailure(call: Call<String>, t: Throwable) {
-                                        Toast.makeText(view.context, "Failed", Toast.LENGTH_SHORT)
-                                            .show()
+                                    else if(response.code() == 404){
+                                        Toast.makeText(requireContext(), response.body().toString(), Toast.LENGTH_SHORT).show()
                                     }
+                                    else if(response.code() == 500){
+                                        Toast.makeText(requireContext(), "Internal Server Error\nPlease try again", Toast.LENGTH_SHORT).show()
+                                    }
+                                    else{
+                                        Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT).show()
+                                    }
+                                }
 
-                                })
+                                override fun onFailure(call: Call<String>, t: Throwable) {
+                                    Toast.makeText(view.context, "Failed to resend link", Toast.LENGTH_SHORT)
+                                        .show()
+                                }
 
-                            }
+                            })
+//
+                        }
+                        else if(response.code() == 200){
                             (activity as AuthenticationActivity).email = email
                             (activity as AuthenticationActivity).password = password1
                             (activity as AuthenticationActivity).emailVerifyFrag()
-                        } else {
+                        }
+                        else if(response.code() == 409){
+                            Toast.makeText(requireContext(), "Email already in use", Toast.LENGTH_SHORT).show()
+                        }
+                        else if(response.code() == 500){
+                            Toast.makeText(requireContext(), "Internal Server Error\nPlease try again", Toast.LENGTH_SHORT).show()
+                        }
+                        else {
                             Toast.makeText(
                                 view.context,
                                 response.code().toString(),
@@ -152,12 +165,7 @@ class SignUpFragment : Fragment() {
                     }
 
                     override fun onFailure(call: Call<String>, t: Throwable) {
-                        Toast.makeText(
-                            view.context,
-                            "Please check your internet connection",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        Log.i("Ashu", "Please check your internet connection")
+                        Toast.makeText(requireContext(), "Failed to sign up. Please try again.", Toast.LENGTH_SHORT).show()
                         progressBar.dismiss()
                     }
                 })

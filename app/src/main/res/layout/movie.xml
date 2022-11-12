@@ -4,13 +4,14 @@
     android:layout_width="@dimen/dp_105"
     android:layout_height="@dimen/dp_149"
     android:layout_marginEnd="@dimen/dp_12"
-    app:cardBackgroundColor="#2b51a9"
+    app:cardBackgroundColor="#323232"
     app:cardCornerRadius="@dimen/dp_3">
 
     <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:indeterminateTint="#808080"/>
 
     <ImageView
         android:id="@+id/movieImgVw"
