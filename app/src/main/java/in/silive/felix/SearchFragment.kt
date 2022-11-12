@@ -1,6 +1,7 @@
 package `in`.silive.felix
 
 import `in`.silive.felix.module.SearchResponseItem
+import `in`.silive.felix.recyclerview.ItemClickListener
 import `in`.silive.felix.recyclerview.RecyclerSearchAdapter
 import `in`.silive.felix.server.RetrofitAPI
 import `in`.silive.felix.server.ServiceBuilder
@@ -18,7 +19,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class SearchFragment : Fragment() {
+class SearchFragment : Fragment(), ItemClickListener {
 
     lateinit var recyclerView : RecyclerView
     lateinit var searchView : SearchView
@@ -44,7 +45,7 @@ class SearchFragment : Fragment() {
                     return true
                 }
                 if(p0 == ""){
-                    val recyclerAdapter = RecyclerSearchAdapter(requireContext(), listOf())
+                    val recyclerAdapter = RecyclerSearchAdapter(requireContext(), listOf(), this@SearchFragment)
                     recyclerView.adapter = recyclerAdapter
                 }
 
@@ -60,7 +61,7 @@ class SearchFragment : Fragment() {
                 }
 
                 if(p0 == ""){
-                    val recyclerAdapter = RecyclerSearchAdapter(requireContext(), listOf())
+                    val recyclerAdapter = RecyclerSearchAdapter(requireContext(), listOf(), this@SearchFragment)
                     recyclerView.adapter = recyclerAdapter
                 }
 
@@ -75,17 +76,17 @@ class SearchFragment : Fragment() {
 
     fun searchItems(p0 : String){
         val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
-//        Log.d("Ashu",  (activity as HomePageActivity).searchText)
-        val call = retrofitAPI.search("Bearer "+ "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpbWFra3VzaHdhaGEyMDAyQGdtYWlsLmNvbSIsImlhdCI6MTY2ODExOTMxNywiZXhwIjoxNjY4MjA1NzE3fQ.NDlXYBfQAHx2nNg4f0nf-q9O31ckuuFM_5AUgQhrVLy8U95lqZZRD6GILYhpMEp6Atsd6B_W7-OVBrvMdumjyw", p0)
+        val call = retrofitAPI.search("Bearer "+ (activity as HomePageActivity).token, p0)
         call.enqueue(object : Callback<List<SearchResponseItem>> {
             override fun onResponse(
                 call: Call<List<SearchResponseItem>>,
                 response: Response<List<SearchResponseItem>>
             ) {
+
                 val list : List<SearchResponseItem> = response.body() as List<SearchResponseItem>
 
                 recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                val recyclerAdapter = RecyclerSearchAdapter(requireContext(), list)
+                val recyclerAdapter = RecyclerSearchAdapter(requireContext(), list, this@SearchFragment)
                 recyclerView.adapter = recyclerAdapter
             }
 
@@ -96,12 +97,16 @@ class SearchFragment : Fragment() {
 
         })
 
-
     }
 
-//    override fun onDestroyView() {
-//        searchView.isIconified = false
-//        super.onDestroyView()
-//    }
+    override fun onItemClick(position: Int, movieId: Int) {
+        (activity as HomePageActivity).movieId = movieId
+        (activity as HomePageActivity).mediaStreamingFrag()
+    }
+
+    override fun onDestroyView() {
+        searchView.onActionViewCollapsed()
+        super.onDestroyView()
+    }
 
 }

@@ -11,11 +11,21 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 
-class RecyclerSearchAdapter(val context : Context, val movieList : List<SearchResponseItem>) : RecyclerView.Adapter<RecyclerSearchAdapter.ViewHolder>() {
+class RecyclerSearchAdapter(val context : Context, val movieList : List<SearchResponseItem>, val itemClickListener: ItemClickListener) : RecyclerView.Adapter<RecyclerSearchAdapter.ViewHolder>() {
 
-    class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val movieImgVw : AppCompatImageView = itemView.findViewById(R.id.movieImgVw)
         val movieTitleTxtVw : AppCompatTextView = itemView.findViewById(R.id.movieTitleTxtVw)
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            val position = adapterPosition
+            if(position != RecyclerView.NO_POSITION){
+                itemClickListener.onItemClick(position, movieList[position].movieId)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

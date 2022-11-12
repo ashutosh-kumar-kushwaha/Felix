@@ -38,12 +38,12 @@ class RecyclerHistoryAdapter(val context: Context, val movies : List<CategoryRes
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.movieImgVw.load(movies[position].coverImageServingPath)
-        holder.crossImgVw.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                historyClickListener.onDeleteClick(position, movies[position].movieId)
-            }
-
-        })
+        holder.crossImgVw.setOnClickListener {
+            historyClickListener.onDeleteClick(
+                position,
+                movies[position].movieId
+            )
+        }
     }
 
     override fun getItemCount(): Int {
