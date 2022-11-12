@@ -74,8 +74,6 @@ class WatchHistoryFragment : Fragment(), HistoryClickListener{
 //        movieRecyclerView.adapter = RecyclerMoviesAdapter(view.context, listOf(R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist,R.drawable.money_heist))
 
 
-
-
         return view
     }
 

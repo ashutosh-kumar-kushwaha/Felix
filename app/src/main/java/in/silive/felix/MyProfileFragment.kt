@@ -20,6 +20,8 @@ import kotlinx.coroutines.launch
 class MyProfileFragment : Fragment() {
 
     lateinit var signOutBtn : AppCompatButton
+    lateinit var nameTxtVw : AppCompatTextView
+    lateinit var emailTxtVw : AppCompatTextView
 
 
     override fun onCreateView(
@@ -28,6 +30,11 @@ class MyProfileFragment : Fragment() {
     ): View? {
 
         val view = inflater.inflate(R.layout.fragment_my_profile, container, false)
+
+        nameTxtVw = view.findViewById(R.id.nameTxtVw)
+        emailTxtVw = view.findViewById(R.id.emailTxtVw)
+        nameTxtVw.text = (activity as HomePageActivity).name
+        emailTxtVw.text = (activity as HomePageActivity).email
 
         signOutBtn = view.findViewById(R.id.signOutBtn)
         signOutBtn.setOnClickListener{

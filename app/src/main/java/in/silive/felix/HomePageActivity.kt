@@ -28,6 +28,9 @@ class HomePageActivity : AppCompatActivity() {
     lateinit var searchLinearLayout : LinearLayoutCompat
     lateinit var searchBtn : AppCompatImageView
     lateinit var token : String
+    lateinit var name : String
+    lateinit var email : String
+    lateinit var role : String
     var movieId : Int = -1
     lateinit var bottomNavigationView : BottomNavigationView
     lateinit var searchView: SearchView
@@ -71,7 +74,9 @@ class HomePageActivity : AppCompatActivity() {
             val dataStoreManager = DataStoreManager(this@HomePageActivity)
             dataStoreManager.getLogInInfo().collect{
                 token = it.token
-                Log.d("Ashu", it.token)
+                name = it.name
+                email = it.email
+                role = it.role
             }
         }
 

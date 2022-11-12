@@ -195,8 +195,9 @@ class HomePageFragment : Fragment(), ItemClickListener{
                 circles[(viewPager.currentItem - 1) % circles.size].setImageResource(R.drawable.ic_circle_white)
                 if ((viewPager.currentItem - 1) % circles.size == 0) {
                     circles[listSize - 3].setImageResource(R.drawable.ic_circle_grey)
-                } else
+                } else{
                     circles[(viewPager.currentItem - 2) % circles.size].setImageResource(R.drawable.ic_circle_grey)
+                }
             }
         })
     }

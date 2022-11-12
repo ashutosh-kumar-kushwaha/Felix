@@ -28,7 +28,7 @@
                 android:layout_width="@dimen/dp_77"
                 android:layout_height="@dimen/dp_77"
                 android:layout_marginStart="@dimen/dp_7"
-                app:srcCompat="@drawable/pngwing_com" />
+                app:srcCompat="@drawable/profile_pic" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
 
@@ -39,6 +39,7 @@
                 android:layout_gravity="start">
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/nameTxtVw"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/sp_21"
@@ -48,6 +49,7 @@
                     android:textFontWeight="500"
                     android:fontFamily="@font/montserrat"/>
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/emailTxtVw"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="clayjens12@gmail.com"

@@ -59,50 +59,17 @@ class WishlistFragment : Fragment() , HistoryClickListener{
         progressBar.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         progressBar.setCanceledOnTouchOutside(false)
 
+
+
+        movieRecyclerView = view.findViewById(R.id.recyclerView)
+
         progressBar.show()
+        getWishlist()
 
-        val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
-        val call = retrofitAPI.getWishList(
-            "Bearer " + (activity as HomePageActivity).token
-        )
 
-        call.enqueue(object : Callback<List<CategoryResponse>> {
-            override fun onResponse(
-                call: Call<List<CategoryResponse>>,
-                response: Response<List<CategoryResponse>>
-            ) {
 
-                if (response.code() == 200) {
 
-                    val res = response.body() as List<CategoryResponse>
 
-                    if(res.isEmpty()){
-                        Toast.makeText(view.context, "Your Wish List is Empty", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-
-                    Log.d("Ashu",res.toString())
-
-                    movieRecyclerView = view.findViewById(R.id.recyclerView)
-                    movieRecyclerView.layoutManager =
-                        GridLayoutManager(view.context, 3)
-
-                    movieRecyclerView.adapter = RecyclerHistoryAdapter(view.context, response.body() as List<CategoryResponse>, this@WishlistFragment)
-                    progressBar.dismiss()
-
-                } else {
-                    Toast.makeText(view.context, response.code().toString(), Toast.LENGTH_SHORT)
-                        .show()
-                    progressBar.dismiss()
-                }
-            }
-
-            override fun onFailure(call: Call<List<CategoryResponse>>, t: Throwable) {
-                Toast.makeText(view.context, "Failed", Toast.LENGTH_SHORT).show()
-                progressBar.dismiss()
-            }
-
-        })
 
 //        movieRecyclerView = view.findViewById(R.id.recyclerView)
 //        movieRecyclerView.layoutManager = GridLayoutManager(view.context, 3)
@@ -119,15 +86,86 @@ class WishlistFragment : Fragment() , HistoryClickListener{
     }
 
     override fun onDeleteClick(position: Int, movieId: Int) {
-        Toast.makeText(requireContext(), "Delete", Toast.LENGTH_SHORT).show()
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Confirm Delete").setMessage("Do you want to delete this movie from Wish List?").setPositiveButton("Yes", DialogInterface.OnClickListener { _, _ -> deleteMovie(movieId) }).setNegativeButton("Cancel", DialogInterface.OnClickListener { _, _ ->  })
+        val alertDialog = builder.create()
+        alertDialog.show()
     }
 
 
     fun deleteMovie(movieId : Int){
         val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
+        val call = retrofitAPI.removeFromWishList("Bearer " + (activity as HomePageActivity).token, movieId.toString())
+        call.enqueue(object : Callback<String>{
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if(response.code()==200){
+                    Toast.makeText(requireContext(), response.body().toString(), Toast.LENGTH_SHORT).show()
+                    getWishlist()
+                }
+                else if(response.code()==401){
+                    (activity as HomePageActivity).signOut()
+                }
+                else if(response.code()==500){
+                    Toast.makeText(requireContext(), "Internal Server Error\nPlease try again", Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT).show()
+                }
+            }
 
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(requireContext(), "Failed to delete from wish list", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
+
+    fun getWishlist(){
+        val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
+        val call = retrofitAPI.getWishList(
+            "Bearer " + (activity as HomePageActivity).token
+        )
+
+        call.enqueue(object : Callback<List<CategoryResponse>> {
+            override fun onResponse(
+                call: Call<List<CategoryResponse>>,
+                response: Response<List<CategoryResponse>>
+            ) {
+
+                if (response.code() == 200) {
+
+                    val res = response.body() as List<CategoryResponse>
+
+                    if(res.isEmpty()){
+                        Toast.makeText(requireContext(), "Your Wish List is Empty", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                    Log.d("Ashu",res.toString())
+
+                    movieRecyclerView.layoutManager =
+                        GridLayoutManager(requireContext(), 3)
+
+                    movieRecyclerView.adapter = RecyclerHistoryAdapter(requireContext(), response.body() as List<CategoryResponse>, this@WishlistFragment)
+                    progressBar.dismiss()
+
+                }
+                else if(response.code()==401){
+                    (activity as HomePageActivity).signOut()
+                }
+                else if(response.code()==500){
+                    Toast.makeText(requireContext(), "Internal Server Error\nPlease try again", Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<List<CategoryResponse>>, t: Throwable) {
+                Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show()
+                progressBar.dismiss()
+            }
+
+        })
     }
 
 }
