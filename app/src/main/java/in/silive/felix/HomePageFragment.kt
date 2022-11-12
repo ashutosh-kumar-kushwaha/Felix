@@ -198,6 +198,13 @@ class HomePageFragment : Fragment(), ItemClickListener{
                 } else{
                     circles[(viewPager.currentItem - 2) % circles.size].setImageResource(R.drawable.ic_circle_grey)
                 }
+
+                if((viewPager.currentItem-1) % circles.size == listSize-3){
+                    circles[0].setImageResource(R.drawable.ic_circle_grey)
+                }
+                else{
+                    circles[(viewPager.currentItem) % circles.size].setImageResource(R.drawable.ic_circle_grey)
+                }
             }
         })
     }
