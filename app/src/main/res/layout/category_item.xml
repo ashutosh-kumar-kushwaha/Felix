@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/dp_287"
-    android:layout_height="@dimen/dp_47">
+    android:layout_height="@dimen/dp_47"
+    android:layout_marginBottom="@dimen/dp_14">
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/hollywoodBtn"
+        android:id="@+id/categoryBtn"
         android:layout_width="@dimen/dp_287"
         android:layout_height="@dimen/dp_47"
         android:textAllCaps="false"

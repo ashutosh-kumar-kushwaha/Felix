@@ -62,4 +62,7 @@ interface RetrofitAPI {
     @GET("api/home/trending")
     fun trending(@Header("Authorization") token : String) : Call<List<Movie>>
 
+    @GET("api/home/get-all-categories")
+    fun getAllCategories(@Header ("Authorization") token : String) : Call<List<CategoryResponse>>
+
 }

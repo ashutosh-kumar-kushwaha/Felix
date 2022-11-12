@@ -239,8 +239,8 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
         })
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onPause() {
+        super.onPause()
         exoPlayer.pause()
     }
 
@@ -249,10 +249,10 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
         if (isVPlaying) {
             exoPlayer.play()
         }
-
     }
 
     override fun onItemClick(position: Int, movieId: Int) {
+        exoPlayer.pause()
         (activity as HomePageActivity).movieId = movieId
         (activity as HomePageActivity).mediaStreamingFrag()
     }

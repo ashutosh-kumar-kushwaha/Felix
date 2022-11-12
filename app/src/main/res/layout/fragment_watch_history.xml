@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".WatchHistoryFragment"
+    android:clickable="true"
+    android:focusable="true"
     android:background="#070E1E">
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -165,7 +165,7 @@ class HomePageFragment : Fragment(), ItemClickListener {
 
                     viewPagerAdapter = ViewPagerAdapter(
                         requireContext(),
-                        trendingMovies + trendingMovies + trendingMovies
+                        trendingMovies + trendingMovies + trendingMovies, this@HomePageFragment
                     )
                     viewPager.adapter = viewPagerAdapter
                     onInfinitePageChangeCallBack(18)

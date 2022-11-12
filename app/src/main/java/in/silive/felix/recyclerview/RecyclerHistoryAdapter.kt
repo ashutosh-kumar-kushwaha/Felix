@@ -27,8 +27,6 @@ class RecyclerHistoryAdapter(val context: Context, val movies : List<Movie>, val
                 historyClickListener.onItemClick(position, movies[position].movieId)
             }
         }
-
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

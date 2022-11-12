@@ -5,7 +5,9 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".AdminFragment"
-    android:background="#070E1E">
+    android:clickable="true"
+    android:background="#070E1E"
+    android:focusable="true">
 
 
     <androidx.appcompat.widget.AppCompatButton

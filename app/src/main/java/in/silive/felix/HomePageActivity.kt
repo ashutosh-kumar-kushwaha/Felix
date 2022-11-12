@@ -50,7 +50,7 @@ class HomePageActivity : AppCompatActivity() {
         categoriesBtn = findViewById(R.id.categoriesBtn)
 
         categoriesBtn.setOnClickListener{
-
+            categoryFrag()
         }
 
 //        searchBtn = findViewById(R.id.searchBtn)
@@ -134,12 +134,17 @@ class HomePageActivity : AppCompatActivity() {
         val fm : FragmentManager = supportFragmentManager
         val ft : FragmentTransaction = fm.beginTransaction()
         if(name == "Profile" || name == "Wishlist" || name == "History" || name == "Home"){
-            for (i in 0 until fm.backStackEntryCount) {
+            for (i in 0..fm.backStackEntryCount) {
                 fm.popBackStack()
             }
+            ft.replace(R.id.container, fragment)
         }
-        ft.addToBackStack(name)
-        ft.add(R.id.container, fragment)
+        else{
+            ft.addToBackStack(name)
+            ft.add(R.id.container, fragment)
+        }
+
+
         ft.commit()
     }
 
@@ -192,13 +197,6 @@ class HomePageActivity : AppCompatActivity() {
 //        }
 //        return super.onOptionsItemSelected(item)
 //    }
-
-    override fun onBackPressed() {
-
-//        searchView.onActionViewCollapsed()
-
-        super.onBackPressed()
-    }
 
 
     fun categoryFrag(){
