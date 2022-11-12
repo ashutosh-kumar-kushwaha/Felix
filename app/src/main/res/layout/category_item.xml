@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dp_287"
+    android:layout_height="@dimen/dp_47">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/hollywoodBtn"
+        android:layout_width="@dimen/dp_287"
+        android:layout_height="@dimen/dp_47"
+        android:textAllCaps="false"
+        android:fontFamily="@font/montserrat"
+        android:textFontWeight="600"
+        android:textSize="@dimen/sp_14"
+        android:textColor="@color/white"
+        android:background="@drawable/categories_bg"/>
+
+</LinearLayout>

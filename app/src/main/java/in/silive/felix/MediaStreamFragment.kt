@@ -216,8 +216,6 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
         })
 
 
-
-
         return view
     }
 

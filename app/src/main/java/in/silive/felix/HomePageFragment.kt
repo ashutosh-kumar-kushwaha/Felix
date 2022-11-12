@@ -31,7 +31,7 @@ import retrofit2.Response
 import kotlin.math.abs
 
 
-class HomePageFragment : Fragment(), ItemClickListener{
+class HomePageFragment : Fragment(), ItemClickListener {
 
     lateinit var viewPager: ViewPager2
 
@@ -41,14 +41,12 @@ class HomePageFragment : Fragment(), ItemClickListener{
     lateinit var circles: List<ImageView>
 
 
-
-
     lateinit var progressBar: AlertDialog
     var builder: AlertDialog.Builder? = null
 
     var loadedItems = 0
 
-    var moviesList : MutableList<Category> = mutableListOf()
+    var moviesList: MutableList<Category> = mutableListOf()
 
     var isTrendingLoaded = false
     var isHollywoodLoaded = false
@@ -56,7 +54,7 @@ class HomePageFragment : Fragment(), ItemClickListener{
     var isAnimeLoaded = false
     var isHorrorLoaded = false
 
-    lateinit var token : String
+    lateinit var token: String
 
 
     override fun onCreateView(
@@ -122,7 +120,6 @@ class HomePageFragment : Fragment(), ItemClickListener{
         transformer.addTransformer(MarginPageTransformer(40))
         transformer.addTransformer(ViewPager2.PageTransformer { page, position ->
             val r: Float = 1 - abs(position)
-            Log.d("Ashu", r.toString())
             page.scaleY = 1f + r * 0.12f
             page.scaleX = 1f + r * 0.12f
         })
@@ -145,35 +142,46 @@ class HomePageFragment : Fragment(), ItemClickListener{
         return view
     }
 
-    fun getTrending(){
+    fun getTrending() {
 
         val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
 
         val callTrending = retrofitAPI.trending("Bearer $token")
-        callTrending.enqueue(object : Callback<List<Movie>>{
+        callTrending.enqueue(object : Callback<List<Movie>> {
             override fun onResponse(
                 call: Call<List<Movie>>,
                 response: Response<List<Movie>>
             ) {
 
-                if(response.code() == 200){
+                if (response.code() == 200) {
                     val trendingMovies = response.body() as List<Movie>
+//                    viewPagerAdapter = ViewPagerAdapter(
+//                        requireContext(),
+//                        listOf(trendingMovies.last()) + trendingMovies + listOf(trendingMovies.first())
+//                    )
+//                    viewPager.adapter = viewPagerAdapter
+//                    onInfinitePageChangeCallBack(8)
+//                    viewPager.currentItem = 1
+
                     viewPagerAdapter = ViewPagerAdapter(
                         requireContext(),
-                        listOf(trendingMovies.last()) + trendingMovies + listOf(trendingMovies.first())
+                        trendingMovies + trendingMovies + trendingMovies
                     )
                     viewPager.adapter = viewPagerAdapter
-                    onInfinitePageChangeCallBack(8)
-                    viewPager.currentItem = 1
-                }
-                else if(response.code() == 401){
+                    onInfinitePageChangeCallBack(18)
+                    viewPager.setCurrentItem(6, false)
+
+                } else if (response.code() == 401) {
                     (activity as HomePageActivity).signOut()
-                }
-                else if(response.code() == 500){
-                    Toast.makeText(requireContext(), "Internal Server Error. Please try again.", Toast.LENGTH_SHORT).show()
-                }
-                else{
-                    Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT).show()
+                } else if (response.code() == 500) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Internal Server Error. Please try again.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT)
+                        .show()
                 }
 
                 isTrendingLoaded = true
@@ -182,7 +190,11 @@ class HomePageFragment : Fragment(), ItemClickListener{
             }
 
             override fun onFailure(call: Call<List<Movie>>, t: Throwable) {
-                Toast.makeText(requireContext(), "Failed to load trending movies", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Failed to load trending movies",
+                    Toast.LENGTH_SHORT
+                ).show()
                 isTrendingLoaded = true
                 checkProgressBar()
             }
@@ -190,14 +202,14 @@ class HomePageFragment : Fragment(), ItemClickListener{
         })
     }
 
-    fun checkProgressBar(){
-        if(isTrendingLoaded && loadedItems == 4){
+    fun checkProgressBar() {
+        if (isTrendingLoaded && loadedItems == 4) {
             progressBar.dismiss()
         }
     }
 
 
-    fun getCategory(categoryName : String){
+    fun getCategory(categoryName: String) {
         val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
 
         val call = retrofitAPI.getMovieByCategory(
@@ -217,18 +229,20 @@ class HomePageFragment : Fragment(), ItemClickListener{
                     movieRecyclerView.layoutManager =
                         LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-                    val parentRecyclerAdapter = ParentRecyclerAdapter(requireContext(), moviesList, this@HomePageFragment)
+                    val parentRecyclerAdapter =
+                        ParentRecyclerAdapter(requireContext(), moviesList, this@HomePageFragment)
 
                     movieRecyclerView.adapter = parentRecyclerAdapter
 
-                }
-                else if(response.code() == 401){
+                } else if (response.code() == 401) {
                     (activity as HomePageActivity).signOut()
-                }
-                else if(response.code() == 500){
-                    Toast.makeText(requireContext(), "Internal Server Error. Please try again.", Toast.LENGTH_SHORT).show()
-                }
-                else {
+                } else if (response.code() == 500) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Internal Server Error. Please try again.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
                     Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT)
                         .show()
                     progressBar.dismiss()
@@ -247,7 +261,7 @@ class HomePageFragment : Fragment(), ItemClickListener{
     }
 
 
-    fun getHomePage(){
+    fun getHomePage() {
         progressBar.show()
         getTrending()
         getCategory("Bollywood")
@@ -262,46 +276,68 @@ class HomePageFragment : Fragment(), ItemClickListener{
             override fun onPageScrollStateChanged(state: Int) {
                 super.onPageScrollStateChanged(state)
                 if (state == ViewPager2.SCROLL_STATE_IDLE) {
-                    when (viewPager.currentItem) {
-                        listSize - 1 -> viewPager.setCurrentItem(1, false)
-                        0 -> viewPager.setCurrentItem(listSize - 2, false)
+//                    when (viewPager.currentItem) {
+//                        listSize - 1 -> viewPager.setCurrentItem(1, false)
+//                        0 -> viewPager.setCurrentItem(listSize - 2, false)
+//                    }
+                    if (viewPager.currentItem < 6) {
+                        viewPager.setCurrentItem(viewPager.currentItem + 6, false)
+                    } else if (viewPager.currentItem > 11) {
+                        viewPager.setCurrentItem(viewPager.currentItem - 6, false)
                     }
                 }
 
-
-                try{
-                    circles[(viewPager.currentItem - 1) % circles.size].setImageResource(R.drawable.ic_circle_white)
-                }
-                catch (e:Error){
-                    Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+                if ((viewPager.currentItem) % circles.size == 0) {
+                    circles[5].setImageResource(R.drawable.ic_circle_grey)
+                } else {
+                    circles[(viewPager.currentItem - 1) % circles.size].setImageResource(R.drawable.ic_circle_grey)
                 }
 
 
 
-                try{
+                circles[(viewPager.currentItem) % circles.size].setImageResource(R.drawable.ic_circle_white)
 
-                    if ((viewPager.currentItem - 1) % circles.size == 0) {
-                        circles[listSize - 3].setImageResource(R.drawable.ic_circle_grey)
-                    } else{
-                        circles[(viewPager.currentItem - 2) % circles.size].setImageResource(R.drawable.ic_circle_grey)
-                    }
-                }
-                catch (e:Error){
-                    Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
-                }
 
-                try{
-                    if((viewPager.currentItem-1) % circles.size == listSize-3){
+
+                if((viewPager.currentItem) % circles.size == 5){
                         circles[0].setImageResource(R.drawable.ic_circle_grey)
-                    }
-                    else{
-                        circles[(viewPager.currentItem) % circles.size].setImageResource(R.drawable.ic_circle_grey)
-                    }
-                }
-                catch (e:Error){
-                    Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+                    } else {
+                    circles[(viewPager.currentItem + 1) % circles.size].setImageResource(R.drawable.ic_circle_grey)
                 }
 
+
+
+//                try{
+//                    circles[(viewPager.currentItem - 1) % circles.size].setImageResource(R.drawable.ic_circle_white)
+//                }
+//                catch (e:Error){
+//                    Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+//                }
+
+
+//                try{
+//
+//                    if ((viewPager.currentItem - 1) % circles.size == 0) {
+//                        circles[listSize - 3].setImageResource(R.drawable.ic_circle_grey)
+//                    } else{
+//                        circles[(viewPager.currentItem - 2) % circles.size].setImageResource(R.drawable.ic_circle_grey)
+//                    }
+//                }
+//                catch (e:Error){
+//                    Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+//                }
+//
+//                try{
+//                    if((viewPager.currentItem-1) % circles.size == listSize-3){
+//                        circles[0].setImageResource(R.drawable.ic_circle_grey)
+//                    }
+//                    else{
+//                        circles[(viewPager.currentItem) % circles.size].setImageResource(R.drawable.ic_circle_grey)
+//                    }
+//                }
+//                catch (e:Error){
+//                    Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+//                }
 
 
             }
@@ -322,7 +358,7 @@ class HomePageFragment : Fragment(), ItemClickListener{
         return builder as AlertDialog.Builder
     }
 
-    override fun onItemClick(position: Int, movieId : Int) {
+    override fun onItemClick(position: Int, movieId: Int) {
         (activity as HomePageActivity).movieId = movieId
         (activity as HomePageActivity).mediaStreamingFrag()
     }

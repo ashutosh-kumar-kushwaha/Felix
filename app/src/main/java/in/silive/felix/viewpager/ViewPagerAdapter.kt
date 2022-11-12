@@ -19,16 +19,6 @@ class ViewPagerAdapter(val context: Context, val movies: List<Movie?>) : Recycle
     }
 
 
-//    val private runnable:Runnable = Runnable(){
-//        override fun run(){
-//            images.addAll(images)
-//            notifyDataSetChanged()
-//        }
-//    }
-
-
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view : View = LayoutInflater.from(context).inflate(R.layout.item, parent, false)
 

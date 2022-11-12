@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -30,7 +31,9 @@ class HomePageActivity : AppCompatActivity() {
     lateinit var searchView: SearchView
     var searchText : String = ""
     lateinit var frag : Fragment
-    lateinit var categoriesBtn : AppCompatImageView
+    lateinit var categoriesBtn : AppCompatTextView
+    var categoryName : String = ""
+    lateinit var categoryBtn : AppCompatTextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -192,11 +195,16 @@ class HomePageActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
 
-        searchView.onActionViewCollapsed()
+//        searchView.onActionViewCollapsed()
 
         super.onBackPressed()
     }
 
+
+    fun categoryFrag(){
+        val categoryFragment = CategoryFragment()
+        replaceFrag(categoryFragment, "Category")
+    }
 
 
     fun signOut(){
