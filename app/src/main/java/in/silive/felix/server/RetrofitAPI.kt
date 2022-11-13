@@ -65,4 +65,7 @@ interface RetrofitAPI {
     @GET("api/home/get-all-categories")
     fun getAllCategories(@Header ("Authorization") token : String) : Call<List<CategoryResponse>>
 
+    @PUT("api/auth/reset-password")
+    fun changePassword(@Header ("Authorization") token : String, @Body changePasswordRequest: ChangePasswordRequest) : Call<String>
+
 }

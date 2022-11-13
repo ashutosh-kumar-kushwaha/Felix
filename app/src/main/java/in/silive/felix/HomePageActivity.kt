@@ -5,11 +5,13 @@ import `in`.silive.felix.module.LogInInfo
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.Window
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -34,9 +36,12 @@ class HomePageActivity : AppCompatActivity() {
     lateinit var categoriesBtn : AppCompatTextView
     var categoryName : String = ""
     lateinit var categoryBtn : AppCompatTextView
-
+    lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        window?.requestFeature(Window.FEATURE_ACTION_BAR);
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_page)
 
@@ -45,6 +50,8 @@ class HomePageActivity : AppCompatActivity() {
         val homePageFragment = HomePageFragment()
         ft.add(R.id.container, homePageFragment)
         ft.commit()
+
+        toolbar = findViewById(R.id.toolbar)
 
 
         categoriesBtn = findViewById(R.id.categoriesBtn)
@@ -130,6 +137,15 @@ class HomePageActivity : AppCompatActivity() {
 
 
 
+    fun hideBottomNav(){
+        bottomNavigationView.visibility = View.GONE
+    }
+
+    fun showBottomNav(){
+        bottomNavigationView.visibility = View.VISIBLE
+    }
+
+
     private fun replaceFrag(fragment : Fragment, name : String){
         val fm : FragmentManager = supportFragmentManager
         val ft : FragmentTransaction = fm.beginTransaction()
@@ -171,6 +187,11 @@ class HomePageActivity : AppCompatActivity() {
     fun homeFrag(){
         val homeFrag = HomePageFragment()
         replaceFrag(homeFrag, "Home")
+    }
+
+    fun changePassFrag(){
+        val changePasswordFragment = ChangePasswordFragment()
+        replaceFrag(changePasswordFragment, "ChangePass")
     }
 
     fun wishlistFrag(){
@@ -218,5 +239,10 @@ class HomePageActivity : AppCompatActivity() {
         val intent = Intent(this, AuthenticationActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    override fun onBackPressed() {
+        showBottomNav()
+        super.onBackPressed()
     }
 }

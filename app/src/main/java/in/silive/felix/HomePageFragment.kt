@@ -129,9 +129,6 @@ class HomePageFragment : Fragment(), ItemClickListener {
 
 
 
-
-
-
         Log.d("Ashu", (activity as HomePageActivity).token)
 
 

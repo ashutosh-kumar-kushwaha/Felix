@@ -90,11 +90,31 @@ class OtpVerificationFragment : Fragment() {
             val call = retrofitAPI.verifyOtp(otpRequest)
             call.enqueue(object : Callback<String> {
                 override fun onResponse(call: Call<String>, response: Response<String>) {
-                    Toast.makeText(view?.context, response.body(), Toast.LENGTH_SHORT).show()
                     (activity as AuthenticationActivity).otp = otpETxt.text.toString()
-                    progressBar.dismiss()
-                    if (response.body() == "OTP Verified")
+                    if (response.code() == 200){
+//                        Toast.makeText(requireContext(), "OTP Verified", Toast.LENGTH_SHORT).show()
                         (activity as AuthenticationActivity).resetPasswordFrag()
+                    }
+                    else if(response.code() == 408){
+                        Toast.makeText(requireContext(), "OTP Expired", Toast.LENGTH_SHORT).show()
+                    }
+                    else if(response.code() == 422){
+                        Toast.makeText(requireContext(), "Invalid OTP", Toast.LENGTH_SHORT).show()
+                    }
+                    else if(response.code() == 404){
+                        Toast.makeText(requireContext(), "User Not Found", Toast.LENGTH_SHORT).show()
+                    }
+                    else if(response.code() == 500){
+                        Toast.makeText(
+                            requireContext(),
+                            "Internal server error\nPlease try again",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    else{
+                        Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT).show()
+                    }
+                    progressBar.dismiss()
                 }
 
                 override fun onFailure(call: Call<String>, t: Throwable) {
@@ -115,13 +135,34 @@ class OtpVerificationFragment : Fragment() {
         val call = retrofitAPI.resendOtp(Email((activity as AuthenticationActivity).email))
         call.enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
-                time = 60
-                Toast.makeText(view?.context, response.body(), Toast.LENGTH_SHORT).show()
-                canResend = false
-                updateTime()
-                resendOtpTxtVw.text = "Resend OTP in"
-                Log.d("Ashu", "Here")
-                isSending = false
+                if(response.code() == 200) {
+                    time = 60
+                    Toast.makeText(requireContext(), response.body(), Toast.LENGTH_SHORT).show()
+                    canResend = false
+                    updateTime()
+                    resendOtpTxtVw.text = "Resend OTP in"
+                    Log.d("Ashu", "Here")
+                    isSending = false
+                }
+                else if(response.code() == 404){
+                    Toast.makeText(requireContext(), response.body(), Toast.LENGTH_SHORT).show()
+                }
+                else if(response.code() == 500){
+                    Toast.makeText(
+                        requireContext(),
+                        "Internal server error\nPlease try again",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                else{
+                    Toast.makeText(
+                        requireContext(),
+                        response.code().toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+
                 progressBar.dismiss()
             }
 

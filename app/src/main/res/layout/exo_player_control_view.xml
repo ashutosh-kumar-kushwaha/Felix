@@ -8,28 +8,27 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:layout_centerInParent="true">
 
-        <androidx.appcompat.widget.AppCompatImageButton
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@id/exo_rew"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            style="@style/ExoMediaButton.Rewind"/>
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@id/exo_play"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            style="@style/ExoMediaButton.Play"/>
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@id/exo_pause"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            style="@style/ExoMediaButton.Pause"/>
-        <androidx.appcompat.widget.AppCompatImageButton
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:src="@drawable/ic_baseline_replay_10_48" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@id/exo_play_pause"
+            style="@style/ExoStyledControls.Button.Center.PlayPause"
+            android:layout_width="@dimen/dp_43"
+            android:layout_height="@dimen/dp_43" />
+
+
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@id/exo_ffwd"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            style="@style/ExoMediaButton.FastForward"/>
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:src="@drawable/ic_baseline_forward_10_48" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
@@ -67,9 +66,13 @@
             android:textSize="14sp"
             android:textStyle="bold" />
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_plus"/>
     </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:id="@+id/fullScreenBtn"
+        android:layout_width="@dimen/dp_22"
+        android:layout_height="@dimen/dp_22"
+        android:src="@drawable/ic_baseline_fullscreen_48" />
 </RelativeLayout>

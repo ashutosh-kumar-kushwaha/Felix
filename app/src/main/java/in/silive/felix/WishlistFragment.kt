@@ -17,6 +17,8 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
@@ -29,6 +31,8 @@ class WishlistFragment : Fragment() , HistoryClickListener{
     lateinit var movieRecyclerView : RecyclerView
     lateinit var progressBar: AlertDialog
     var builder: AlertDialog.Builder? = null
+    lateinit var nothingImgVw : AppCompatImageView
+    lateinit var nothingTxtVw : AppCompatTextView
 
 
     fun getDialogueProgressBar(view: View): AlertDialog.Builder {
@@ -136,14 +140,18 @@ class WishlistFragment : Fragment() , HistoryClickListener{
                     if(res.isEmpty()){
                         Toast.makeText(requireContext(), "Your Wish List is Empty", Toast.LENGTH_SHORT)
                             .show()
+                        nothingImgVw.visibility = View.VISIBLE
+                        nothingTxtVw.visibility = View.VISIBLE
                     }
-                    Log.d("Ashu",res.toString())
+                    else{
+                        movieRecyclerView.layoutManager =
+                            GridLayoutManager(requireContext(), 3)
 
-                    movieRecyclerView.layoutManager =
-                        GridLayoutManager(requireContext(), 3)
+                        movieRecyclerView.adapter = RecyclerHistoryAdapter(requireContext(), response.body() as List<Movie>, this@WishlistFragment)
 
-                    movieRecyclerView.adapter = RecyclerHistoryAdapter(requireContext(), response.body() as List<Movie>, this@WishlistFragment)
-                    progressBar.dismiss()
+                    }
+
+                   progressBar.dismiss()
 
                 }
                 else if(response.code()==401){

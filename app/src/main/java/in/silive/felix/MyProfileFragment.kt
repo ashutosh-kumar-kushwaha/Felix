@@ -22,6 +22,9 @@ class MyProfileFragment : Fragment() {
     lateinit var signOutBtn : AppCompatButton
     lateinit var nameTxtVw : AppCompatTextView
     lateinit var emailTxtVw : AppCompatTextView
+    lateinit var wishlistBtn : AppCompatButton
+    lateinit var changePassBtn : AppCompatButton
+    lateinit var historyBtn : AppCompatButton
 
 
     override fun onCreateView(
@@ -37,6 +40,11 @@ class MyProfileFragment : Fragment() {
         emailTxtVw.text = (activity as HomePageActivity).email
 
         signOutBtn = view.findViewById(R.id.signOutBtn)
+
+       wishlistBtn = view.findViewById(R.id.wishlistBtn)
+       historyBtn = view.findViewById(R.id.historyBtn)
+       changePassBtn = view.findViewById(R.id.changePassBtn)
+
         signOutBtn.setOnClickListener{
 
             val alertDialogBuilder = AlertDialog.Builder(view.context)
@@ -45,6 +53,19 @@ class MyProfileFragment : Fragment() {
             alert.setCanceledOnTouchOutside(false)
             alert.show()
         }
+
+        wishlistBtn.setOnClickListener{
+            (activity as HomePageActivity).wishlistFrag()
+        }
+
+        changePassBtn.setOnClickListener{
+            (activity as HomePageActivity).changePassFrag()
+        }
+
+        historyBtn.setOnClickListener{
+            (activity as HomePageActivity).historyFrag()
+        }
+
         return view
     }
 

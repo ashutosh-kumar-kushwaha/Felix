@@ -17,6 +17,8 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
@@ -30,6 +32,8 @@ class WatchHistoryFragment : Fragment(), HistoryClickListener{
     lateinit var movieRecyclerView : RecyclerView
     lateinit var progressBar: AlertDialog
     var builder: AlertDialog.Builder? = null
+    lateinit var nothingImgVw : AppCompatImageView
+    lateinit var nothingTxtVw : AppCompatTextView
 
 
     fun getDialogueProgressBar(view: View): AlertDialog.Builder {
@@ -52,6 +56,10 @@ class WatchHistoryFragment : Fragment(), HistoryClickListener{
     ): View? {
 
         val view = inflater.inflate(R.layout.fragment_watch_history, container, false)
+
+
+        nothingImgVw = view.findViewById(R.id.nothingImgVw)
+        nothingTxtVw = view.findViewById(R.id.nothingTxtVw)
 
         progressBar = getDialogueProgressBar(view).create()
         progressBar.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -133,15 +141,24 @@ class WatchHistoryFragment : Fragment(), HistoryClickListener{
                     if(res.isEmpty()){
                         Toast.makeText(requireContext(), "Your History is Empty", Toast.LENGTH_SHORT)
                             .show()
+
+                        nothingImgVw.visibility = View.VISIBLE
+                        nothingTxtVw.visibility = View.VISIBLE
+
                     }
 
+                    else {
+                        movieRecyclerView.layoutManager =
+                            GridLayoutManager(requireContext(), 3)
 
-                    movieRecyclerView.layoutManager =
-                        GridLayoutManager(requireContext(), 3)
 
-
-                    movieRecyclerView.adapter = RecyclerHistoryAdapter(requireContext(), response.body() as List<Movie>, this@WatchHistoryFragment)
-                    progressBar.dismiss()
+                        movieRecyclerView.adapter = RecyclerHistoryAdapter(
+                            requireContext(),
+                            response.body() as List<Movie>,
+                            this@WatchHistoryFragment
+                        )
+                    }
+                        progressBar.dismiss()
 
                 }
                 else if(response.code()==401){
