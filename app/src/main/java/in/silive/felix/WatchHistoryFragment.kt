@@ -147,7 +147,7 @@ class WatchHistoryFragment : Fragment(), HistoryClickListener{
 
                     }
 
-                    else {
+
                         movieRecyclerView.layoutManager =
                             GridLayoutManager(requireContext(), 3)
 
@@ -157,7 +157,7 @@ class WatchHistoryFragment : Fragment(), HistoryClickListener{
                             response.body() as List<Movie>,
                             this@WatchHistoryFragment
                         )
-                    }
+
                         progressBar.dismiss()
 
                 }

@@ -145,13 +145,13 @@ class WishlistFragment : Fragment() , HistoryClickListener{
                         nothingImgVw.visibility = View.VISIBLE
                         nothingTxtVw.visibility = View.VISIBLE
                     }
-                    else{
+
                         movieRecyclerView.layoutManager =
                             GridLayoutManager(requireContext(), 3)
 
                         movieRecyclerView.adapter = RecyclerHistoryAdapter(requireContext(), response.body() as List<Movie>, this@WishlistFragment)
 
-                    }
+
 
                    progressBar.dismiss()
 
