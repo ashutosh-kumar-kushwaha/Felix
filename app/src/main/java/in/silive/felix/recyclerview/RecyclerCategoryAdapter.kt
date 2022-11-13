@@ -1,18 +1,23 @@
 package `in`.silive.felix.recyclerview
 
+
 import `in`.silive.felix.R
 import `in`.silive.felix.module.CategoryResponse
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.AppCompatButton
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class RecyclerCategoryAdapter(val context : Context, val categories: List<CategoryResponse>, val categoryClickListener: CategoryClickListener) : RecyclerView.Adapter<RecyclerCategoryAdapter.ViewHolder>(){
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        val categoryBtn : AppCompatButton = itemView.findViewById(R.id.categoryBtn)
+    inner class ViewHolder(val itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+        val categoryBtn : TextView = itemView.findViewById(R.id.categoryBtn)
+
+        init {
+            itemView.setOnClickListener(this)
+        }
 
         override fun onClick(v: View?) {
             val position = adapterPosition
@@ -20,7 +25,6 @@ class RecyclerCategoryAdapter(val context : Context, val categories: List<Catego
                 categoryClickListener.onItemClick(position, categories[position].allCategoryName)
             }
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

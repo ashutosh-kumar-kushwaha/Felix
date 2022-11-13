@@ -134,7 +134,7 @@ class HomePageActivity : AppCompatActivity() {
         val fm : FragmentManager = supportFragmentManager
         val ft : FragmentTransaction = fm.beginTransaction()
         if(name == "Profile" || name == "Wishlist" || name == "History" || name == "Home"){
-            for (i in 0..fm.backStackEntryCount) {
+            for (i in 0 .. fm.backStackEntryCount) {
                 fm.popBackStack()
             }
             ft.replace(R.id.container, fragment)
@@ -161,6 +161,11 @@ class HomePageActivity : AppCompatActivity() {
     fun profileFrag(){
         val myProfileFrag = MyProfileFragment()
         replaceFrag(myProfileFrag, "Profile")
+    }
+
+    fun moviesByCategoryFrag(){
+        val moviesByCategoryFragment = MoviesByCategoryFragment()
+        replaceFrag(moviesByCategoryFragment, "moviesByCategory")
     }
 
     fun homeFrag(){

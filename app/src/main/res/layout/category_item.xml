@@ -4,15 +4,18 @@
     android:layout_height="@dimen/dp_47"
     android:layout_marginBottom="@dimen/dp_14">
 
-    <androidx.appcompat.widget.AppCompatButton
+    <TextView
         android:id="@+id/categoryBtn"
         android:layout_width="@dimen/dp_287"
         android:layout_height="@dimen/dp_47"
+        android:gravity="center"
         android:textAllCaps="false"
         android:fontFamily="@font/montserrat"
         android:textFontWeight="600"
+        android:text=""
         android:textSize="@dimen/sp_14"
         android:textColor="@color/white"
         android:background="@drawable/categories_bg"/>
+
 
 </LinearLayout>

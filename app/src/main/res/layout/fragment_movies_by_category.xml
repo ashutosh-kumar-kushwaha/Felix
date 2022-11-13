@@ -1,44 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WishlistFragment"
-    android:clickable="true"
-    android:focusable="true"
-    android:background="#070E1E">
+    android:background="#070E1E"
+    tools:context=".MoviesByCategoryFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#070E1E">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/nothingImgVw"
-            android:visibility="gone"
             android:layout_width="@dimen/dp_192"
             android:layout_height="@dimen/dp_230"
-            app:srcCompat="@drawable/ic_undraw_void__3_ggu_1"
             android:layout_marginTop="@dimen/dp_190"
-            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_undraw_void__3_ggu_1" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/nothingTxtVw"
-            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_14"
+            android:fontFamily="@font/montserrat"
             android:text="Nothing to show here"
             android:textColor="@color/white"
-            android:fontFamily="@font/montserrat"
             android:textFontWeight="500"
             android:textSize="@dimen/sp_14"
-            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nothingImgVw"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nothingImgVw" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="wrap_content"

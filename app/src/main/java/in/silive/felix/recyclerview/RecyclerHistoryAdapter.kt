@@ -12,8 +12,6 @@ import coil.load
 
 class RecyclerHistoryAdapter(val context: Context, val movies : List<Movie>, val historyClickListener: HistoryClickListener) : RecyclerView.Adapter<RecyclerHistoryAdapter.ViewHolder>() {
 
-
-
     inner class ViewHolder(val itemView : View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val movieImgVw : ImageView = itemView.findViewById(R.id.movieImgVw)
         val crossImgVw : ImageView = itemView.findViewById(R.id.crossImgVw)

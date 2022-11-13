@@ -38,7 +38,7 @@ class CategoryFragment : Fragment(), CategoryClickListener {
 
     override fun onItemClick(position: Int, categoryName: String) {
         (activity as HomePageActivity).categoryName = categoryName
-        (activity as HomePageActivity).mediaStreamingFrag()
+        (activity as HomePageActivity).moviesByCategoryFrag()
     }
 
     fun getCategories(){
