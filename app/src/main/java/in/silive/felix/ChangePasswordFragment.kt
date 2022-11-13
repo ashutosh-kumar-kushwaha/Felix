@@ -4,6 +4,7 @@ import `in`.silive.felix.module.ChangePasswordRequest
 import `in`.silive.felix.server.RetrofitAPI
 import `in`.silive.felix.server.ServiceBuilder
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +23,9 @@ class ChangePasswordFragment : Fragment() {
     lateinit var oldPasswordETxt : TextInputEditText
     lateinit var password1ETxt : TextInputEditText
     lateinit var password2ETxt : TextInputEditText
+    lateinit var oldPasswordETxtLayout: TextInputLayout
+    lateinit var password1ETxtLayout: TextInputLayout
+    lateinit var password2ETxtLayout: TextInputLayout
     lateinit var changePassBtn : AppCompatButton
 
 
@@ -36,11 +40,29 @@ class ChangePasswordFragment : Fragment() {
         password1ETxt = view.findViewById(R.id.password1ETxt)
         password2ETxt = view.findViewById(R.id.password2ETxt)
         changePassBtn = view.findViewById(R.id.changePassBtn)
+        oldPasswordETxtLayout = view.findViewById(R.id.oldPasswordETxtLayout)
+        password1ETxtLayout = view.findViewById(R.id.password1ETxtLayout)
+        password2ETxtLayout = view.findViewById(R.id.password2ETxtLayout)
 
         changePassBtn.setOnClickListener{
-            changePassword()
-        }
 
+            val oldPassword = oldPasswordETxt.text.toString()
+            val password1 = password1ETxt.text.toString()
+            val password2 = password2ETxt.text.toString()
+            if(password1 == password2){
+                val msg = isValidPassword(password1)
+                if(msg == "true"){
+                    password2ETxtLayout.helperText = ""
+                    changePassword()
+                }
+                else{
+                    password2ETxtLayout.helperText = msg
+                }
+            }
+            else{
+                password2ETxtLayout.helperText = "Both passwords must be same"
+            }
+        }
 
         return view
     }
@@ -51,16 +73,17 @@ class ChangePasswordFragment : Fragment() {
         call.enqueue(object : Callback<String>{
             override fun onResponse(call: Call<String>, response: Response<String>) {
                 if(response.code() == 200){
-                    Toast.makeText(requireContext(), response.body().toString(), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Password changed successfully", Toast.LENGTH_SHORT).show()
                 }
                 else if(response.code() == 404){
-                    Toast.makeText(requireContext(), response.body().toString(), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "User with email not found", Toast.LENGTH_SHORT).show()
                 }
                 else if(response.code() == 409){
-                    Toast.makeText(requireContext(), response.body().toString(), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "New password can't be same as old password", Toast.LENGTH_SHORT).show()
                 }
                 else if(response.code() == 401){
-                    Toast.makeText(requireContext(), response.body().toString(), Toast.LENGTH_SHORT).show()
+                    Log.d("Ashu", response.body().toString())
+                    Toast.makeText(requireContext(), "Invalid Password", Toast.LENGTH_SHORT).show()
                 }
                 else if (response.code() == 500) {
                     Toast.makeText(
@@ -86,6 +109,49 @@ class ChangePasswordFragment : Fragment() {
             }
 
         })
+    }
+
+    fun isValidPassword(password: String): String {
+
+        if (password.length < 8) {
+            return "Password must contain at least 8 characters"
+        }
+
+        var hasUpperCase = false
+        var hasLowerCase = false
+        var hasNumber = false
+        var hasSpecialSymbol = false
+
+        for (char in password) {
+            when (char) {
+                in 'A'..'Z' -> {
+                    hasUpperCase = true
+                }
+                in 'a'..'z' -> {
+                    hasLowerCase = true
+                }
+                in '0'..'9' -> {
+                    hasNumber = true
+                }
+                else -> {
+                    hasSpecialSymbol = true
+                }
+            }
+        }
+
+        if (!hasUpperCase) {
+            return "Password must contain at least one uppercase character"
+        }
+        if (!hasLowerCase) {
+            return "Password must contain at least one lowercase character"
+        }
+        if (!hasNumber) {
+            return "Password must contain at least one number"
+        }
+        if (!hasSpecialSymbol) {
+            return "Password must contain at least one special symbol"
+        }
+        return "true"
     }
 
 }

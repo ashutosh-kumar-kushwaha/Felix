@@ -122,7 +122,7 @@
             android:layout_marginTop="@dimen/dp_11"
             android:textColor="@color/white"
             android:fontFamily="@font/montserrat"
-            android:text="Watch History"
+            android:text="Clear Watch History"
             android:textAllCaps="false"
             android:textSize="@dimen/sp_14"
             android:textAlignment="textStart"

@@ -68,4 +68,7 @@ interface RetrofitAPI {
     @PUT("api/auth/reset-password")
     fun changePassword(@Header ("Authorization") token : String, @Body changePasswordRequest: ChangePasswordRequest) : Call<String>
 
+    @DELETE("api/history/clear")
+    fun clearHistory(@Header ("Authorization") token : String) : Call<String>
+
 }

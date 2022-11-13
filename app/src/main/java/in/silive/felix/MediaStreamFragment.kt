@@ -264,10 +264,7 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
         val call = retrofitAPI.addToHistory("Bearer " + (activity as HomePageActivity).token, MovieId((activity as HomePageActivity).movieId))
         call.enqueue(object : Callback<String>{
             override fun onResponse(call: Call<String>, response: Response<String>) {
-                if(response.code() == 200){
-                    Toast.makeText(requireContext(), response.body().toString(), Toast.LENGTH_SHORT).show()
-                }
-                else{
+                if(response.code() != 200){
                     Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT).show()
                 }
             }

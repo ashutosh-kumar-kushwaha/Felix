@@ -60,6 +60,8 @@ class WishlistFragment : Fragment() , HistoryClickListener{
         progressBar.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         progressBar.setCanceledOnTouchOutside(false)
 
+        nothingImgVw = view.findViewById(R.id.nothingImgVw)
+        nothingTxtVw = view.findViewById(R.id.nothingTxtVw)
 
 
         movieRecyclerView = view.findViewById(R.id.recyclerView)

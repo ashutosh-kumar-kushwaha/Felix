@@ -110,11 +110,11 @@ class LogInFragment : Fragment() {
 
                         } else if(response.code() == 200) {
 //                        Toast.makeText(view.context, "Hello " + response.body()?.firstName.toString() + "!\nRole = " + response.body()?.role.toString(), Toast.LENGTH_SHORT).show()
-                            Toast.makeText(
-                                view.context,
-                                response.headers().get("Set-Cookie").toString(),
-                                Toast.LENGTH_SHORT
-                            ).show()
+//                            Toast.makeText(
+//                                view.context,
+//                                response.headers().get("Set-Cookie").toString(),
+//                                Toast.LENGTH_SHORT
+//                            ).show()
 
                             lifecycleScope.launch(Dispatchers.IO) {
                                 val dataStoreManager = DataStoreManager(view.context)
@@ -152,7 +152,7 @@ class LogInFragment : Fragment() {
                     override fun onFailure(call: Call<User>, t: Throwable) {
                         Toast.makeText(
                             view.context,
-                            "Please check your internet connection",
+                            "Failed",
                             Toast.LENGTH_SHORT
                         ).show()
                         Log.i("Ashu", "Please check your internet connection")

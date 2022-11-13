@@ -6,21 +6,14 @@ import android.app.ActionBar
 import android.app.Activity
 import android.content.ClipDescription
 import android.content.Intent
-import android.graphics.drawable.ClipDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
-import androidx.core.content.res.ResourcesCompat
-import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.GlobalScope
