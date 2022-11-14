@@ -101,23 +101,44 @@ class WishlistFragment : Fragment() , HistoryClickListener{
         val call = retrofitAPI.removeFromWishList("Bearer " + (activity as HomePageActivity).token, movieId.toString())
         call.enqueue(object : Callback<String>{
             override fun onResponse(call: Call<String>, response: Response<String>) {
-                if(response.code()==200){
-                    Toast.makeText(requireContext(), response.body().toString(), Toast.LENGTH_SHORT).show()
-                    getWishlist()
-                }
-                else if(response.code()==401){
-                    (activity as HomePageActivity).signOut()
-                }
-                else if(response.code()==500){
-                    Toast.makeText(requireContext(), "Internal Server Error\nPlease try again", Toast.LENGTH_SHORT).show()
-                }
-                else{
-                    Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT).show()
+
+                if(context != null) {
+
+                    if (response.code() == 200) {
+                        Toast.makeText(
+                            requireContext(),
+                            response.body().toString(),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        getWishlist()
+                    } else if (response.code() == 401) {
+                        (activity as HomePageActivity).signOut()
+                    } else if (response.code() == 500) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Internal Server Error\nPlease try again",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            response.code().toString(),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
-                Toast.makeText(requireContext(), "Failed to delete from wish list", Toast.LENGTH_SHORT).show()
+                if(context != null) {
+
+                    Toast.makeText(
+                        requireContext(),
+                        "Failed to delete from wish list",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
             }
 
         })
@@ -135,40 +156,57 @@ class WishlistFragment : Fragment() , HistoryClickListener{
                 response: Response<List<Movie>>
             ) {
 
-                if (response.code() == 200) {
+                if(context != null) {
 
-                    val res = response.body() as List<Movie>
 
-                    if(res.isEmpty()){
-                        Toast.makeText(requireContext(), "Your Wish List is Empty", Toast.LENGTH_SHORT)
-                            .show()
-                        nothingImgVw.visibility = View.VISIBLE
-                        nothingTxtVw.visibility = View.VISIBLE
-                    }
+                    if (response.code() == 200) {
+
+                        val res = response.body() as List<Movie>
+
+                        if (res.isEmpty()) {
+                            Toast.makeText(
+                                requireContext(),
+                                "Your Wish List is Empty",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                            nothingImgVw.visibility = View.VISIBLE
+                            nothingTxtVw.visibility = View.VISIBLE
+                        }
 
                         movieRecyclerView.layoutManager =
                             GridLayoutManager(requireContext(), 3)
 
-                        movieRecyclerView.adapter = RecyclerHistoryAdapter(requireContext(), response.body() as List<Movie>, this@WishlistFragment)
+                        movieRecyclerView.adapter = RecyclerHistoryAdapter(
+                            requireContext(),
+                            response.body() as List<Movie>,
+                            this@WishlistFragment
+                        )
 
 
-
-                   progressBar.dismiss()
-
+                    } else if (response.code() == 401) {
+                        (activity as HomePageActivity).signOut()
+                    } else if (response.code() == 500) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Internal Server Error\nPlease try again",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            response.code().toString(),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
-                else if(response.code()==401){
-                    (activity as HomePageActivity).signOut()
-                }
-                else if(response.code()==500){
-                    Toast.makeText(requireContext(), "Internal Server Error\nPlease try again", Toast.LENGTH_SHORT).show()
-                }
-                else{
-                    Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT).show()
-                }
+                progressBar.dismiss()
             }
 
             override fun onFailure(call: Call<List<Movie>>, t: Throwable) {
-                Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show()
+                if(context != null) {
+                    Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show()
+                }
                 progressBar.dismiss()
             }
 

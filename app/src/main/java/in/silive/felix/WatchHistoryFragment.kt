@@ -98,24 +98,41 @@ class WatchHistoryFragment : Fragment(), HistoryClickListener{
         val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
         val call = retrofitAPI.removeFromHistory("Bearer " + (activity as HomePageActivity).token, movieId.toString())
         call.enqueue(object : Callback<String>{
+
             override fun onResponse(call: Call<String>, response: Response<String>) {
-                if(response.code()==200){
-                    Toast.makeText(requireContext(), response.body().toString(), Toast.LENGTH_SHORT).show()
-                    getHistory()
-                }
-                else if(response.code()==401){
-                    (activity as HomePageActivity).signOut()
-                }
-                else if(response.code()==500){
-                    Toast.makeText(requireContext(), "Internal Server Error\nPlease try again", Toast.LENGTH_SHORT).show()
-                }
-                else{
-                    Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT).show()
+
+                if((activity as HomePageActivity).currentFragment == "History") {
+
+                    if (response.code() == 200) {
+                        Toast.makeText(
+                            requireContext(),
+                            response.body().toString(),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        getHistory()
+                    } else if (response.code() == 401) {
+                        (activity as HomePageActivity).signOut()
+                    } else if (response.code() == 500) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Internal Server Error\nPlease try again",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            response.code().toString(),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
-                Toast.makeText(requireContext(), "Failed to delete history", Toast.LENGTH_SHORT).show()
+                if((activity as HomePageActivity).currentFragment == "History") {
+                    Toast.makeText(requireContext(), "Failed to delete history", Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
 
         })
@@ -134,18 +151,25 @@ class WatchHistoryFragment : Fragment(), HistoryClickListener{
                 response: Response<List<Movie>>
             ) {
 
-                if (response.code() == 200) {
 
-                    val res = response.body() as List<Movie>
+                if (context != null) {
 
-                    if(res.isEmpty()){
-                        Toast.makeText(requireContext(), "Your History is Empty", Toast.LENGTH_SHORT)
-                            .show()
+                    if (response.code() == 200) {
 
-                        nothingImgVw.visibility = View.VISIBLE
-                        nothingTxtVw.visibility = View.VISIBLE
+                        val res = response.body() as List<Movie>
 
-                    }
+                        if (res.isEmpty()) {
+                            Toast.makeText(
+                                requireContext(),
+                                "Your History is Empty",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+
+                            nothingImgVw.visibility = View.VISIBLE
+                            nothingTxtVw.visibility = View.VISIBLE
+
+                        }
 
 
                         movieRecyclerView.layoutManager =
@@ -158,24 +182,32 @@ class WatchHistoryFragment : Fragment(), HistoryClickListener{
                             this@WatchHistoryFragment
                         )
 
-                        progressBar.dismiss()
 
+                    } else if (response.code() == 401) {
+                        (activity as HomePageActivity).signOut()
+                    } else if (response.code() == 500) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Internal Server Error\nPlease try again",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            response.code().toString(),
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
                 }
-                else if(response.code()==401){
-                    (activity as HomePageActivity).signOut()
-                }
-                else if(response.code()==500){
-                    Toast.makeText(requireContext(), "Internal Server Error\nPlease try again", Toast.LENGTH_SHORT).show()
-                }
-                else {
-                    Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT)
-                        .show()
-                    progressBar.dismiss()
-                }
+                progressBar.dismiss()
             }
 
             override fun onFailure(call: Call<List<Movie>>, t: Throwable) {
-                Toast.makeText(requireContext(), "Failed to load history", Toast.LENGTH_SHORT).show()
+                if(context != null) {
+                    Toast.makeText(requireContext(), "Failed to load history", Toast.LENGTH_SHORT)
+                        .show()
+                }
                 progressBar.dismiss()
             }
 

@@ -37,6 +37,7 @@ class HomePageActivity : AppCompatActivity() {
     var categoryName : String = ""
     lateinit var categoryBtn : AppCompatTextView
     lateinit var toolbar: Toolbar
+    var currentFragment : String? = "Home"
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -171,41 +172,49 @@ class HomePageActivity : AppCompatActivity() {
 
     fun mediaStreamingFrag(){
         val mediaStreamFragment = MediaStreamFragment()
+        currentFragment = "Media"
         replaceFrag(mediaStreamFragment, "Media")
     }
 
     fun profileFrag(){
         val myProfileFrag = MyProfileFragment()
+        currentFragment = "Profile"
         replaceFrag(myProfileFrag, "Profile")
     }
 
     fun moviesByCategoryFrag(){
         val moviesByCategoryFragment = MoviesByCategoryFragment()
+        currentFragment = "moviesByCategory"
         replaceFrag(moviesByCategoryFragment, "moviesByCategory")
     }
 
     fun homeFrag(){
         val homeFrag = HomePageFragment()
+        currentFragment = "Home"
         replaceFrag(homeFrag, "Home")
     }
 
     fun changePassFrag(){
         val changePasswordFragment = ChangePasswordFragment()
+        currentFragment = "ChangePass"
         replaceFrag(changePasswordFragment, "ChangePass")
     }
 
     fun wishlistFrag(){
         val wishlistFragment = WishlistFragment()
+        currentFragment = "Wishlist"
         replaceFrag(wishlistFragment, "Wishlist")
     }
 
     fun historyFrag(){
         val historyFragment = WatchHistoryFragment()
+        currentFragment = "History"
         replaceFrag(historyFragment, "History")
     }
 
     fun searchFrag(){
         val searchFragment = SearchFragment()
+        currentFragment = "Search"
         replaceFrag(searchFragment, "Search")
     }
 
@@ -227,6 +236,7 @@ class HomePageActivity : AppCompatActivity() {
 
     fun categoryFrag(){
         val categoryFragment = CategoryFragment()
+        currentFragment = "Category"
         replaceFrag(categoryFragment, "Category")
     }
 
