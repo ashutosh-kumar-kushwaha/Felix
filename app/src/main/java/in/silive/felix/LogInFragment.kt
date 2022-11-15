@@ -131,6 +131,9 @@ class LogInFragment : Fragment() {
 
                             (activity as AuthenticationActivity).homePage()
                         }
+                        else if(response.code() == 403){
+                            Toast.makeText(requireContext(), "Please verify your email", Toast.LENGTH_SHORT).show()
+                        }
                         else if(response.code() == 500){
                             Toast.makeText(
                                 view.context,

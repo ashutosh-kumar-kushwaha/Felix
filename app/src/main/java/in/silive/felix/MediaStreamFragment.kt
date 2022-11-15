@@ -5,6 +5,7 @@ import `in`.silive.felix.recyclerview.ItemClickListener
 import `in`.silive.felix.recyclerview.ParentRecyclerAdapter
 import `in`.silive.felix.server.RetrofitAPI
 import `in`.silive.felix.server.ServiceBuilder
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.os.Bundle
@@ -15,12 +16,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.marginStart
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.exoplayer2.ExoPlayer
@@ -28,6 +32,7 @@ import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.google.android.flexbox.FlexboxLayout
+import com.google.android.material.appbar.AppBarLayout
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -56,6 +61,7 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
     lateinit var watchNowBtn : AppCompatButton
     var moviesList: MutableList<Category> = mutableListOf()
     var loadedItems = 0
+
 
     fun getCategory(categoryName: String) {
         val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
@@ -222,7 +228,6 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
 
                 exoPlayer.setMediaItem(mediaItem)
                 exoPlayer.prepare()
-                exoPlayer.play()
 
 
 
@@ -277,34 +282,37 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
     }
 
     fun fullScreen(){
+
+
         if(isFullScreen){
             fullScreenBtn.setImageResource(R.drawable.ic_baseline_fullscreen_48)
-//                activity?.window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
-//                var lp = videoPlayer.layoutParams
-//                lp.width = ViewGroup.LayoutParams.MATCH_PARENT
-//                lp.height =
-//                    activity?.applicationContext?.resources?.displayMetrics?.density?.toInt()!! * 200
-//                if(activity?.actionBar != null){
-//                    activity?.actionBar!!.show()
-//                }
-//                (activity as HomePageActivity).showBottomNav()
-//                videoPlayer.layoutParams = lp
+                activity?.window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+                var lp = videoPlayer.layoutParams
+                lp.width = resources.getDimensionPixelSize(R.dimen.dp_315)
+                lp.height = resources.getDimensionPixelSize(R.dimen.dp_205)
+
+            (activity as HomePageActivity).showActionBar()
+            (activity as HomePageActivity).showBottomNav()
+                videoPlayer.layoutParams = lp
             activity?.requestedOrientation  = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         }
         else{
             fullScreenBtn.setImageResource(R.drawable.ic_baseline_fullscreen_exit_24)
-//                activity?.window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                var lp = videoPlayer.layoutParams
-////                if(activity?.actionBar != null){
-////                    activity?.actionBar!!.hide()
-////                }
-//                lp.width = ConstraintLayout.LayoutParams.MATCH_PARENT
-//                lp.height = resources.getDimensionPixelSize(R.dimen.dp_315)
-//                (activity as HomePageActivity).actionBar?.hide()
+                activity?.window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                var lp = videoPlayer.layoutParams as ConstraintLayout.LayoutParams
 
-//                (activity as HomePageActivity).toolbar.visibility = View.GONE
-//                (activity as HomePageActivity).hideBottomNav()
-//                videoPlayer.layoutParams = lp
+
+
+            (activity as HomePageActivity).hideActionBar()
+
+
+
+            lp.width = ConstraintLayout.LayoutParams.MATCH_PARENT
+                lp.height = resources.getDimensionPixelSize(R.dimen.dp_315)
+
+//            (activity as HomePageActivity).appbarLayout.visibility = View.VISIBLE
+                (activity as HomePageActivity).hideBottomNav()
+                videoPlayer.layoutParams = lp
             activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         }
         isFullScreen = !isFullScreen

@@ -4,23 +4,25 @@ package `in`.silive.felix.recyclerview
 import `in`.silive.felix.R
 import `in`.silive.felix.module.CategoryResponse
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class RecyclerCategoryAdapter(val context : Context, val categories: List<CategoryResponse>, val categoryClickListener: CategoryClickListener) : RecyclerView.Adapter<RecyclerCategoryAdapter.ViewHolder>(){
 
     inner class ViewHolder(val itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        val categoryBtn : TextView = itemView.findViewById(R.id.categoryBtn)
+        val categoryBtn : Button = itemView.findViewById(R.id.categoryBtn)
 
         init {
-            itemView.setOnClickListener(this)
+            categoryBtn.setOnClickListener(this)
         }
 
         override fun onClick(v: View?) {
-            val position = adapterPosition
+            val position = absoluteAdapterPosition
             if(position != RecyclerView.NO_POSITION){
                 categoryClickListener.onItemClick(position, categories[position].allCategoryName)
             }

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#070E1E"
+    tools:context=".NewMovieFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#191919"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginStart="@dimen/dp_12"
+        android:layout_marginEnd="@dimen/dp_12">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/addImageBtn"
+            android:layout_width="@dimen/dp_88"
+            android:layout_height="@dimen/dp_123"
+            android:layout_marginStart="@dimen/dp_18"
+            android:layout_marginTop="@dimen/dp_14"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/add_image" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/movieNameTxtVw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Movie Name"
+            android:layout_marginTop="@dimen/dp_14"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/addImageBtn"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat"
+            android:textFontWeight="600"
+            android:layout_marginStart="@dimen/dp_32"
+            />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/movieNameETxt"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_26"
+            android:layout_marginTop="@dimen/dp_7"
+            android:layout_marginStart="@dimen/dp_32"
+            android:layout_marginEnd="@dimen/dp_19"
+            android:textSize="@dimen/sp_14"
+            android:background="@drawable/movie_name_etxt_bg"
+            app:layout_constraintStart_toEndOf="@+id/addImageBtn"
+            app:layout_constraintTop_toBottomOf="@id/movieNameTxtVw"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/uploadMovieTxtVw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Upload Movie"
+            android:layout_marginTop="@dimen/dp_14"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintTop_toBottomOf="@id/movieNameETxt"
+            app:layout_constraintStart_toEndOf="@id/addImageBtn"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat"
+            android:textFontWeight="600"
+            android:layout_marginStart="@dimen/dp_32"
+            />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/uploadBtn"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_26"
+            android:layout_marginTop="@dimen/dp_7"
+            android:layout_marginStart="@dimen/dp_32"
+            android:layout_marginEnd="@dimen/dp_19"
+            android:text="Upload"
+            android:textColor="#191919"
+            android:fontFamily="@font/montserrat"
+            android:textFontWeight="600"
+            android:textAlignment="center"
+            android:drawablePadding="-24dp"
+            android:paddingEnd="@dimen/dp_24"
+            android:drawableEnd="@drawable/ic_bx_upload"
+            android:background="@drawable/movie_name_etxt_bg"
+            app:layout_constraintStart_toEndOf="@id/addImageBtn"
+            app:layout_constraintTop_toBottomOf="@id/uploadMovieTxtVw"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/descriptionTxtVw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat"
+            android:textSize="@dimen/sp_14"
+            android:textFontWeight="600"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="@dimen/dp_18"
+            android:layout_marginTop="@dimen/dp_21"
+            app:layout_constraintTop_toBottomOf="@id/addImageBtn"
+            />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/descriptionETxt"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_105"
+            android:layout_marginStart="@dimen/dp_18"
+            android:layout_marginEnd="@dimen/dp_18"
+            android:layout_marginTop="@dimen/dp_7"
+            android:textSize="@dimen/sp_14"
+            android:background="@drawable/movie_name_etxt_bg"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/descriptionTxtVw"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/castTxtVw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cast"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat"
+            android:textSize="@dimen/sp_14"
+            android:textFontWeight="600"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="@dimen/dp_18"
+            android:layout_marginTop="@dimen/dp_21"
+            app:layout_constraintTop_toBottomOf="@id/descriptionETxt"
+            />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/castETxt"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_52"
+            android:layout_marginStart="@dimen/dp_18"
+            android:layout_marginEnd="@dimen/dp_18"
+            android:layout_marginTop="@dimen/dp_7"
+            android:textSize="@dimen/sp_14"
+            android:background="@drawable/movie_name_etxt_bg"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/castTxtVw"/>
+
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_18"
+            android:layout_marginEnd="@dimen/dp_18"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/castETxt">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_28"
+                android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/movieYearTxtVw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Movie Year"
+                android:layout_marginTop="@dimen/dp_14"
+                android:textSize="@dimen/sp_14"
+                android:textColor="@color/white"
+                android:fontFamily="@font/montserrat"
+                android:textFontWeight="600"
+                />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/movieYearETxt"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_26"
+                android:layout_marginTop="@dimen/dp_7"
+                android:background="@drawable/movie_name_etxt_bg" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/lengthTxtVw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Length"
+                    android:layout_marginTop="@dimen/dp_14"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/montserrat"
+                    android:textFontWeight="600"
+                    android:layout_marginStart="@dimen/dp_32"
+                    />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/lengthETxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_26"
+                    android:layout_marginTop="@dimen/dp_7"
+                    android:background="@drawable/movie_name_etxt_bg" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

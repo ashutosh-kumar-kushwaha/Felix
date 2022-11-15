@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,10 +38,12 @@ class HomePageActivity : AppCompatActivity() {
     var categoryName : String = ""
     lateinit var categoryBtn : AppCompatTextView
     lateinit var toolbar: Toolbar
+    var currentFragment : String? = "Home"
+    lateinit var appbarLayout : AppBarLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        window?.requestFeature(Window.FEATURE_ACTION_BAR);
+//        window?.requestFeature(Window.FEATURE_ACTION_BAR);
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_page)
@@ -52,7 +55,7 @@ class HomePageActivity : AppCompatActivity() {
         ft.commit()
 
         toolbar = findViewById(R.id.toolbar)
-
+        setSupportActionBar(toolbar)
 
         categoriesBtn = findViewById(R.id.categoriesBtn)
 
@@ -94,6 +97,8 @@ class HomePageActivity : AppCompatActivity() {
         
 
         searchView = findViewById(R.id.searchView)
+        appbarLayout = findViewById(R.id.toolbarContainer)
+
 
         searchView.setOnSearchClickListener {
 
@@ -169,43 +174,59 @@ class HomePageActivity : AppCompatActivity() {
 //        replaceFrag(myProfileFrag, "Profile")
 //    }
 
+    fun hideActionBar(){
+        appbarLayout.visibility = View.GONE
+    }
+
+    fun showActionBar(){
+        appbarLayout.visibility = View.VISIBLE
+    }
+
     fun mediaStreamingFrag(){
         val mediaStreamFragment = MediaStreamFragment()
+        currentFragment = "Media"
         replaceFrag(mediaStreamFragment, "Media")
     }
 
     fun profileFrag(){
         val myProfileFrag = MyProfileFragment()
+        currentFragment = "Profile"
         replaceFrag(myProfileFrag, "Profile")
     }
 
     fun moviesByCategoryFrag(){
         val moviesByCategoryFragment = MoviesByCategoryFragment()
+        currentFragment = "moviesByCategory"
         replaceFrag(moviesByCategoryFragment, "moviesByCategory")
     }
 
     fun homeFrag(){
         val homeFrag = HomePageFragment()
+        currentFragment = "Home"
         replaceFrag(homeFrag, "Home")
     }
 
     fun changePassFrag(){
         val changePasswordFragment = ChangePasswordFragment()
+        currentFragment = "ChangePass"
         replaceFrag(changePasswordFragment, "ChangePass")
     }
 
     fun wishlistFrag(){
         val wishlistFragment = WishlistFragment()
+        currentFragment = "Wishlist"
         replaceFrag(wishlistFragment, "Wishlist")
     }
 
     fun historyFrag(){
         val historyFragment = WatchHistoryFragment()
+        currentFragment = "History"
         replaceFrag(historyFragment, "History")
     }
 
     fun searchFrag(){
         val searchFragment = SearchFragment()
+        currentFragment = "Search"
         replaceFrag(searchFragment, "Search")
     }
 
@@ -227,6 +248,7 @@ class HomePageActivity : AppCompatActivity() {
 
     fun categoryFrag(){
         val categoryFragment = CategoryFragment()
+        currentFragment = "Category"
         replaceFrag(categoryFragment, "Category")
     }
 

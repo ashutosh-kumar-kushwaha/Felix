@@ -35,4 +35,8 @@
         <item name="android:textSize">@dimen/sp_12</item>
         <item name="android:fontFamily">@font/montserrat</item>
     </style>
+    <style name="ThemeOverlay.Felix.FullscreenContainer" parent="">
+        <item name="fullscreenBackgroundColor">@color/light_blue_900</item>
+        <item name="fullscreenTextColor">@color/light_blue_A400</item>
+    </style>
 </resources>
