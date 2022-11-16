@@ -43,6 +43,16 @@ class HomePageActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
+        lifecycleScope.launch(Dispatchers.IO) {
+            val dataStoreManager = DataStoreManager(this@HomePageActivity)
+            dataStoreManager.getLogInInfo().collect{
+                token = it.token
+                name = it.name
+                email = it.email
+                role = it.role
+            }
+        }
+
 //        window?.requestFeature(Window.FEATURE_ACTION_BAR);
 
         super.onCreate(savedInstanceState)
@@ -73,25 +83,24 @@ class HomePageActivity : AppCompatActivity() {
 //        searchLinearLayout = findViewById(R.id.searchLinearLayout)
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
 
+        if(role == "ADMIN"){
+            bottomNavigationView.menu.clear()
+            bottomNavigationView.inflateMenu(R.menu.bottom_menu_admin)
+        }
+
+
         bottomNavigationView.setOnNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.home -> homeFrag()
                 R.id.wishlist -> wishlistFrag()
                 R.id.history -> historyFrag()
                 R.id.profile -> profileFrag()
+                R.id.admin -> adminFrag()
             }
             true
         }
 
-        lifecycleScope.launch(Dispatchers.IO) {
-            val dataStoreManager = DataStoreManager(this@HomePageActivity)
-            dataStoreManager.getLogInInfo().collect{
-                token = it.token
-                name = it.name
-                email = it.email
-                role = it.role
-            }
-        }
+
 
 
         
@@ -140,6 +149,10 @@ class HomePageActivity : AppCompatActivity() {
 
     }
 
+    fun adminFrag() {
+        val adminFragment = AdminFragment()
+        replaceFrag(adminFragment, "Media")
+    }
 
 
     fun hideBottomNav(){

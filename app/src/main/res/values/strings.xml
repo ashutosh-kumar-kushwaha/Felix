@@ -5,4 +5,12 @@
     <string name="title_activity_fullscreen">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string-array name="categories">
+        <item>Bollywood</item>
+        <item>Hollywood</item>
+        <item>Anime</item>
+        <item>Horror</item>
+    </string-array>
+
 </resources>
