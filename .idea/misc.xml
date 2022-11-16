@@ -19,6 +19,7 @@
         <entry key="..\:/Programming/Felix/app/src/main/res/drawable/ic_eye.xml" value="0.121" />
         <entry key="..\:/Programming/Felix/app/src/main/res/drawable/ic_felix.xml" value="0.2165" />
         <entry key="..\:/Programming/Felix/app/src/main/res/drawable/ic_vector__1_.xml" value="0.156" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/drawable/movie_name_etxt_bg.xml" value="0.2555" />
         <entry key="..\:/Programming/Felix/app/src/main/res/drawable/profile_options_bg.xml" value="0.19" />
         <entry key="..\:/Programming/Felix/app/src/main/res/drawable/search_bg.xml" value="0.2545" />
         <entry key="..\:/Programming/Felix/app/src/main/res/drawable/search_icon.xml" value="0.12" />
@@ -28,16 +29,18 @@
         <entry key="..\:/Programming/Felix/app/src/main/res/drawable/video.xml" value="0.1565" />
         <entry key="..\:/Programming/Felix/app/src/main/res/drawable/watch_now_background.xml" value="0.177" />
         <entry key="..\:/Programming/Felix/app/src/main/res/drawable/wishlist_profile.xml" value="0.191" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/layout-land/fragment_media_stream.xml" value="0.21164021164021163" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/activity_authentication.xml" value="0.2" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/layout/activity_fullscreen.xml" value="0.2" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/activity_home_page.xml" value="0.2" />
-        <entry key="..\:/Programming/Felix/app/src/main/res/layout/activity_intro.xml" value="0.4" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/layout/activity_intro.xml" value="0.264" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/activity_search.xml" value="0.176" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/activity_splash.xml" value="0.20521590423257802" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/adapter_viewpager.xml" value="0.1453125" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/add_wishlist_btn_background.xml" value="0.13723813595553655" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/bottom_navigation_bar_menu.xml" value="0.11928174433518597" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/category_item.xml" value="0.34738186462324394" />
-        <entry key="..\:/Programming/Felix/app/src/main/res/layout/exo_player_control_view.xml" value="0.152" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/layout/exo_player_control_view.xml" value="0.264" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_admin.xml" value="0.2" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_category.xml" value="0.2" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_change_password.xml" value="0.2" />
@@ -45,9 +48,10 @@
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_forgot_password.xml" value="0.25" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_home_page.xml" value="0.176" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_log_in.xml" value="0.2" />
-        <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_media_stream.xml" value="0.2" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_media_stream.xml" value="0.25" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_movies_by_category.xml" value="0.264" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_my_profile.xml" value="0.16" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_new_movie.xml" value="0.40977443609022557" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_otp_verification.xml" value="0.2" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_reset_password.xml" value="0.25" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_search.xml" value="0.264" />
