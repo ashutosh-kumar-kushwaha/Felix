@@ -83,15 +83,22 @@ class SearchFragment : Fragment(), ItemClickListener {
                 response: Response<List<SearchResponseItem>>
             ) {
 
-                val list : List<SearchResponseItem> = response.body() as List<SearchResponseItem>
+                if(context != null) {
 
-                recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                val recyclerAdapter = RecyclerSearchAdapter(requireContext(), list, this@SearchFragment)
-                recyclerView.adapter = recyclerAdapter
+                    val list: List<SearchResponseItem> = response.body() as List<SearchResponseItem>
+
+                    recyclerView.layoutManager =
+                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                    val recyclerAdapter =
+                        RecyclerSearchAdapter(requireContext(), list, this@SearchFragment)
+                    recyclerView.adapter = recyclerAdapter
+                }
             }
 
             override fun onFailure(call: Call<List<SearchResponseItem>>, t: Throwable) {
-                Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show()
+                if(context != null) {
+                    Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show()
+                }
             }
 
 

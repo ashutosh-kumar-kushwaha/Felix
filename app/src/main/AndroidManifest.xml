@@ -16,14 +16,21 @@
         android:theme="@style/Theme.Second"
         tools:targetApi="31">
         <activity
-            android:name=".SearchActivity"
+            android:name=".AdminActivity"
             android:exported="false" />
         <activity
-            android:name=".HomePageActivity"
-            android:supportsRtl="true"
+            android:name=".FullscreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:exported="false"> </activity>
+            android:exported="false"
+            android:label="@string/title_activity_fullscreen"
+            android:theme="@style/Theme.Second.Fullscreen" />
+                <activity
+            android:name=".HomePageActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="false"
+            android:supportsRtl="true">
 
+                </activity>
         <activity
             android:name=".SplashActivity"
             android:exported="true">

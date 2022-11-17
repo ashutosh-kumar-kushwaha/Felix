@@ -5,6 +5,7 @@ import `in`.silive.felix.recyclerview.ItemClickListener
 import `in`.silive.felix.recyclerview.ParentRecyclerAdapter
 import `in`.silive.felix.server.RetrofitAPI
 import `in`.silive.felix.server.ServiceBuilder
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.graphics.Color
@@ -19,12 +20,15 @@ import android.view.Window
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.marginStart
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.exoplayer2.ExoPlayer
@@ -33,6 +37,7 @@ import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.google.android.flexbox.FlexboxLayout
+import com.google.android.material.appbar.AppBarLayout
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -159,8 +164,6 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
             fullScreen()
         }
 
-
-
         wishListBtn.setOnClickListener {
             if (!isChangingWishList) {
                 if (isAddedToWishlist == true) {
@@ -247,7 +250,6 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
 
                 exoPlayer.setMediaItem(mediaItem)
                 exoPlayer.prepare()
-                exoPlayer.play()
 
 
 

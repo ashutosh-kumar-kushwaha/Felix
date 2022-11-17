@@ -1,6 +1,8 @@
 package `in`.silive.felix.server
 
 import `in`.silive.felix.module.*
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -71,4 +73,10 @@ interface RetrofitAPI {
     @DELETE("api/history/clear")
     fun clearHistory(@Header ("Authorization") token : String) : Call<String>
 
+    @Multipart
+    @POST("api/admin/add-new-movie")
+    fun addNewMovie(@Header ("Authorization") token: String, @Part coverImage : MultipartBody.Part, @Part movieVideo : MultipartBody.Part, @Part movie : MultipartBody.Part) : Call<String>
+
+    @POST("api/admin/add-new-category")
+    fun addNewCategory(@Header ("Authorization") token : String, @Body categoryRequest: NewCategoryRequest) : Call<String>
 }

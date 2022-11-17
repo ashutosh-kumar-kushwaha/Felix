@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
-import android.view.Window
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
@@ -44,6 +43,16 @@ class HomePageActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
+        lifecycleScope.launch(Dispatchers.IO) {
+            val dataStoreManager = DataStoreManager(this@HomePageActivity)
+            dataStoreManager.getLogInInfo().collect{
+                token = it.token
+                name = it.name
+                email = it.email
+                role = it.role
+            }
+        }
+
         window?.requestFeature(Window.FEATURE_ACTION_BAR);
 
         super.onCreate(savedInstanceState)
@@ -74,30 +83,31 @@ class HomePageActivity : AppCompatActivity() {
 //        searchLinearLayout = findViewById(R.id.searchLinearLayout)
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
 
+        if(role == "ADMIN"){
+            bottomNavigationView.menu.clear()
+            bottomNavigationView.inflateMenu(R.menu.bottom_menu_admin)
+        }
+
+
         bottomNavigationView.setOnNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.home -> homeFrag()
                 R.id.wishlist -> wishlistFrag()
                 R.id.history -> historyFrag()
                 R.id.profile -> profileFrag()
+                R.id.admin -> adminFrag()
             }
             true
         }
 
-        lifecycleScope.launch(Dispatchers.IO) {
-            val dataStoreManager = DataStoreManager(this@HomePageActivity)
-            dataStoreManager.getLogInInfo().collect{
-                token = it.token
-                name = it.name
-                email = it.email
-                role = it.role
-            }
-        }
+
 
 
         
 
         searchView = findViewById(R.id.searchView)
+        appbarLayout = findViewById(R.id.toolbarContainer)
+
 
         searchView.setOnSearchClickListener {
 
@@ -139,6 +149,10 @@ class HomePageActivity : AppCompatActivity() {
 
     }
 
+    fun adminFrag() {
+        val adminFragment = AdminFragment()
+        replaceFrag(adminFragment, "Admin")
+    }
 
 
     fun showActionBar(){
@@ -183,49 +197,41 @@ class HomePageActivity : AppCompatActivity() {
 
     fun mediaStreamingFrag(){
         val mediaStreamFragment = MediaStreamFragment()
-        currentFragment = "Media"
         replaceFrag(mediaStreamFragment, "Media")
     }
 
     fun profileFrag(){
         val myProfileFrag = MyProfileFragment()
-        currentFragment = "Profile"
         replaceFrag(myProfileFrag, "Profile")
     }
 
     fun moviesByCategoryFrag(){
         val moviesByCategoryFragment = MoviesByCategoryFragment()
-        currentFragment = "moviesByCategory"
         replaceFrag(moviesByCategoryFragment, "moviesByCategory")
     }
 
     fun homeFrag(){
         val homeFrag = HomePageFragment()
-        currentFragment = "Home"
         replaceFrag(homeFrag, "Home")
     }
 
     fun changePassFrag(){
         val changePasswordFragment = ChangePasswordFragment()
-        currentFragment = "ChangePass"
         replaceFrag(changePasswordFragment, "ChangePass")
     }
 
     fun wishlistFrag(){
         val wishlistFragment = WishlistFragment()
-        currentFragment = "Wishlist"
         replaceFrag(wishlistFragment, "Wishlist")
     }
 
     fun historyFrag(){
         val historyFragment = WatchHistoryFragment()
-        currentFragment = "History"
         replaceFrag(historyFragment, "History")
     }
 
     fun searchFrag(){
         val searchFragment = SearchFragment()
-        currentFragment = "Search"
         replaceFrag(searchFragment, "Search")
     }
 
@@ -247,8 +253,13 @@ class HomePageActivity : AppCompatActivity() {
 
     fun categoryFrag(){
         val categoryFragment = CategoryFragment()
-        currentFragment = "Category"
         replaceFrag(categoryFragment, "Category")
+    }
+
+    fun newMovieFrag(){
+        val newMovieFragment = NewMovieFragment()
+        currentFragment = "NewMovie"
+        replaceFrag(newMovieFragment, "Category")
     }
 
 
@@ -260,5 +271,17 @@ class HomePageActivity : AppCompatActivity() {
         val intent = Intent(this, AuthenticationActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    override fun onBackPressed() {
+        showBottomNav()
+        super.onBackPressed()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        for (fragment in supportFragmentManager.fragments) {
+            fragment.onActivityResult(requestCode, resultCode, data)
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 }
