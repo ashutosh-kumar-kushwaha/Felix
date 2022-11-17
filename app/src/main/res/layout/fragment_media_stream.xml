@@ -22,6 +22,7 @@
             app:controller_layout_id="@layout/exo_player_control_view"
             app:layout_constraintBottom_toTopOf="@+id/details"
             app:layout_constraintEnd_toEndOf="parent"
+            android:background="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:resize_mode="fit" />

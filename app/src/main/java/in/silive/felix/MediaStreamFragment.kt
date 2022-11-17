@@ -16,6 +16,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.AppCompatButton
@@ -63,8 +64,8 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
     var loadedItems = 0
     lateinit var fitZoomBtn : AppCompatImageView
 
-
-    var isFit = true
+    val resizeMode = listOf(R.drawable.ic_fit_to_screen, R.drawable.ic_zoom, R.drawable.ic_stretch)
+    var resizeModeIndex = 0
 
     fun getCategory(categoryName: String) {
         val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
@@ -181,13 +182,7 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
         }
 
         fitZoomBtn.setOnClickListener {
-            if(isFit){
-                videoPlayer.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_ZOOM
-            }
-            else{
-                videoPlayer.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
-            }
-            isFit = !isFit
+            changeResizeMode()
         }
 
 
@@ -311,8 +306,8 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
             details.visibility = View.VISIBLE
             fullScreenBtn.setImageResource(R.drawable.ic_baseline_fullscreen_48)
                 activity?.window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
-                var lp = videoPlayer.layoutParams as ConstraintLayout.LayoutParams
-                lp.width = resources.getDimensionPixelSize(R.dimen.dp_315)
+                var lp = videoPlayer.layoutParams as LinearLayout.LayoutParams
+                lp.width = LinearLayout.LayoutParams.MATCH_PARENT
                 lp.height = resources.getDimensionPixelSize(R.dimen.dp_205)
 
                 (activity as HomePageActivity).showBottomNav()
@@ -324,7 +319,7 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
             details.visibility = View.GONE
             fullScreenBtn.setImageResource(R.drawable.ic_baseline_fullscreen_exit_24)
                 activity?.window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                var lp = videoPlayer.layoutParams as ConstraintLayout.LayoutParams
+                var lp = videoPlayer.layoutParams as LinearLayout.LayoutParams
 
             activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
 
@@ -477,8 +472,8 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
     override fun onDestroyView() {
         fullScreenBtn.setImageResource(R.drawable.ic_baseline_fullscreen_48)
         activity?.window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
-        var lp = videoPlayer.layoutParams as ConstraintLayout.LayoutParams
-        lp.width = resources.getDimensionPixelSize(R.dimen.dp_315)
+        val lp = videoPlayer.layoutParams as LinearLayout.LayoutParams
+        lp.width = LinearLayout.LayoutParams.MATCH_PARENT
         lp.height = resources.getDimensionPixelSize(R.dimen.dp_205)
 
         (activity as HomePageActivity).showBottomNav()
@@ -487,6 +482,26 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
         activity?.requestedOrientation  = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         super.onDestroyView()
+    }
+
+    fun changeResizeMode(){
+        when (resizeModeIndex) {
+            0 -> {
+                fitZoomBtn.setImageResource(resizeMode[resizeModeIndex])
+                videoPlayer.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_ZOOM
+                resizeModeIndex = 1
+            }
+            1 -> {
+                fitZoomBtn.setImageResource(resizeMode[resizeModeIndex])
+                videoPlayer.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FILL
+                resizeModeIndex = 2
+            }
+            else -> {
+                fitZoomBtn.setImageResource(resizeMode[resizeModeIndex])
+                videoPlayer.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
+                resizeModeIndex = 0
+            }
+        }
     }
 
 
