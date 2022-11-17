@@ -227,6 +227,37 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/genreTxtVw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Genre"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat"
+            android:textSize="@dimen/sp_14"
+            android:textFontWeight="600"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="@dimen/dp_18"
+            android:layout_marginTop="@dimen/dp_21"
+            app:layout_constraintTop_toBottomOf="@id/movieYearAndLength"
+            />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/genreETxt"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_52"
+            android:layout_marginStart="@dimen/dp_18"
+            android:layout_marginEnd="@dimen/dp_18"
+            android:layout_marginTop="@dimen/dp_7"
+            android:textCursorDrawable="@null"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14"
+            android:padding="@dimen/dp_7"
+            android:background="@drawable/movie_name_etxt_bg"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/genreTxtVw"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/categoriesTxtVw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -237,7 +268,7 @@
             android:textColor="@color/white"
             android:layout_marginTop="@dimen/dp_7"
             android:layout_marginStart="@dimen/dp_18"
-            app:layout_constraintTop_toBottomOf="@id/movieYearAndLength"
+            app:layout_constraintTop_toBottomOf="@id/genreETxt"
             app:layout_constraintStart_toStartOf="parent"/>
 
         <androidx.appcompat.widget.AppCompatSpinner
