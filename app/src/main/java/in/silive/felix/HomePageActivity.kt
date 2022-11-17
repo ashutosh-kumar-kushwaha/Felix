@@ -3,6 +3,7 @@ package `in`.silive.felix
 import `in`.silive.felix.datastore.DataStoreManager
 import `in`.silive.felix.module.LogInInfo
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
 import android.view.Window
@@ -12,10 +13,12 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,7 +39,8 @@ class HomePageActivity : AppCompatActivity() {
     lateinit var categoriesBtn : AppCompatTextView
     var categoryName : String = ""
     lateinit var categoryBtn : AppCompatTextView
-    lateinit var toolbar: Toolbar
+    lateinit var appbarLayout: AppBarLayout
+    var currentFragment : String? = "Home"
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -51,7 +55,7 @@ class HomePageActivity : AppCompatActivity() {
         ft.add(R.id.container, homePageFragment)
         ft.commit()
 
-        toolbar = findViewById(R.id.toolbar)
+        appbarLayout = findViewById(R.id.toolbarContainer)
 
 
         categoriesBtn = findViewById(R.id.categoriesBtn)
@@ -137,6 +141,14 @@ class HomePageActivity : AppCompatActivity() {
 
 
 
+    fun showActionBar(){
+        appbarLayout.visibility = View.VISIBLE
+    }
+
+    fun hideActionBar(){
+        appbarLayout.visibility = View.GONE
+    }
+
     fun hideBottomNav(){
         bottomNavigationView.visibility = View.GONE
     }
@@ -171,41 +183,49 @@ class HomePageActivity : AppCompatActivity() {
 
     fun mediaStreamingFrag(){
         val mediaStreamFragment = MediaStreamFragment()
+        currentFragment = "Media"
         replaceFrag(mediaStreamFragment, "Media")
     }
 
     fun profileFrag(){
         val myProfileFrag = MyProfileFragment()
+        currentFragment = "Profile"
         replaceFrag(myProfileFrag, "Profile")
     }
 
     fun moviesByCategoryFrag(){
         val moviesByCategoryFragment = MoviesByCategoryFragment()
+        currentFragment = "moviesByCategory"
         replaceFrag(moviesByCategoryFragment, "moviesByCategory")
     }
 
     fun homeFrag(){
         val homeFrag = HomePageFragment()
+        currentFragment = "Home"
         replaceFrag(homeFrag, "Home")
     }
 
     fun changePassFrag(){
         val changePasswordFragment = ChangePasswordFragment()
+        currentFragment = "ChangePass"
         replaceFrag(changePasswordFragment, "ChangePass")
     }
 
     fun wishlistFrag(){
         val wishlistFragment = WishlistFragment()
+        currentFragment = "Wishlist"
         replaceFrag(wishlistFragment, "Wishlist")
     }
 
     fun historyFrag(){
         val historyFragment = WatchHistoryFragment()
+        currentFragment = "History"
         replaceFrag(historyFragment, "History")
     }
 
     fun searchFrag(){
         val searchFragment = SearchFragment()
+        currentFragment = "Search"
         replaceFrag(searchFragment, "Search")
     }
 
@@ -227,6 +247,7 @@ class HomePageActivity : AppCompatActivity() {
 
     fun categoryFrag(){
         val categoryFragment = CategoryFragment()
+        currentFragment = "Category"
         replaceFrag(categoryFragment, "Category")
     }
 
@@ -239,10 +260,5 @@ class HomePageActivity : AppCompatActivity() {
         val intent = Intent(this, AuthenticationActivity::class.java)
         startActivity(intent)
         finish()
-    }
-
-    override fun onBackPressed() {
-        showBottomNav()
-        super.onBackPressed()
     }
 }

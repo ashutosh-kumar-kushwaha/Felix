@@ -69,10 +69,23 @@
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
         android:id="@+id/fullScreenBtn"
         android:layout_width="@dimen/dp_22"
         android:layout_height="@dimen/dp_22"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
         android:src="@drawable/ic_baseline_fullscreen_48" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/fitZoomBtn"
+        android:layout_width="@dimen/dp_17"
+        android:layout_height="@dimen/dp_17"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:src="@drawable/ic_fit_to_screen"
+        android:tint="@color/white" />
 </RelativeLayout>

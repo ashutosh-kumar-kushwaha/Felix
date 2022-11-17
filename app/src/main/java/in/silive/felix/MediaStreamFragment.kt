@@ -6,15 +6,19 @@ import `in`.silive.felix.recyclerview.ParentRecyclerAdapter
 import `in`.silive.felix.server.RetrofitAPI
 import `in`.silive.felix.server.ServiceBuilder
 import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -26,6 +30,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.google.android.flexbox.FlexboxLayout
 import retrofit2.Call
@@ -42,6 +47,7 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
     lateinit var exoPlayer: ExoPlayer
     lateinit var wishListBtn: AppCompatButton
     lateinit var heartImgVw: AppCompatImageView
+    lateinit var details:ConstraintLayout
     var isVPlaying = false
     lateinit var movieRecyclerView: RecyclerView
     var isLiked: Boolean? = false
@@ -56,6 +62,10 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
     lateinit var watchNowBtn : AppCompatButton
     var moviesList: MutableList<Category> = mutableListOf()
     var loadedItems = 0
+    lateinit var fitZoomBtn : AppCompatImageView
+
+    val resizeMode = listOf(R.drawable.ic_fit_to_screen, R.drawable.ic_zoom, R.drawable.ic_stretch)
+    var resizeModeIndex = 0
 
     fun getCategory(categoryName: String) {
         val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
@@ -111,6 +121,13 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
         savedInstanceState: Bundle?
     ): View? {
 
+//        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
+//            override fun handleOnBackPressed() {
+//                if(isFullScreen){
+//                    fullScreen()
+//                }
+//            }
+//        })
 
         val view = inflater.inflate(R.layout.fragment_media_stream, container, false)
 
@@ -126,6 +143,8 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
         flexLayout = view.findViewById(R.id.flexLayout)
         fullScreenBtn = view.findViewById(R.id.fullScreenBtn)
         watchNowBtn = view.findViewById(R.id.watchNowBtn)
+        details = view.findViewById(R.id.details)
+        fitZoomBtn = view.findViewById(R.id.fitZoomBtn)
 
         watchNowBtn.setOnClickListener{
             if(!isVPlaying){
@@ -139,6 +158,8 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
         fullScreenBtn.setOnClickListener{
             fullScreen()
         }
+
+
 
         wishListBtn.setOnClickListener {
             if (!isChangingWishList) {
@@ -158,6 +179,10 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
                     like()
                 }
             }
+        }
+
+        fitZoomBtn.setOnClickListener {
+            changeResizeMode()
         }
 
 
@@ -278,34 +303,38 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
 
     fun fullScreen(){
         if(isFullScreen){
+            details.visibility = View.VISIBLE
             fullScreenBtn.setImageResource(R.drawable.ic_baseline_fullscreen_48)
-//                activity?.window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
-//                var lp = videoPlayer.layoutParams
-//                lp.width = ViewGroup.LayoutParams.MATCH_PARENT
-//                lp.height =
-//                    activity?.applicationContext?.resources?.displayMetrics?.density?.toInt()!! * 200
-//                if(activity?.actionBar != null){
-//                    activity?.actionBar!!.show()
-//                }
-//                (activity as HomePageActivity).showBottomNav()
-//                videoPlayer.layoutParams = lp
+                activity?.window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+                var lp = videoPlayer.layoutParams as LinearLayout.LayoutParams
+                lp.width = LinearLayout.LayoutParams.MATCH_PARENT
+                lp.height = resources.getDimensionPixelSize(R.dimen.dp_205)
+
+                (activity as HomePageActivity).showBottomNav()
+            (activity as HomePageActivity).showActionBar()
+                videoPlayer.layoutParams = lp
             activity?.requestedOrientation  = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         }
         else{
+            details.visibility = View.GONE
             fullScreenBtn.setImageResource(R.drawable.ic_baseline_fullscreen_exit_24)
-//                activity?.window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                var lp = videoPlayer.layoutParams
-////                if(activity?.actionBar != null){
-////                    activity?.actionBar!!.hide()
-////                }
-//                lp.width = ConstraintLayout.LayoutParams.MATCH_PARENT
-//                lp.height = resources.getDimensionPixelSize(R.dimen.dp_315)
-//                (activity as HomePageActivity).actionBar?.hide()
+                activity?.window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                var lp = videoPlayer.layoutParams as LinearLayout.LayoutParams
 
-//                (activity as HomePageActivity).toolbar.visibility = View.GONE
-//                (activity as HomePageActivity).hideBottomNav()
-//                videoPlayer.layoutParams = lp
             activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+
+            val displayMetrics = DisplayMetrics()
+            activity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
+
+            var width = displayMetrics.widthPixels
+            var height = displayMetrics.heightPixels
+                lp.width = ConstraintLayout.LayoutParams.MATCH_PARENT
+                lp.height = width
+
+
+                (activity as HomePageActivity).hideActionBar()
+                (activity as HomePageActivity).hideBottomNav()
+                videoPlayer.layoutParams = lp
         }
         isFullScreen = !isFullScreen
     }
@@ -439,6 +468,42 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
 
         })
     }
+
+    override fun onDestroyView() {
+        fullScreenBtn.setImageResource(R.drawable.ic_baseline_fullscreen_48)
+        activity?.window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+        val lp = videoPlayer.layoutParams as LinearLayout.LayoutParams
+        lp.width = LinearLayout.LayoutParams.MATCH_PARENT
+        lp.height = resources.getDimensionPixelSize(R.dimen.dp_205)
+
+        (activity as HomePageActivity).showBottomNav()
+        (activity as HomePageActivity).showActionBar()
+        videoPlayer.layoutParams = lp
+        activity?.requestedOrientation  = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
+        super.onDestroyView()
+    }
+
+    fun changeResizeMode(){
+        when (resizeModeIndex) {
+            0 -> {
+                fitZoomBtn.setImageResource(resizeMode[resizeModeIndex])
+                videoPlayer.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_ZOOM
+                resizeModeIndex = 1
+            }
+            1 -> {
+                fitZoomBtn.setImageResource(resizeMode[resizeModeIndex])
+                videoPlayer.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FILL
+                resizeModeIndex = 2
+            }
+            else -> {
+                fitZoomBtn.setImageResource(resizeMode[resizeModeIndex])
+                videoPlayer.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
+                resizeModeIndex = 0
+            }
+        }
+    }
+
 
 
 

@@ -114,7 +114,7 @@ class HomePageFragment : Fragment(), ItemClickListener {
             resources.getDimensionPixelSize(R.dimen.dp_13),
             resources.getDimensionPixelSize(R.dimen.dp_73),
             resources.getDimensionPixelSize(R.dimen.dp_13)
-        );
+        )
 
         val transformer = CompositePageTransformer()
         transformer.addTransformer(MarginPageTransformer(40))
@@ -149,9 +149,10 @@ class HomePageFragment : Fragment(), ItemClickListener {
                 call: Call<List<Movie>>,
                 response: Response<List<Movie>>
             ) {
+                if (context != null) {
 
-                if (response.code() == 200) {
-                    val trendingMovies = response.body() as List<Movie>
+                    if (response.code() == 200) {
+                        val trendingMovies = response.body() as List<Movie>
 //                    viewPagerAdapter = ViewPagerAdapter(
 //                        requireContext(),
 //                        listOf(trendingMovies.last()) + trendingMovies + listOf(trendingMovies.first())
@@ -160,39 +161,50 @@ class HomePageFragment : Fragment(), ItemClickListener {
 //                    onInfinitePageChangeCallBack(8)
 //                    viewPager.currentItem = 1
 
-                    viewPagerAdapter = ViewPagerAdapter(
-                        requireContext(),
-                        trendingMovies + trendingMovies + trendingMovies, this@HomePageFragment
-                    )
-                    viewPager.adapter = viewPagerAdapter
-                    onInfinitePageChangeCallBack(18)
-                    viewPager.setCurrentItem(6, false)
+                        viewPagerAdapter = ViewPagerAdapter(
+                            requireContext(),
+                            trendingMovies + trendingMovies + trendingMovies, this@HomePageFragment
+                        )
+                        viewPager.adapter = viewPagerAdapter
+                        onInfinitePageChangeCallBack(18)
+                        viewPager.setCurrentItem(6, false)
 
-                } else if (response.code() == 401) {
-                    (activity as HomePageActivity).signOut()
-                } else if (response.code() == 500) {
-                    Toast.makeText(
-                        requireContext(),
-                        "Internal Server Error. Please try again.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT)
-                        .show()
+                    } else if (response.code() == 401) {
+                        (activity as HomePageActivity).signOut()
+                    } else if (response.code() == 500) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Internal Server Error. Please try again.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            response.code().toString(),
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
+
+
                 }
-
                 isTrendingLoaded = true
+
                 checkProgressBar()
+
 
             }
 
             override fun onFailure(call: Call<List<Movie>>, t: Throwable) {
-                Toast.makeText(
-                    requireContext(),
-                    "Failed to load trending movies",
-                    Toast.LENGTH_SHORT
-                ).show()
+                if(context != null) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Failed to load trending movies",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
                 isTrendingLoaded = true
+
                 checkProgressBar()
             }
 
@@ -218,40 +230,59 @@ class HomePageFragment : Fragment(), ItemClickListener {
                 call: Call<List<Movie>>,
                 response: Response<List<Movie>>
             ) {
-                if (response.code() == 200) {
-                    val movies = response.body() as List<Movie>
 
-                    moviesList.add(Category(categoryName, movies))
+                if(context != null) {
 
-                    movieRecyclerView.layoutManager =
-                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                    if (response.code() == 200) {
+                        val movies = response.body() as List<Movie>
 
-                    val parentRecyclerAdapter =
-                        ParentRecyclerAdapter(requireContext(), moviesList, this@HomePageFragment)
+                        moviesList.add(Category(categoryName, movies))
 
-                    movieRecyclerView.adapter = parentRecyclerAdapter
+                        movieRecyclerView.layoutManager =
+                            LinearLayoutManager(
+                                requireContext(),
+                                LinearLayoutManager.VERTICAL,
+                                false
+                            )
 
-                } else if (response.code() == 401) {
-                    (activity as HomePageActivity).signOut()
-                } else if (response.code() == 500) {
-                    Toast.makeText(
-                        requireContext(),
-                        "Internal Server Error. Please try again.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT)
-                        .show()
-                    progressBar.dismiss()
+                        val parentRecyclerAdapter =
+                            ParentRecyclerAdapter(
+                                requireContext(),
+                                moviesList,
+                                this@HomePageFragment
+                            )
+
+                        movieRecyclerView.adapter = parentRecyclerAdapter
+
+                    } else if (response.code() == 401) {
+                        (activity as HomePageActivity).signOut()
+                    } else if (response.code() == 500) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Internal Server Error. Please try again.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            response.code().toString(),
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                        progressBar.dismiss()
+                    }
                 }
                 loadedItems++
                 checkProgressBar()
             }
 
             override fun onFailure(call: Call<List<Movie>>, t: Throwable) {
-                Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show()
+                if(context != null) {
+                    Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show()
+                    checkProgressBar()
+                }
                 loadedItems++
-                checkProgressBar()
+
             }
 
         })
