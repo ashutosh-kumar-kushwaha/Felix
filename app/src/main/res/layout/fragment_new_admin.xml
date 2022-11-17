@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="#070E1E"
+    tools:context=".NewAdminFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#070E1E">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/emailETxt"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_56"
+            android:background="@drawable/textbox_background"
+            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginStart="@dimen/dp_14"
+            android:layout_marginEnd="@dimen/dp_14"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat"
+            android:inputType="textEmailAddress"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/sp_14"
+            android:paddingStart="@dimen/dp_21"
+            android:paddingEnd="@dimen/dp_21"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/doneBtn"
+            android:layout_width="@dimen/dp_53"
+            android:layout_height="@dimen/dp_26"
+            android:background="@drawable/buttonbackground"
+            android:textSize="@dimen/sp_11"
+            android:text="Done"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:fontFamily="@font/montserrat"
+            android:textFontWeight="600"
+            android:layout_marginTop="@dimen/dp_7"
+            app:layout_constraintEnd_toEndOf="@+id/emailETxt"
+            app:layout_constraintTop_toBottomOf="@+id/emailETxt"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

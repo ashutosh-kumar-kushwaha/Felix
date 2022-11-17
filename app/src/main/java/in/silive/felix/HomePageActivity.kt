@@ -5,7 +5,6 @@ import `in`.silive.felix.module.LogInInfo
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.view.Window
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
@@ -151,7 +150,7 @@ class HomePageActivity : AppCompatActivity() {
 
     fun adminFrag() {
         val adminFragment = AdminFragment()
-        replaceFrag(adminFragment, "Media")
+        replaceFrag(adminFragment, "Admin")
     }
 
 
@@ -265,6 +264,12 @@ class HomePageActivity : AppCompatActivity() {
         replaceFrag(categoryFragment, "Category")
     }
 
+    fun newMovieFrag(){
+        val newMovieFragment = NewMovieFragment()
+        currentFragment = "NewMovie"
+        replaceFrag(newMovieFragment, "Category")
+    }
+
 
     fun signOut(){
         lifecycleScope.launch(Dispatchers.IO) {
@@ -279,5 +284,12 @@ class HomePageActivity : AppCompatActivity() {
     override fun onBackPressed() {
         showBottomNav()
         super.onBackPressed()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        for (fragment in supportFragmentManager.fragments) {
+            fragment.onActivityResult(requestCode, resultCode, data)
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 }

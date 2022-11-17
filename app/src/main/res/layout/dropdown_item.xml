@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Category"
-        android:textSize="@dimen/sp_14"
-        android:textColor="@color/white"
-        android:gravity="center"
-        android:fontFamily="@font/montserrat"
-        android:background="@drawable/upload_image"/>
-
-</LinearLayout>
+    android:layout_height="@dimen/dp_26"
+    android:background="@drawable/upload_image"
+    android:fontFamily="@font/montserrat"
+    android:gravity="center_vertical"
+    android:paddingStart="@dimen/dp_7"
+    android:paddingEnd="@dimen/dp_7"
+    android:textColor="@color/white"
+    android:textSize="@dimen/sp_14" />
