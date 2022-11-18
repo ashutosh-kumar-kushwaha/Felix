@@ -10,6 +10,7 @@ import androidx.appcompat.widget.AppCompatButton
 class AdminFragment : Fragment() {
 
     lateinit var newMovieBtn : AppCompatButton
+    lateinit var deleteMovieBtn : AppCompatButton
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -21,6 +22,11 @@ class AdminFragment : Fragment() {
         newMovieBtn = view.findViewById(R.id.newMovieBtn)
         newMovieBtn.setOnClickListener{
             (activity as HomePageActivity).newMovieFrag()
+        }
+
+        deleteMovieBtn = view.findViewById(R.id.deleteMovieBtn)
+        deleteMovieBtn.setOnClickListener{
+            (activity as HomePageActivity).deleteMovieFrag()
         }
 
         return view

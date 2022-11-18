@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
+import android.view.Window
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
@@ -258,8 +259,12 @@ class HomePageActivity : AppCompatActivity() {
 
     fun newMovieFrag(){
         val newMovieFragment = NewMovieFragment()
-        currentFragment = "NewMovie"
-        replaceFrag(newMovieFragment, "Category")
+        replaceFrag(newMovieFragment, "AddMovie")
+    }
+
+    fun deleteMovieFrag(){
+        val deleteMovieFragment = DeleteMovieFragment()
+        replaceFrag(deleteMovieFragment, "DeleteMovie")
     }
 
 

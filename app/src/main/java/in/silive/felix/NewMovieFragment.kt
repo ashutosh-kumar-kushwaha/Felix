@@ -6,6 +6,7 @@ import `in`.silive.felix.module.GenreX
 import `in`.silive.felix.server.RetrofitAPI
 import `in`.silive.felix.server.ServiceBuilder
 import android.app.Activity.RESULT_OK
+import android.app.ApplicationErrorReport
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -167,7 +168,7 @@ class NewMovieFragment : Fragment() {
 
 
         } catch (e: Exception) {
-            Log.d("Ashu", "Error in adding movie")
+            Log.d("Ashu", e.message.toString())
         }
     }
 
