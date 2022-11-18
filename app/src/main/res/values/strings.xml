@@ -6,11 +6,14 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
-    <string-array name="categories">
-        <item>Bollywood</item>
-        <item>Hollywood</item>
-        <item>Anime</item>
-        <item>Horror</item>
+    <string-array name="restrictions">
+        <item>U/A 16+</item>
+        <item>15</item>
+        <item>U/A 13+</item>
+        <item>12A</item>
+        <item>12</item>
+        <item>PG</item>
     </string-array>
+
 
 </resources>

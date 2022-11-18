@@ -24,21 +24,25 @@
             android:exported="false"
             android:label="@string/title_activity_fullscreen"
             android:theme="@style/Theme.Second.Fullscreen" />
-                <activity
+        <activity
+
             android:name=".HomePageActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="true"
             android:supportsRtl="true">
-                    <intent-filter android:autoVerify="true">
-                        <action android:name="android.intent.action.VIEW"/>
-                        <category android:name="android.intent.category.DEFAULT"/>
-                        <category android:name="android.intent.category.BROWSABLE"/>
-                        <data android:scheme="https"/>
-                        <data android:scheme="http"/>
-                        <data android:scheme="app"/>
-                        <data android:host="felixapis.herokuapp.com"/>
-                    </intent-filter>
-                </activity>
+            <intent-filter
+                android:autoVerify="true">
+
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:scheme="app" />
+                <data android:host="felixapis.herokuapp.com" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".SplashActivity"
             android:exported="true">

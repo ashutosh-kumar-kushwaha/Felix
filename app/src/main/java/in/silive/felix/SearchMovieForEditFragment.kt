@@ -2,16 +2,11 @@ package `in`.silive.felix
 
 import `in`.silive.felix.module.SearchResponseItem
 import `in`.silive.felix.recyclerview.ItemClickListener
-import `in`.silive.felix.recyclerview.DeleteMovieAdapter
+import `in`.silive.felix.recyclerview.SearchForEditAdapter
 import `in`.silive.felix.server.RetrofitAPI
 import `in`.silive.felix.server.ServiceBuilder
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,15 +14,14 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.Exception
 
-
-class DeleteMovieFragment : Fragment(), ItemClickListener {
+class SearchMovieForEditFragment : Fragment() , ItemClickListener{
 
     lateinit var moviesRecyclerView: RecyclerView
     lateinit var movieSearchView: SearchView
@@ -37,7 +31,7 @@ class DeleteMovieFragment : Fragment(), ItemClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_delete_movie, container, false)
+        val view = inflater.inflate(R.layout.fragment_search_movie_for_edit, container, false)
 
         token = (activity as HomePageActivity).token
 
@@ -45,6 +39,7 @@ class DeleteMovieFragment : Fragment(), ItemClickListener {
         movieSearchView = view.findViewById(R.id.movieSearchView)
         val searchETxt = movieSearchView.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
         searchETxt.setTextColor(resources.getColor(R.color.white))
+
         val searchClose: ImageView =
             movieSearchView.findViewById(androidx.appcompat.R.id.search_close_btn) as ImageView
         searchClose.setColorFilter(Color.WHITE)
@@ -58,7 +53,7 @@ class DeleteMovieFragment : Fragment(), ItemClickListener {
                 }
                 if (p0 == "") {
                     val recyclerAdapter =
-                        DeleteMovieAdapter(requireContext(), listOf(), this@DeleteMovieFragment)
+                        SearchForEditAdapter(requireContext(), listOf(), this@SearchMovieForEditFragment)
                     moviesRecyclerView.adapter = recyclerAdapter
                 }
 
@@ -73,7 +68,7 @@ class DeleteMovieFragment : Fragment(), ItemClickListener {
 
                 if (p0 == "") {
                     val recyclerAdapter =
-                        DeleteMovieAdapter(requireContext(), listOf(), this@DeleteMovieFragment)
+                        SearchForEditAdapter(requireContext(), listOf(), this@SearchMovieForEditFragment)
                     moviesRecyclerView.adapter = recyclerAdapter
                 }
 
@@ -82,33 +77,14 @@ class DeleteMovieFragment : Fragment(), ItemClickListener {
 
         })
 
+
         return view
     }
 
-    fun deleteMovie(movieId: Int) {
-        if(context != null){
-            val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
-            val call = retrofitAPI.deleteMovie("Bearer $token", movieId)
-            call.enqueue(object : Callback<String>{
-                override fun onResponse(call: Call<String>, response: Response<String>) {
-                    Toast.makeText(requireContext(), "Deleted", Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onFailure(call: Call<String>, t: Throwable) {
-                    Toast.makeText(requireContext(), "Failed to delete", Toast.LENGTH_SHORT).show()
-                }
-
-            })
-        }
-    }
-
     override fun onItemClick(position: Int, movieId: Int) {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Confirm Delete?").setMessage("Do you want to delete the movie?").setPositiveButton("Yes", DialogInterface.OnClickListener { _, _ -> deleteMovie(movieId) }).setNegativeButton("No", DialogInterface.OnClickListener { _, _ ->  })
-        val alertDialog = builder.create()
-        alertDialog.show()
+        (activity as HomePageActivity).movieId = movieId
+        (activity as HomePageActivity).editMovieFrag()
     }
-
 
     fun searchItems(p0: String) {
         if(context != null) {
@@ -130,7 +106,7 @@ class DeleteMovieFragment : Fragment(), ItemClickListener {
                             false
                         )
                     val recyclerAdapter =
-                        DeleteMovieAdapter(requireContext(), list, this@DeleteMovieFragment)
+                        SearchForEditAdapter(requireContext(), list, this@SearchMovieForEditFragment)
                     moviesRecyclerView.adapter = recyclerAdapter
                 }
 

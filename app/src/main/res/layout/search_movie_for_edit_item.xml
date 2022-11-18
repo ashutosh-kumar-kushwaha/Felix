@@ -22,14 +22,9 @@
         android:textColor="@color/white"
         android:textSize="@dimen/sp_12"
         android:fontFamily="@font/montserrat"
-        android:layout_width="@dimen/dp_156"
+        android:layout_width="@dimen/dp_184"
+        android:layout_marginEnd="@dimen/dp_14"
         android:layout_height="wrap_content"/>
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/playBtn"
-        android:layout_width="@dimen/dp_28"
-        android:background="@drawable/play"
-        android:layout_marginEnd="@dimen/dp_14"
-        android:layout_height="@dimen/dp_28"/>
 
 </com.google.android.flexbox.FlexboxLayout>

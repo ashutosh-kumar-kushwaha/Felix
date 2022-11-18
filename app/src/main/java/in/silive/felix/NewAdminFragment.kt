@@ -29,7 +29,7 @@ class NewAdminFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_new_admin, container, false)
         emailETxt = view.findViewById(R.id.emailETxt)
-        addBtn = view.findViewById(R.id.doneBtn)
+        addBtn = view.findViewById(R.id.addBtn)
         addBtn.setOnClickListener{
             addAdmin()
         }

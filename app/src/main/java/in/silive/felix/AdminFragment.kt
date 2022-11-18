@@ -12,6 +12,8 @@ class AdminFragment : Fragment() {
     lateinit var newMovieBtn : AppCompatButton
     lateinit var deleteMovieBtn : AppCompatButton
     lateinit var newCategoryBtn : AppCompatButton
+    lateinit var editMovieBtn : AppCompatButton
+    lateinit var newAdminBtn : AppCompatButton
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +35,16 @@ class AdminFragment : Fragment() {
         newCategoryBtn = view.findViewById(R.id.newCategoryBtn)
         newCategoryBtn.setOnClickListener{
             (activity as HomePageActivity).newCategoryFrag()
+        }
+
+        editMovieBtn = view.findViewById(R.id.editMovieBtn)
+        editMovieBtn.setOnClickListener{
+            (activity as HomePageActivity).searchMovieForEditFrag()
+        }
+
+        newAdminBtn = view.findViewById(R.id.newAdminBtn)
+        newAdminBtn.setOnClickListener{
+            (activity as HomePageActivity).newAdminFrag()
         }
 
 

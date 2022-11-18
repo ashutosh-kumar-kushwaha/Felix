@@ -7,6 +7,7 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
 import android.view.Window
+import android.widget.EditText
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -65,8 +67,6 @@ class HomePageActivity : AppCompatActivity() {
         val uri = intent.data
 
 
-
-
         appbarLayout = findViewById(R.id.toolbarContainer)
 
 
@@ -112,6 +112,7 @@ class HomePageActivity : AppCompatActivity() {
         appbarLayout = findViewById(R.id.toolbarContainer)
 
 
+
         searchView.setOnSearchClickListener {
 
             searchFrag()
@@ -152,7 +153,7 @@ class HomePageActivity : AppCompatActivity() {
 
 
         if(uri != null){
-            movieId = uri.getQueryParameter("movieId")!!.toInt()
+            movieId = uri.lastPathSegment!!.toInt()
             val fm : FragmentManager = supportFragmentManager
             val ft : FragmentTransaction = fm.beginTransaction()
             val mediaStreamFragment = MediaStreamFragment()
@@ -167,6 +168,10 @@ class HomePageActivity : AppCompatActivity() {
             ft.commit()
         }
 
+
+
+//        val searchETxt = searchView.findViewById(searchView.context.resources.getIdentifier("android:id/search_src_text", null, null)) as EditText
+//        searchETxt.setBackground(resources.getDrawable(R.drawable.search_bg))
     }
 
     fun adminFrag() {
@@ -225,9 +230,24 @@ class HomePageActivity : AppCompatActivity() {
         replaceFrag(myProfileFrag, "Profile")
     }
 
+    fun editMovieFrag(){
+        val editMovieFragment = EditMovieFragment()
+        replaceFrag(editMovieFragment, "EditMovie")
+    }
+
+    fun searchMovieForEditFrag(){
+        val searchMovieForEditFragment = SearchMovieForEditFragment()
+        replaceFrag(searchMovieForEditFragment, "SearchMovieForEdit")
+    }
+
     fun moviesByCategoryFrag(){
         val moviesByCategoryFragment = MoviesByCategoryFragment()
         replaceFrag(moviesByCategoryFragment, "moviesByCategory")
+    }
+
+    fun newAdminFrag(){
+        val newAdminFragment = NewAdminFragment()
+        replaceFrag(newAdminFragment, "moviesByCategory")
     }
 
     fun homeFrag(){

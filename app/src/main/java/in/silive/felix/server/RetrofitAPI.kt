@@ -86,5 +86,8 @@ interface RetrofitAPI {
     @PUT("api/admin/make-new-admin")
     fun addAdmin(@Header ("Authorization") token : String, @Body email: Email) : Call<String>
 
+    @PUT("api/home/edit-movie")
+    fun editMovie(@Header ("Authorization") token : String, @Body editMovieRequest: EditMovieRequest) : Call<String>
+
 
  }

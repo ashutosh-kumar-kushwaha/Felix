@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#070E1E"
-    tools:context=".NewMovieFragment">
+    tools:context=".EditMovieFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,13 +16,13 @@
         android:layout_marginEnd="@dimen/dp_12">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/addImageBtn"
+            android:id="@+id/coverImage"
             android:layout_width="@dimen/dp_88"
             android:layout_height="@dimen/dp_123"
             android:layout_marginStart="@dimen/dp_18"
             android:layout_marginTop="@dimen/dp_14"
-            app:srcCompat="@drawable/add_image"
             android:scaleType="fitXY"
+            android:src="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,10 +31,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Movie Name"
-            android:layout_marginTop="@dimen/dp_14"
-            android:textSize="@dimen/sp_12"
+            android:layout_marginTop="@dimen/dp_21"
+            android:textSize="@dimen/sp_14"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/addImageBtn"
+            app:layout_constraintStart_toEndOf="@+id/coverImage"
             android:textColor="@color/white"
             android:fontFamily="@font/montserrat"
             android:textFontWeight="600"
@@ -57,59 +57,24 @@
             app:flow_verticalAlign="center"
             android:textSize="@dimen/sp_14"
             android:background="@drawable/movie_name_etxt_bg"
-            app:layout_constraintStart_toEndOf="@+id/addImageBtn"
+            app:layout_constraintStart_toEndOf="@+id/coverImage"
             app:layout_constraintTop_toBottomOf="@id/movieNameTxtVw"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/uploadMovieTxtVw"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Upload Movie"
-            android:layout_marginTop="@dimen/dp_7"
-            android:textSize="@dimen/sp_12"
-            app:layout_constraintTop_toBottomOf="@id/movieNameETxt"
-            app:layout_constraintStart_toEndOf="@id/addImageBtn"
-            android:textColor="@color/white"
-            android:fontFamily="@font/montserrat"
-            android:textFontWeight="600"
-            android:layout_marginStart="@dimen/dp_32"
-            />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/uploadMovieBtn"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/dp_26"
-            android:layout_marginTop="@dimen/dp_7"
-            android:layout_marginStart="@dimen/dp_32"
-            android:layout_marginEnd="@dimen/dp_19"
-            android:text="Upload"
-            android:textColor="#191919"
-            android:fontFamily="@font/montserrat"
-            android:textFontWeight="600"
-            android:textAlignment="center"
-            android:textAllCaps="false"
-            android:drawablePadding="-24dp"
-            android:paddingEnd="@dimen/dp_24"
-            android:drawableEnd="@drawable/ic_bx_upload"
-            android:background="@drawable/movie_name_etxt_bg"
-            app:layout_constraintStart_toEndOf="@id/addImageBtn"
-            app:layout_constraintTop_toBottomOf="@id/uploadMovieTxtVw"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/restrictionTxtVw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="R:"
-            android:textSize="@dimen/sp_14"
-            android:fontFamily="@font/montserrat"
-            android:textFontWeight="600"
-            android:textColor="@color/white"
-            android:layout_marginTop="@dimen/dp_12"
             android:layout_marginStart="@dimen/dp_32"
-            app:layout_constraintTop_toBottomOf="@id/uploadMovieBtn"
-            app:layout_constraintStart_toEndOf="@id/addImageBtn"/>
+            android:fontFamily="@font/montserrat"
+            android:text="R:"
+            android:textColor="@color/white"
+            android:textFontWeight="600"
+            android:textSize="@dimen/sp_14"
+            android:layout_marginTop="@dimen/dp_26"
+            app:layout_constraintStart_toEndOf="@id/coverImage"
+            app:layout_constraintTop_toBottomOf="@+id/movieNameETxt"
+            tools:layout_editor_absoluteY="176dp" />
 
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/restrictionDropdown"
@@ -137,7 +102,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="@dimen/dp_18"
             android:layout_marginTop="@dimen/dp_21"
-            app:layout_constraintTop_toBottomOf="@id/addImageBtn"
+            app:layout_constraintTop_toBottomOf="@id/coverImage"
             />
 
         <com.google.android.material.textfield.TextInputEditText
@@ -208,30 +173,30 @@
                 android:layout_marginEnd="@dimen/dp_28"
                 android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/movieYearTxtVw"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Movie Year"
-                android:layout_marginTop="@dimen/dp_14"
-                android:textSize="@dimen/sp_14"
-                android:textColor="@color/white"
-                android:fontFamily="@font/montserrat"
-                android:textFontWeight="600"
-                />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/movieYearTxtVw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Movie Year"
+                    android:layout_marginTop="@dimen/dp_14"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/montserrat"
+                    android:textFontWeight="600"
+                    />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/movieYearETxt"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_26"
-                android:textCursorDrawable="@null"
-                android:textColor="@color/white"
-                android:fontFamily="@font/montserrat"
-                android:singleLine="true"
-                android:paddingStart="@dimen/dp_7"
-                android:paddingEnd="@dimen/dp_7"
-                android:layout_marginTop="@dimen/dp_7"
-                android:background="@drawable/movie_name_etxt_bg" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/movieYearETxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_26"
+                    android:textCursorDrawable="@null"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/montserrat"
+                    android:singleLine="true"
+                    android:paddingStart="@dimen/dp_7"
+                    android:paddingEnd="@dimen/dp_7"
+                    android:layout_marginTop="@dimen/dp_7"
+                    android:background="@drawable/movie_name_etxt_bg" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat

@@ -81,7 +81,6 @@
                 android:layout_gravity="end"
                 android:layoutDirection="rtl"
                 android:searchIcon="@drawable/search_icon"
-
                 android:queryHint="Search"/>
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/categoriesBtn"

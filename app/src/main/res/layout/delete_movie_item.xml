@@ -28,7 +28,7 @@
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/deleteMovieBtn"
         android:layout_width="@dimen/dp_28"
-        android:background="@drawable/ic_cross"
+        android:background="@drawable/ic_baseline_delete_24"
         android:layout_marginEnd="@dimen/dp_14"
         android:layout_height="@dimen/dp_28"/>
 
