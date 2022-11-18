@@ -267,6 +267,11 @@ class HomePageActivity : AppCompatActivity() {
         replaceFrag(deleteMovieFragment, "DeleteMovie")
     }
 
+    fun newCategoryFrag(){
+        val newCategoryFragment = NewCategoryFragment()
+        replaceFrag(newCategoryFragment, "NewCategory")
+    }
+
 
     fun signOut(){
         lifecycleScope.launch(Dispatchers.IO) {
