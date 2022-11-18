@@ -83,5 +83,8 @@ interface RetrofitAPI {
     @DELETE("api/admin/delete-movie")
     fun deleteMovie(@Header ("Authorization") token: String, @Query("movieId") movieId: Int) : Call<String>
 
+    @PUT("api/admin/make-new-admin")
+    fun addAdmin(@Header ("Authorization") token : String, @Body email: Email) : Call<String>
+
 
  }

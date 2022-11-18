@@ -35,7 +35,7 @@
             />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/doneBtn"
+            android:id="@+id/addBtn"
             android:layout_width="@dimen/dp_53"
             android:layout_height="@dimen/dp_26"
             android:background="@drawable/buttonbackground"
