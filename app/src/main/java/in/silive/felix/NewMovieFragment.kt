@@ -118,7 +118,7 @@ class NewMovieFragment : Fragment() {
 
 
     fun upload() {
-        try {
+        if(context != null) {
             val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
             val uriPathHelper = URIPathHelper()
             val coverImagePath = uriPathHelper.getPath(requireContext(), imageUri!!)
@@ -165,10 +165,6 @@ class NewMovieFragment : Fragment() {
                 }
 
             })
-
-
-        } catch (e: Exception) {
-            Log.d("Ashu", e.message.toString())
         }
     }
 

@@ -77,7 +77,7 @@ class DeleteMovieFragment : Fragment(), ItemClickListener {
     }
 
     fun deleteMovie(movieId: Int) {
-        try{
+        if(context != null){
             val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
             val call = retrofitAPI.deleteMovie("Bearer $token", movieId)
             call.enqueue(object : Callback<String>{
@@ -91,9 +91,6 @@ class DeleteMovieFragment : Fragment(), ItemClickListener {
 
             })
         }
-        catch (e : Exception){
-            Log.d("Ashu", e.stackTrace.toString())
-        }
     }
 
     override fun onItemClick(position: Int, movieId: Int) {
@@ -105,7 +102,7 @@ class DeleteMovieFragment : Fragment(), ItemClickListener {
 
 
     fun searchItems(p0: String) {
-        try {
+        if(context != null) {
             val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
             val call = retrofitAPI.search("Bearer " + (activity as HomePageActivity).token, p0)
             call.enqueue(object : Callback<List<SearchResponseItem>> {
@@ -132,9 +129,6 @@ class DeleteMovieFragment : Fragment(), ItemClickListener {
                     Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show()
                 }
             })
-
-        } catch (e: Exception) {
-            Log.d("Ashu", e.stackTrace.toString())
         }
     }
 }
