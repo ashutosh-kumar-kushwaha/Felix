@@ -79,4 +79,9 @@ interface RetrofitAPI {
 
     @POST("api/admin/add-new-category")
     fun addNewCategory(@Header ("Authorization") token : String, @Body categoryRequest: NewCategoryRequest) : Call<String>
-}
+
+    @DELETE("api/admin/delete-movie")
+    fun deleteMovie(@Header ("Authorization") token: String, @Query("movieId") movieId: Int) : Call<String>
+
+
+ }

@@ -49,6 +49,7 @@
             android:layout_marginStart="@dimen/dp_32"
             android:textCursorDrawable="@null"
             android:textColor="@color/white"
+            android:fontFamily="@font/montserrat"
             android:layout_marginEnd="@dimen/dp_19"
             android:paddingEnd="@dimen/dp_7"
             android:paddingStart="@dimen/dp_7"
@@ -119,6 +120,7 @@
             android:layout_marginTop="@dimen/dp_7"
             android:textCursorDrawable="@null"
             android:textColor="@color/white"
+            android:fontFamily="@font/montserrat"
             android:padding="@dimen/dp_7"
             android:textSize="@dimen/sp_14"
             android:background="@drawable/movie_name_etxt_bg"
@@ -149,6 +151,7 @@
             android:layout_marginEnd="@dimen/dp_18"
             android:layout_marginTop="@dimen/dp_7"
             android:textCursorDrawable="@null"
+            android:fontFamily="@font/montserrat"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_14"
             android:padding="@dimen/dp_7"
@@ -194,6 +197,9 @@
                 android:layout_height="@dimen/dp_26"
                 android:textCursorDrawable="@null"
                 android:textColor="@color/white"
+                android:fontFamily="@font/montserrat"
+                android:paddingStart="@dimen/dp_7"
+                android:paddingEnd="@dimen/dp_7"
                 android:layout_marginTop="@dimen/dp_7"
                 android:background="@drawable/movie_name_etxt_bg" />
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -221,6 +227,11 @@
                     android:id="@+id/lengthETxt"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_26"
+                    android:textCursorDrawable="@null"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/montserrat"
+                    android:paddingStart="@dimen/dp_7"
+                    android:paddingEnd="@dimen/dp_7"
                     android:layout_marginTop="@dimen/dp_7"
                     android:background="@drawable/movie_name_etxt_bg" />
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -250,6 +261,7 @@
             android:layout_marginTop="@dimen/dp_7"
             android:textCursorDrawable="@null"
             android:textColor="@color/white"
+            android:fontFamily="@font/montserrat"
             android:textSize="@dimen/sp_14"
             android:padding="@dimen/dp_7"
             android:background="@drawable/movie_name_etxt_bg"

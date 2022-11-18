@@ -40,7 +40,7 @@ class NewCategoryFragment : Fragment() {
     }
 
     private fun createNewCategory() {
-        try {
+        if(context != null) {
             val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
             val call = retrofitAPI.addNewCategory("Bearer $token", NewCategoryRequest(categoryETxt.text.toString()))
             call.enqueue(object : Callback<String> {
@@ -74,9 +74,6 @@ class NewCategoryFragment : Fragment() {
                 }
 
             })
-        }
-        catch (e: Exception){
-            Log.d("Ashu","Error in adding new category")
         }
     }
 }

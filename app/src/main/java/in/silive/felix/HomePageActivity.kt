@@ -278,8 +278,17 @@ class HomePageActivity : AppCompatActivity() {
 
     fun newMovieFrag(){
         val newMovieFragment = NewMovieFragment()
-        currentFragment = "NewMovie"
-        replaceFrag(newMovieFragment, "Category")
+        replaceFrag(newMovieFragment, "AddMovie")
+    }
+
+    fun deleteMovieFrag(){
+        val deleteMovieFragment = DeleteMovieFragment()
+        replaceFrag(deleteMovieFragment, "DeleteMovie")
+    }
+
+    fun newCategoryFrag(){
+        val newCategoryFragment = NewCategoryFragment()
+        replaceFrag(newCategoryFragment, "NewCategory")
     }
 
 
