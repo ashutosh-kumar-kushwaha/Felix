@@ -6,7 +6,9 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
+import android.view.Window
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -43,6 +45,8 @@ class HomePageActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
+
+
         lifecycleScope.launch(Dispatchers.IO) {
             val dataStoreManager = DataStoreManager(this@HomePageActivity)
             dataStoreManager.getLogInInfo().collect{
@@ -58,11 +62,10 @@ class HomePageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_page)
 
-        val fm : FragmentManager = supportFragmentManager
-        val ft : FragmentTransaction = fm.beginTransaction()
-        val homePageFragment = HomePageFragment()
-        ft.add(R.id.container, homePageFragment)
-        ft.commit()
+        val uri = intent.data
+
+
+
 
         appbarLayout = findViewById(R.id.toolbarContainer)
 
@@ -146,6 +149,23 @@ class HomePageActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
         val actionBar = supportActionBar
         actionBar?.setDisplayShowTitleEnabled(false)
+
+
+        if(uri != null){
+            movieId = uri.getQueryParameter("movieId")!!.toInt()
+            val fm : FragmentManager = supportFragmentManager
+            val ft : FragmentTransaction = fm.beginTransaction()
+            val mediaStreamFragment = MediaStreamFragment()
+            ft.add(R.id.container, mediaStreamFragment)
+            ft.commit()
+        }
+        else{
+            val fm : FragmentManager = supportFragmentManager
+            val ft : FragmentTransaction = fm.beginTransaction()
+            val homePageFragment = HomePageFragment()
+            ft.add(R.id.container, homePageFragment)
+            ft.commit()
+        }
 
     }
 
