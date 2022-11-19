@@ -49,24 +49,45 @@ class CategoryFragment : Fragment(), CategoryClickListener {
                 call: Call<List<CategoryResponse>>,
                 response: Response<List<CategoryResponse>>
             ) {
-                if(response.code() == 200){
-                    val categories = response.body() as List<CategoryResponse>
-                    recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                    recyclerView.adapter = RecyclerCategoryAdapter(requireContext(), categories, this@CategoryFragment)
-                }
-                else if(response.code()==401){
-                    (activity as HomePageActivity).signOut()
-                }
-                else if(response.code()==500){
-                    Toast.makeText(requireContext(), "Internal Server Error\nPlease try again", Toast.LENGTH_SHORT).show()
-                }
-                else{
-                    Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT).show()
+                if (context != null) {
+                    if (response.code() == 200) {
+                        val categories = response.body() as List<CategoryResponse>
+                        recyclerView.layoutManager = LinearLayoutManager(
+                            requireContext(),
+                            LinearLayoutManager.VERTICAL,
+                            false
+                        )
+                        recyclerView.adapter = RecyclerCategoryAdapter(
+                            requireContext(),
+                            categories,
+                            this@CategoryFragment
+                        )
+                    } else if (response.code() == 401) {
+                        (activity as HomePageActivity).signOut()
+                    } else if (response.code() == 500) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Internal Server Error\nPlease try again",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            response.code().toString(),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
 
             override fun onFailure(call: Call<List<CategoryResponse>>, t: Throwable) {
-                Toast.makeText(requireContext(), "Failed to load categories", Toast.LENGTH_SHORT).show()
+                if(context != null) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Failed to load categories",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
 
         })

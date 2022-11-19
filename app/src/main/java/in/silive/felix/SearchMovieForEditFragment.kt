@@ -95,23 +95,31 @@ class SearchMovieForEditFragment : Fragment() , ItemClickListener{
                     call: Call<List<SearchResponseItem>>,
                     response: Response<List<SearchResponseItem>>
                 ) {
+                    if (context != null) {
 
-                    val list: List<SearchResponseItem> =
-                        response.body() as List<SearchResponseItem>
+                        val list: List<SearchResponseItem> =
+                            response.body() as List<SearchResponseItem>
 
-                    moviesRecyclerView.layoutManager =
-                        LinearLayoutManager(
-                            requireContext(),
-                            LinearLayoutManager.VERTICAL,
-                            false
-                        )
-                    val recyclerAdapter =
-                        SearchForEditAdapter(requireContext(), list, this@SearchMovieForEditFragment)
-                    moviesRecyclerView.adapter = recyclerAdapter
+                        moviesRecyclerView.layoutManager =
+                            LinearLayoutManager(
+                                requireContext(),
+                                LinearLayoutManager.VERTICAL,
+                                false
+                            )
+                        val recyclerAdapter =
+                            SearchForEditAdapter(
+                                requireContext(),
+                                list,
+                                this@SearchMovieForEditFragment
+                            )
+                        moviesRecyclerView.adapter = recyclerAdapter
+                    }
                 }
 
                 override fun onFailure(call: Call<List<SearchResponseItem>>, t: Throwable) {
-                    Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show()
+                    if(context != null) {
+                        Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show()
+                    }
                 }
             })
         }

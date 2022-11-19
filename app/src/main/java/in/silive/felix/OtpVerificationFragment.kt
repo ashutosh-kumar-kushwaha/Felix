@@ -67,7 +67,8 @@ class OtpVerificationFragment : Fragment() {
         otpETxt = view.findViewById(R.id.otpETxt)
         textView3 = view.findViewById(R.id.textView3)
         resendOtpTxtVw = view.findViewById(R.id.resendOtpTxtVw)
-        textView3.text = "Enter the otp sent on this email ${(activity as AuthenticationActivity).email}"
+        textView3.text =
+            "Enter the otp sent on this email ${(activity as AuthenticationActivity).email}"
         continueBtn.setOnClickListener {
             sendOtp()
         }
@@ -90,40 +91,45 @@ class OtpVerificationFragment : Fragment() {
             val call = retrofitAPI.verifyOtp(otpRequest)
             call.enqueue(object : Callback<String> {
                 override fun onResponse(call: Call<String>, response: Response<String>) {
-                    (activity as AuthenticationActivity).otp = otpETxt.text.toString()
-                    if (response.code() == 200){
+                    if (context != null) {
+                        (activity as AuthenticationActivity).otp = otpETxt.text.toString()
+                        if (response.code() == 200) {
 //                        Toast.makeText(requireContext(), "OTP Verified", Toast.LENGTH_SHORT).show()
-                        (activity as AuthenticationActivity).resetPasswordFrag()
+                            (activity as AuthenticationActivity).resetPasswordFrag()
+                        } else if (response.code() == 408) {
+                            Toast.makeText(requireContext(), "OTP Expired", Toast.LENGTH_SHORT)
+                                .show()
+                        } else if (response.code() == 422) {
+                            Toast.makeText(requireContext(), "Invalid OTP", Toast.LENGTH_SHORT)
+                                .show()
+                        } else if (response.code() == 404) {
+                            Toast.makeText(requireContext(), "User Not Found", Toast.LENGTH_SHORT)
+                                .show()
+                        } else if (response.code() == 500) {
+                            Toast.makeText(
+                                requireContext(),
+                                "Internal server error\nPlease try again",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            Toast.makeText(
+                                requireContext(),
+                                response.code().toString(),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        progressBar.dismiss()
                     }
-                    else if(response.code() == 408){
-                        Toast.makeText(requireContext(), "OTP Expired", Toast.LENGTH_SHORT).show()
-                    }
-                    else if(response.code() == 422){
-                        Toast.makeText(requireContext(), "Invalid OTP", Toast.LENGTH_SHORT).show()
-                    }
-                    else if(response.code() == 404){
-                        Toast.makeText(requireContext(), "User Not Found", Toast.LENGTH_SHORT).show()
-                    }
-                    else if(response.code() == 500){
-                        Toast.makeText(
-                            requireContext(),
-                            "Internal server error\nPlease try again",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                    else{
-                        Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT).show()
-                    }
-                    progressBar.dismiss()
                 }
 
                 override fun onFailure(call: Call<String>, t: Throwable) {
-                    Toast.makeText(view?.context, "Failed", Toast.LENGTH_SHORT).show()
-                    progressBar.dismiss()
+                    if (context != null) {
+                        Toast.makeText(view?.context, "Failed", Toast.LENGTH_SHORT).show()
+                        progressBar.dismiss()
+                    }
                 }
             })
-        }
-        else{
+        } else {
             otpETxt.error = "OTP is of six digits"
         }
     }
@@ -135,31 +141,30 @@ class OtpVerificationFragment : Fragment() {
         val call = retrofitAPI.resendOtp(Email((activity as AuthenticationActivity).email))
         call.enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
-                if(response.code() == 200) {
-                    time = 60
-                    Toast.makeText(requireContext(), response.body(), Toast.LENGTH_SHORT).show()
-                    canResend = false
-                    updateTime()
-                    resendOtpTxtVw.text = "Resend OTP in"
-                    Log.d("Ashu", "Here")
-                    isSending = false
-                }
-                else if(response.code() == 404){
-                    Toast.makeText(requireContext(), response.body(), Toast.LENGTH_SHORT).show()
-                }
-                else if(response.code() == 500){
-                    Toast.makeText(
-                        requireContext(),
-                        "Internal server error\nPlease try again",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                else{
-                    Toast.makeText(
-                        requireContext(),
-                        response.code().toString(),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                if (context != null) {
+                    if (response.code() == 200) {
+                        time = 60
+                        Toast.makeText(requireContext(), response.body(), Toast.LENGTH_SHORT).show()
+                        canResend = false
+                        updateTime()
+                        resendOtpTxtVw.text = "Resend OTP in"
+                        Log.d("Ashu", "Here")
+                        isSending = false
+                    } else if (response.code() == 404) {
+                        Toast.makeText(requireContext(), response.body(), Toast.LENGTH_SHORT).show()
+                    } else if (response.code() == 500) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Internal server error\nPlease try again",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            response.code().toString(),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
 
 
@@ -167,10 +172,12 @@ class OtpVerificationFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
-                Toast.makeText(view?.context, "Failed", Toast.LENGTH_SHORT).show()
-                Log.d("Ashu", "Here")
-                isSending = false
-                progressBar.dismiss()
+                if (context != null) {
+                    Toast.makeText(view?.context, "Failed", Toast.LENGTH_SHORT).show()
+                    Log.d("Ashu", "Here")
+                    isSending = false
+                    progressBar.dismiss()
+                }
             }
 
         })

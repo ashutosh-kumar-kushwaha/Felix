@@ -27,13 +27,13 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MoviesByCategoryFragment : Fragment() , ItemClickListener{
+class MoviesByCategoryFragment : Fragment(), ItemClickListener {
 
-    lateinit var movieRecyclerView : RecyclerView
+    lateinit var movieRecyclerView: RecyclerView
     lateinit var progressBar: AlertDialog
     var builder: AlertDialog.Builder? = null
-    lateinit var nothingImgVw : AppCompatImageView
-    lateinit var nothingTxtVw : AppCompatTextView
+    lateinit var nothingImgVw: AppCompatImageView
+    lateinit var nothingTxtVw: AppCompatTextView
 
 
     fun getDialogueProgressBar(view: View): AlertDialog.Builder {
@@ -74,11 +74,12 @@ class MoviesByCategoryFragment : Fragment() , ItemClickListener{
         return view
     }
 
-    fun getMovies(){
+    fun getMovies() {
         progressBar.show()
         val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
         val call = retrofitAPI.getMovieByCategory(
-            "Bearer " + (activity as HomePageActivity).token, (activity as HomePageActivity).categoryName
+            "Bearer " + (activity as HomePageActivity).token,
+            (activity as HomePageActivity).categoryName
         )
 
         call.enqueue(object : Callback<List<Movie>> {
@@ -86,48 +87,59 @@ class MoviesByCategoryFragment : Fragment() , ItemClickListener{
                 call: Call<List<Movie>>,
                 response: Response<List<Movie>>
             ) {
+                if (context != null) {
 
-                if (response.code() == 200) {
+                    if (response.code() == 200) {
 
-                    val res = response.body() as List<Movie>
+                        val res = response.body() as List<Movie>
 
-                    if(res.isEmpty()){
-                        nothingImgVw.visibility = View.VISIBLE
-                        nothingTxtVw.visibility = View.VISIBLE
+                        if (res.isEmpty()) {
+                            nothingImgVw.visibility = View.VISIBLE
+                            nothingTxtVw.visibility = View.VISIBLE
+                        } else {
+                            nothingImgVw.visibility = View.GONE
+                            nothingTxtVw.visibility = View.GONE
+                            movieRecyclerView.layoutManager =
+                                GridLayoutManager(requireContext(), 3)
+
+                            movieRecyclerView.adapter = RecyclerMoviesByCategoryAdapter(
+                                requireContext(),
+                                response.body() as List<Movie>,
+                                this@MoviesByCategoryFragment
+                            )
+
+                        }
+
+                        progressBar.dismiss()
+
+                    } else if (response.code() == 401) {
+                        (activity as HomePageActivity).signOut()
+                    } else if (response.code() == 500) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Internal Server Error\nPlease try again",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            response.code().toString(),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
-                    else{
-                        nothingImgVw.visibility = View.GONE
-                        nothingTxtVw.visibility = View.GONE
-                        movieRecyclerView.layoutManager =
-                            GridLayoutManager(requireContext(), 3)
-
-                        movieRecyclerView.adapter = RecyclerMoviesByCategoryAdapter(requireContext(), response.body() as List<Movie>, this@MoviesByCategoryFragment)
-
-                    }
-
-                    progressBar.dismiss()
-
-                }
-                else if(response.code()==401){
-                    (activity as HomePageActivity).signOut()
-                }
-                else if(response.code()==500){
-                    Toast.makeText(requireContext(), "Internal Server Error\nPlease try again", Toast.LENGTH_SHORT).show()
-                }
-                else{
-                    Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<List<Movie>>, t: Throwable) {
-                Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show()
-                progressBar.dismiss()
+                if (context != null) {
+                    Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show()
+                    progressBar.dismiss()
+                }
             }
-
         })
     }
 
-    override fun onItemClick(position: Int, movieId : Int) {
+    override fun onItemClick(position: Int, movieId: Int) {
         (activity as HomePageActivity).movieId = movieId
         (activity as HomePageActivity).mediaStreamingFrag()
     }

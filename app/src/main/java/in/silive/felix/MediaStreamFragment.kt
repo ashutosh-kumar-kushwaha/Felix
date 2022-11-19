@@ -372,15 +372,23 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
         )
         call.enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
-                if (response.code() != 200) {
-                    Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT)
-                        .show()
+                if(context != null) {
+                    if (response.code() != 200) {
+                        Toast.makeText(
+                            requireContext(),
+                            response.code().toString(),
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
                 }
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
-                Toast.makeText(requireContext(), "Failed to add to history", Toast.LENGTH_SHORT)
-                    .show()
+                if(context != null) {
+                    Toast.makeText(requireContext(), "Failed to add to history", Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
 
         })
@@ -453,25 +461,29 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
         )
         call.enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
-                Toast.makeText(requireContext(), response.body().toString(), Toast.LENGTH_SHORT)
-                    .show()
-                wishListBtn.setCompoundDrawablesWithIntrinsicBounds(
-                    ContextCompat.getDrawable(
-                        wishListBtn.context,
-                        R.drawable.ic_cross
-                    ), null, null, null
-                )
-                isAddedToWishlist = true
-                isChangingWishList = false
+                if (context != null) {
+                    Toast.makeText(requireContext(), response.body().toString(), Toast.LENGTH_SHORT)
+                        .show()
+                    wishListBtn.setCompoundDrawablesWithIntrinsicBounds(
+                        ContextCompat.getDrawable(
+                            wishListBtn.context,
+                            R.drawable.ic_cross
+                        ), null, null, null
+                    )
+                    isAddedToWishlist = true
+                    isChangingWishList = false
+                }
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
-                Toast.makeText(
-                    requireContext(),
-                    "Failed to add to wish list",
-                    Toast.LENGTH_SHORT
-                ).show()
-                isChangingWishList = false
+                if (context != null) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Failed to add to wish list",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    isChangingWishList = false
+                }
             }
 
         })
@@ -487,27 +499,30 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
         )
         call.enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
-                Toast.makeText(requireContext(), response.body().toString(), Toast.LENGTH_SHORT)
-                    .show()
-                wishListBtn.setCompoundDrawablesWithIntrinsicBounds(
-                    ContextCompat.getDrawable(
-                        wishListBtn.context,
-                        R.drawable.ic_plus
-                    ), null, null, null
-                )
-                isAddedToWishlist = false
-                isChangingWishList = false
+                if (context != null) {
+                    Toast.makeText(requireContext(), response.body().toString(), Toast.LENGTH_SHORT)
+                        .show()
+                    wishListBtn.setCompoundDrawablesWithIntrinsicBounds(
+                        ContextCompat.getDrawable(
+                            wishListBtn.context,
+                            R.drawable.ic_plus
+                        ), null, null, null
+                    )
+                    isAddedToWishlist = false
+                    isChangingWishList = false
+                }
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
-                Toast.makeText(
-                    requireContext(),
-                    "Failed to remove from wish list",
-                    Toast.LENGTH_SHORT
-                ).show()
-                isChangingWishList = false
+                if (context != null) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Failed to remove from wish list",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    isChangingWishList = false
+                }
             }
-
         })
 
     }
@@ -520,14 +535,18 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
         )
         call.enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
-                Toast.makeText(requireContext(), response.body().toString(), Toast.LENGTH_SHORT)
-                    .show()
-                isLiked = true
-                heartImgVw.setImageResource(R.drawable.heart_liked)
+                if(context != null) {
+                    Toast.makeText(requireContext(), response.body().toString(), Toast.LENGTH_SHORT)
+                        .show()
+                    isLiked = true
+                    heartImgVw.setImageResource(R.drawable.heart_liked)
+                }
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
-                Toast.makeText(requireContext(), "Failed to like", Toast.LENGTH_SHORT).show()
+                if(context != null) {
+                    Toast.makeText(requireContext(), "Failed to like", Toast.LENGTH_SHORT).show()
+                }
             }
 
         })
@@ -541,14 +560,18 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
         )
         call.enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
-                Toast.makeText(requireContext(), response.body().toString(), Toast.LENGTH_SHORT)
-                    .show()
-                isLiked = false
-                heartImgVw.setImageResource(R.drawable.heart_unliked)
+                if(context != null) {
+                    Toast.makeText(requireContext(), response.body().toString(), Toast.LENGTH_SHORT)
+                        .show()
+                    isLiked = false
+                    heartImgVw.setImageResource(R.drawable.heart_unliked)
+                }
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
-                Toast.makeText(requireContext(), "Failed to like", Toast.LENGTH_SHORT).show()
+                if(context != null) {
+                    Toast.makeText(requireContext(), "Failed to like", Toast.LENGTH_SHORT).show()
+                }
             }
 
         })

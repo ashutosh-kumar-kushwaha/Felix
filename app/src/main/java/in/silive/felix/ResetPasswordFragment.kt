@@ -89,111 +89,124 @@ class ResetPasswordFragment : Fragment() {
                 val call = retrofitAPI.resetPassword(resetPasswordRequest)
                 call.enqueue(object : Callback<String> {
                     override fun onResponse(call: Call<String>, response: Response<String>) {
-                        if (response.code() == 200) {
-                            val user = User(null, (activity as AuthenticationActivity).email, null, null, password1, null)
-                            val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
-                            val call2 = retrofitAPI.logIn(user)
+                        if (context != null) {
+                            if (response.code() == 200) {
+                                val user = User(
+                                    null,
+                                    (activity as AuthenticationActivity).email,
+                                    null,
+                                    null,
+                                    password1,
+                                    null
+                                )
+                                val retrofitAPI =
+                                    ServiceBuilder.buildService(RetrofitAPI::class.java)
+                                val call2 = retrofitAPI.logIn(user)
 
-                            call2.enqueue(object : Callback<User> {
-                                override fun onResponse(
-                                    call: Call<User>,
-                                    response: Response<User>
-                                ) {
-                                    if (response.code() == 401) {
-                                        Toast.makeText(
-                                            requireContext(),
-                                            "Invalid Email or Password",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
+                                call2.enqueue(object : Callback<User> {
+                                    override fun onResponse(
+                                        call: Call<User>,
+                                        response: Response<User>
+                                    ) {
+                                        if(context != null) {
+                                            if (response.code() == 401) {
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    "Invalid Email or Password",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
 
-                                    } else if (response.code() == 200) {
-                                        Toast.makeText(
-                                            requireContext(),
-                                            response.headers().get("Set-Cookie").toString(),
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-
-                                        lifecycleScope.launch(Dispatchers.IO) {
-                                            val dataStoreManager = DataStoreManager(requireContext())
-                                            dataStoreManager.storeLogInInfo(
-                                                LogInInfo(
+                                            } else if (response.code() == 200) {
+                                                Toast.makeText(
+                                                    requireContext(),
                                                     response.headers().get("Set-Cookie").toString(),
-                                                    true,
-                                                    response.body()?.firstName.toString() + " " + response.body()?.lastName.toString(),
-                                                    response.body()?.email.toString(),
-                                                    response.body()?.role.toString()
-                                                )
-                                            )
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+
+                                                lifecycleScope.launch(Dispatchers.IO) {
+                                                    val dataStoreManager =
+                                                        DataStoreManager(requireContext())
+                                                    dataStoreManager.storeLogInInfo(
+                                                        LogInInfo(
+                                                            response.headers().get("Set-Cookie")
+                                                                .toString(),
+                                                            true,
+                                                            response.body()?.firstName.toString() + " " + response.body()?.lastName.toString(),
+                                                            response.body()?.email.toString(),
+                                                            response.body()?.role.toString()
+                                                        )
+                                                    )
+                                                }
+                                                (activity as AuthenticationActivity).homePage()
+                                            } else if (response.code() == 500) {
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    "Internal server error\nPlease try again",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            } else {
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    response.code().toString(),
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
+
+                                            progressBar.dismiss()
                                         }
-                                        (activity as AuthenticationActivity).homePage()
-                                    } else if (response.code() == 500) {
-                                        Toast.makeText(
-                                            requireContext(),
-                                            "Internal server error\nPlease try again",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    } else {
-                                        Toast.makeText(
-                                            requireContext(),
-                                            response.code().toString(),
-                                            Toast.LENGTH_SHORT
-                                        ).show()
                                     }
 
-                                    progressBar.dismiss()
-                                }
-
-                                override fun onFailure(call: Call<User>, t: Throwable) {
-                                    Toast.makeText(
-                                        requireContext(),
-                                        "Please check your internet connection",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                    progressBar.dismiss()
-                                }
-                            })
+                                    override fun onFailure(call: Call<User>, t: Throwable) {
+                                        if(context != null) {
+                                            Toast.makeText(
+                                                requireContext(),
+                                                "Please check your internet connection",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                            progressBar.dismiss()
+                                        }
+                                    }
+                                })
+                            } else if (response.code() == 422) {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Invalid OTP",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            } else if (response.code() == 408) {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Session Expired",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            } else if (response.code() == 404) {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "User Not Found",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            } else if (response.code() == 500) {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Internal server error\nPlease try again",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            } else {
+                                Toast.makeText(
+                                    requireContext(),
+                                    response.code().toString(),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                            progressBar.dismiss()
                         }
-                        else if(response.code() == 422){
-                            Toast.makeText(
-                                requireContext(),
-                                "Invalid OTP",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                        else if(response.code() == 408){
-                            Toast.makeText(
-                                requireContext(),
-                                "Session Expired",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                        else if(response.code() == 404){
-                            Toast.makeText(
-                                requireContext(),
-                                "User Not Found",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                        else if(response.code() == 500){
-                            Toast.makeText(
-                                requireContext(),
-                                "Internal server error\nPlease try again",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                        else{
-                            Toast.makeText(
-                                requireContext(),
-                                response.code().toString(),
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                        progressBar.dismiss()
                     }
 
                     override fun onFailure(call: Call<String>, t: Throwable) {
-                        Toast.makeText(view?.context, "Failed", Toast.LENGTH_SHORT).show()
-                        progressBar.dismiss()
+                        if(context != null) {
+                            Toast.makeText(view?.context, "Failed", Toast.LENGTH_SHORT).show()
+                            progressBar.dismiss()
+                        }
                     }
 
                 })

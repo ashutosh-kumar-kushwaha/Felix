@@ -109,64 +109,97 @@ class SignUpFragment : Fragment() {
 
                         if (response.code() == 401) {
 
+                            if (context != null) {
 
-                            val call2 = retrofitAPI.resendVerificationLink(Email(email))
-                            call2.enqueue(object : Callback<String> {
-                                override fun onResponse(
-                                    call: Call<String>,
-                                    response: Response<String>
-                                ) {
-                                    if (response.code() == 200) {
+
+                                val call2 = retrofitAPI.resendVerificationLink(Email(email))
+                                call2.enqueue(object : Callback<String> {
+                                    override fun onResponse(
+                                        call: Call<String>,
+                                        response: Response<String>
+                                    ) {
+                                        if(context != null) {
+                                            if (response.code() == 201) {
 //
-                                        (activity as AuthenticationActivity).email = email
-                                        (activity as AuthenticationActivity).password =
-                                            password1
-                                        (activity as AuthenticationActivity).emailVerifyFrag()
+                                                (activity as AuthenticationActivity).email = email
+                                                (activity as AuthenticationActivity).password =
+                                                    password1
+                                                (activity as AuthenticationActivity).emailVerifyFrag()
+                                            } else if (response.code() == 404) {
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    response.body().toString(),
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            } else if (response.code() == 500) {
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    "Internal Server Error\nPlease try again",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            } else {
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    response.code().toString(),
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
+                                        }
                                     }
-                                    else if(response.code() == 404){
-                                        Toast.makeText(requireContext(), response.body().toString(), Toast.LENGTH_SHORT).show()
-                                    }
-                                    else if(response.code() == 500){
-                                        Toast.makeText(requireContext(), "Internal Server Error\nPlease try again", Toast.LENGTH_SHORT).show()
-                                    }
-                                    else{
-                                        Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT).show()
-                                    }
-                                }
 
-                                override fun onFailure(call: Call<String>, t: Throwable) {
-                                    Toast.makeText(view.context, "Failed to resend link", Toast.LENGTH_SHORT)
-                                        .show()
-                                }
 
-                            })
+                                    override fun onFailure(call: Call<String>, t: Throwable) {
+                                        if(context != null) {
+
+                                            Toast.makeText(
+                                                view.context,
+                                                "Failed to resend link",
+                                                Toast.LENGTH_SHORT
+                                            )
+                                                .show()
+                                        }
+                                    }
+
+                                })
 //
-                        }
-                        else if(response.code() == 200){
-                            (activity as AuthenticationActivity).email = email
-                            (activity as AuthenticationActivity).password = password1
-                            (activity as AuthenticationActivity).emailVerifyFrag()
-                        }
-                        else if(response.code() == 409){
-                            Toast.makeText(requireContext(), "Email already in use", Toast.LENGTH_SHORT).show()
-                        }
-                        else if(response.code() == 500){
-                            Toast.makeText(requireContext(), "Internal Server Error\nPlease try again", Toast.LENGTH_SHORT).show()
-                        }
-                        else {
-                            Toast.makeText(
-                                view.context,
-                                response.code().toString(),
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            } else if (response.code() == 200) {
+                                (activity as AuthenticationActivity).email = email
+                                (activity as AuthenticationActivity).password = password1
+                                (activity as AuthenticationActivity).emailVerifyFrag()
+                            } else if (response.code() == 409) {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Email already in use",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            } else if (response.code() == 500) {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Internal Server Error\nPlease try again",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            } else {
+                                Toast.makeText(
+                                    view.context,
+                                    response.code().toString(),
+                                    Toast.LENGTH_SHORT
+                                ).show()
 
+                            }
+                            progressBar.dismiss()
                         }
-                        progressBar.dismiss()
                     }
 
                     override fun onFailure(call: Call<String>, t: Throwable) {
-                        Toast.makeText(requireContext(), "Failed to sign up. Please try again.", Toast.LENGTH_SHORT).show()
-                        progressBar.dismiss()
+                        if(context != null) {
+
+                            Toast.makeText(
+                                requireContext(),
+                                "Failed to sign up. Please try again.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            progressBar.dismiss()
+                        }
                     }
                 })
 

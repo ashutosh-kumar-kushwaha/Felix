@@ -72,40 +72,55 @@ class ChangePasswordFragment : Fragment() {
         val call = retrofitAPI.changePassword("Bearer " + (activity as HomePageActivity).token,ChangePasswordRequest((activity as HomePageActivity).email, oldPasswordETxt.text.toString(), password1ETxt.text.toString()))
         call.enqueue(object : Callback<String>{
             override fun onResponse(call: Call<String>, response: Response<String>) {
-                if(response.code() == 200){
-                    Toast.makeText(requireContext(), "Password changed successfully", Toast.LENGTH_SHORT).show()
-                }
-                else if(response.code() == 404){
-                    Toast.makeText(requireContext(), "User with email not found", Toast.LENGTH_SHORT).show()
-                }
-                else if(response.code() == 409){
-                    Toast.makeText(requireContext(), "New password can't be same as old password", Toast.LENGTH_SHORT).show()
-                }
-                else if(response.code() == 401){
-                    Log.d("Ashu", response.body().toString())
-                    Toast.makeText(requireContext(), "Invalid Password", Toast.LENGTH_SHORT).show()
-                }
-                else if (response.code() == 500) {
-                    Toast.makeText(
-                        requireContext(),
-                        "Internal Server Error. Please try again.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                else if (response.code() == 400) {
-                    Toast.makeText(
-                        requireContext(),
-                        response.body().toString(),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                else {
-                    Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT).show()
+                if(context != null) {
+                    if (response.code() == 200) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Password changed successfully",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else if (response.code() == 404) {
+                        Toast.makeText(
+                            requireContext(),
+                            "User with email not found",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else if (response.code() == 409) {
+                        Toast.makeText(
+                            requireContext(),
+                            "New password can't be same as old password",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else if (response.code() == 401) {
+                        Log.d("Ashu", response.body().toString())
+                        Toast.makeText(requireContext(), "Invalid Password", Toast.LENGTH_SHORT)
+                            .show()
+                    } else if (response.code() == 500) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Internal Server Error. Please try again.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else if (response.code() == 400) {
+                        Toast.makeText(
+                            requireContext(),
+                            response.body().toString(),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            response.code().toString(),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
-                Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show()
+                if(context != null) {
+                    Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show()
+                }
             }
 
         })

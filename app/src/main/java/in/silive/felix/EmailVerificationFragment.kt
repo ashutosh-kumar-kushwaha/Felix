@@ -77,7 +77,7 @@ class EmailVerificationFragment : Fragment() {
         timer.schedule(object : TimerTask(){
             override fun run() {
 
-                    //
+                logIn()
 
             }
 
@@ -96,43 +96,50 @@ class EmailVerificationFragment : Fragment() {
         call.enqueue(object : Callback<User> {
             override fun onResponse(call: Call<User>, response: Response<User>) {
 
-                if(response.code() == 200) {
-//                        Toast.makeText(requireContext(), "Hello " + response.body()?.firstName.toString() + "!\nRole = " + response.body()?.role.toString(), Toast.LENGTH_SHORT).show()
-                    Toast.makeText(
-                        requireContext(),
-                        response.headers().get("Set-Cookie").toString(),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                if (context != null) {
 
-                    lifecycleScope.launch(Dispatchers.IO) {
-                        val dataStoreManager = DataStoreManager(requireContext())
-                        dataStoreManager.storeLogInInfo(
-                            LogInInfo(
-                                response.headers().get("Set-Cookie").toString(), true, response.body()?.firstName.toString() + " " + response.body()?.lastName.toString(), response.body()?.email.toString(), response.body()?.role.toString()
+                    if (response.code() == 200) {
+//                        Toast.makeText(requireContext(), "Hello " + response.body()?.firstName.toString() + "!\nRole = " + response.body()?.role.toString(), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(),
+                            response.headers().get("Set-Cookie").toString(),
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            val dataStoreManager = DataStoreManager(requireContext())
+                            dataStoreManager.storeLogInInfo(
+                                LogInInfo(
+                                    response.headers().get("Set-Cookie").toString(),
+                                    true,
+                                    response.body()?.firstName.toString() + " " + response.body()?.lastName.toString(),
+                                    response.body()?.email.toString(),
+                                    response.body()?.role.toString()
+                                )
                             )
-                        )
-                    }
+                        }
 
 //                        runBlocking { view?.let { DataStoreManager(it.context).storeLogInInfo(
 //                            LogInInfo(response.headers().get("Set-Cookie").toString(), true)
 //                        ) } }
 
-                    (activity as AuthenticationActivity).homePage()
-                }
-                else if(response.code() != 500 && response.code() != 401){
-                    Toast.makeText(
-                        requireContext(),
-                        response.code().toString(),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+                        (activity as AuthenticationActivity).homePage()
+                    } else if (response.code() != 500 && response.code() != 401) {
+                        Toast.makeText(
+                            requireContext(),
+                            response.code().toString(),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
 
-                progressBar.dismiss()
+                    progressBar.dismiss()
+                }
             }
 
             override fun onFailure(call: Call<User>, t: Throwable) {
-
-                progressBar.dismiss()
+                if(context != null) {
+                    progressBar.dismiss()
+                }
             }
         })
     }
@@ -143,20 +150,28 @@ class EmailVerificationFragment : Fragment() {
         val call = retrofitAPI.resendVerificationLink(Email((activity as AuthenticationActivity).email))
         call.enqueue(object : Callback<String>{
             override fun onResponse(call: Call<String>, response: Response<String>) {
-                time = 60
-                Toast.makeText(view?.context, response.body(), Toast.LENGTH_SHORT).show()
-                canResend = false
-                updateTime()
-                resendEmailTxtVw.text = "Resend email in"
-                resendBtn.alpha = 0.5f
-                Log.d("Ashu", "Here")
-                isSending = false
+                if(context != null) {
+                    time = 60
+                    Toast.makeText(view?.context, response.body(), Toast.LENGTH_SHORT).show()
+                    canResend = false
+                    updateTime()
+                    resendEmailTxtVw.text = "Resend email in"
+                    resendBtn.alpha = 0.5f
+                    Log.d("Ashu", "Here")
+                    isSending = false
+                }
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
-                Toast.makeText(view?.context, "Failed to resend link. Please try again.", Toast.LENGTH_SHORT).show()
-                Log.d("Ashu", "Here")
-                isSending = false
+                if(context != null) {
+                    Toast.makeText(
+                        view?.context,
+                        "Failed to resend link. Please try again.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    Log.d("Ashu", "Here")
+                    isSending = false
+                }
             }
 
         })

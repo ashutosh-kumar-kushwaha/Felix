@@ -57,47 +57,50 @@ class ForgotPasswordFragment : Fragment() {
             val call = retrofitAPI.forgotPassword(email)
             call.enqueue(object : Callback<String> {
                 override fun onResponse(call: Call<String>, response: Response<String>) {
-                    if(response.code() == 200){
-                        (activity as AuthenticationActivity).email = email.email
-                        Toast.makeText(view.context, response.body().toString(), Toast.LENGTH_SHORT)
-                            .show()
+                    if (context != null) {
+                        if (response.code() == 200) {
+                            (activity as AuthenticationActivity).email = email.email
+                            Toast.makeText(
+                                view.context,
+                                response.body().toString(),
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
 
-                        if (response.body() == "OTP sent on the given mail")
-                            (activity as AuthenticationActivity).otpVerificationFrag()
-                    }
-                    else if(response.code() == 404){
-                        Toast.makeText(
-                            view.context,
-                            "User not found",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                    else if(response.code() == 500){
-                        Toast.makeText(
-                            view.context,
-                            "Internal server error\nPlease try again",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                    else{
-                        Toast.makeText(
-                            view.context,
-                            response.code().toString(),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
+                            if (response.body() == "OTP sent on the given mail")
+                                (activity as AuthenticationActivity).otpVerificationFrag()
+                        } else if (response.code() == 404) {
+                            Toast.makeText(
+                                view.context,
+                                "User not found",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else if (response.code() == 500) {
+                            Toast.makeText(
+                                view.context,
+                                "Internal server error\nPlease try again",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            Toast.makeText(
+                                view.context,
+                                response.code().toString(),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
 
-                    progressBar.dismiss()
-
+                        progressBar.dismiss()
+                    }
                 }
 
                 override fun onFailure(call: Call<String>, t: Throwable) {
-                    Toast.makeText(view.context, "Failed", Toast.LENGTH_SHORT).show()
-                    progressBar.dismiss()
+                    if (context != null) {
+                        Toast.makeText(view.context, "Failed", Toast.LENGTH_SHORT).show()
+                        progressBar.dismiss()
+                    }
                 }
             })
-        }
-        else{
+        } else {
             emailETxt.error = "Enter a valid email"
         }
     }
