@@ -55,7 +55,7 @@
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_log_in.xml" value="0.2" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_media_stream.xml" value="0.25" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_movies_by_category.xml" value="0.264" />
-        <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_my_profile.xml" value="0.16" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_my_profile.xml" value="0.176" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_new_admin.xml" value="0.1" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_new_category.xml" value="0.2" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_new_movie.xml" value="0.1851002865329513" />
@@ -63,8 +63,8 @@
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_reset_password.xml" value="0.25" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_search.xml" value="0.264" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_search_movie_for_edit.xml" value="0.1" />
-        <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_sign_up.xml" value="0.2" />
-        <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_watch_history.xml" value="0.13809320222317228" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_sign_up.xml" value="0.24169530355097366" />
+        <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_watch_history.xml" value="0.536" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/fragment_wishlist.xml" value="0.1" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/history_item.xml" value="0.653250773993808" />
         <entry key="..\:/Programming/Felix/app/src/main/res/layout/image_container.xml" value="0.12013681060282172" />

@@ -117,11 +117,11 @@ class ResetPasswordFragment : Fragment() {
                                                 ).show()
 
                                             } else if (response.code() == 200) {
-                                                Toast.makeText(
-                                                    requireContext(),
-                                                    response.headers().get("Set-Cookie").toString(),
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
+//                                                Toast.makeText(
+//                                                    requireContext(),
+//                                                    response.headers().get("Set-Cookie").toString(),
+//                                                    Toast.LENGTH_SHORT
+//                                                ).show()
 
                                                 lifecycleScope.launch(Dispatchers.IO) {
                                                     val dataStoreManager =

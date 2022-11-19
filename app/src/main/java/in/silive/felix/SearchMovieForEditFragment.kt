@@ -114,6 +114,7 @@ class SearchMovieForEditFragment : Fragment() , ItemClickListener{
                             )
                         moviesRecyclerView.adapter = recyclerAdapter
                     }
+
                 }
 
                 override fun onFailure(call: Call<List<SearchResponseItem>>, t: Throwable) {

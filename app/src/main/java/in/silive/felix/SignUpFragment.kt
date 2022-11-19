@@ -111,7 +111,6 @@ class SignUpFragment : Fragment() {
 
                             if (context != null) {
 
-
                                 val call2 = retrofitAPI.resendVerificationLink(Email(email))
                                 call2.enqueue(object : Callback<String> {
                                     override fun onResponse(
@@ -144,6 +143,7 @@ class SignUpFragment : Fragment() {
                                                     Toast.LENGTH_SHORT
                                                 ).show()
                                             }
+                                            progressBar.dismiss()
                                         }
                                     }
 
@@ -157,6 +157,7 @@ class SignUpFragment : Fragment() {
                                                 Toast.LENGTH_SHORT
                                             )
                                                 .show()
+                                            progressBar.dismiss()
                                         }
                                     }
 

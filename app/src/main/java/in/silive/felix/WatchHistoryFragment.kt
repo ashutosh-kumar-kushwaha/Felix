@@ -26,14 +26,15 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class WatchHistoryFragment : Fragment(), HistoryClickListener{
+class WatchHistoryFragment : Fragment(), HistoryClickListener {
 
 
-    lateinit var movieRecyclerView : RecyclerView
+    lateinit var movieRecyclerView: RecyclerView
     lateinit var progressBar: AlertDialog
     var builder: AlertDialog.Builder? = null
-    lateinit var nothingImgVw : AppCompatImageView
-    lateinit var nothingTxtVw : AppCompatTextView
+    lateinit var nothingImgVw: AppCompatImageView
+    lateinit var nothingTxtVw: AppCompatTextView
+    lateinit var clearAllBtn: AppCompatTextView
 
 
     fun getDialogueProgressBar(view: View): AlertDialog.Builder {
@@ -69,7 +70,22 @@ class WatchHistoryFragment : Fragment(), HistoryClickListener{
 
         movieRecyclerView = view.findViewById(R.id.recyclerView)
 
+        clearAllBtn = view.findViewById(R.id.clearAllBtn)
+
         getHistory()
+
+        clearAllBtn.setOnClickListener {
+
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle("Confirm Delete").setMessage("Do you want to clear History?")
+                .setPositiveButton(
+                    "Yes",
+                    DialogInterface.OnClickListener { _, _ -> clearHistory() })
+                .setNegativeButton("Cancel", DialogInterface.OnClickListener { _, _ -> })
+            val alertDialog = builder.create()
+            alertDialog.show()
+
+        }
 
 
 //        movieRecyclerView = view.findViewById(R.id.recyclerView)
@@ -88,20 +104,27 @@ class WatchHistoryFragment : Fragment(), HistoryClickListener{
 
     override fun onDeleteClick(position: Int, movieId: Int) {
         val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Confirm Delete").setMessage("Do you want to delete this movie from Wish List?").setPositiveButton("Yes", DialogInterface.OnClickListener { _, _ -> deleteMovie(movieId) }).setNegativeButton("Cancel", DialogInterface.OnClickListener { _, _ ->  })
+        builder.setTitle("Confirm Delete")
+            .setMessage("Do you want to delete this movie from History?").setPositiveButton(
+            "Yes",
+            DialogInterface.OnClickListener { _, _ -> deleteMovie(movieId) })
+            .setNegativeButton("Cancel", DialogInterface.OnClickListener { _, _ -> })
         val alertDialog = builder.create()
         alertDialog.show()
     }
 
-    fun deleteMovie(movieId: Int){
+    fun deleteMovie(movieId: Int) {
 
         val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
-        val call = retrofitAPI.removeFromHistory("Bearer " + (activity as HomePageActivity).token, movieId.toString())
-        call.enqueue(object : Callback<String>{
+        val call = retrofitAPI.removeFromHistory(
+            "Bearer " + (activity as HomePageActivity).token,
+            movieId.toString()
+        )
+        call.enqueue(object : Callback<String> {
 
             override fun onResponse(call: Call<String>, response: Response<String>) {
 
-                if((activity as HomePageActivity).currentFragment == "History") {
+                if (context != null) {
 
                     if (response.code() == 200) {
                         Toast.makeText(
@@ -129,17 +152,18 @@ class WatchHistoryFragment : Fragment(), HistoryClickListener{
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
-                if((activity as HomePageActivity).currentFragment == "History") {
+                if (context != null) {
                     Toast.makeText(requireContext(), "Failed to delete history", Toast.LENGTH_SHORT)
                         .show()
                 }
             }
 
+
         })
 
     }
 
-    fun getHistory(){
+    fun getHistory() {
         val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
         val call = retrofitAPI.getHistory(
             "Bearer " + (activity as HomePageActivity).token
@@ -204,7 +228,7 @@ class WatchHistoryFragment : Fragment(), HistoryClickListener{
             }
 
             override fun onFailure(call: Call<List<Movie>>, t: Throwable) {
-                if(context != null) {
+                if (context != null) {
                     Toast.makeText(requireContext(), "Failed to load history", Toast.LENGTH_SHORT)
                         .show()
                 }
@@ -213,5 +237,52 @@ class WatchHistoryFragment : Fragment(), HistoryClickListener{
 
         })
 
+    }
+
+    fun clearHistory() {
+        progressBar.show()
+
+        val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
+        val call = retrofitAPI.clearHistory("Bearer " + (activity as HomePageActivity).token)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if (context != null) {
+                    if (response.code() == 200) {
+                        Toast.makeText(requireContext(), "History Cleared", Toast.LENGTH_SHORT)
+                            .show()
+                        getHistory()
+
+
+                    } else if (response.code() == 401) {
+                        (activity as HomePageActivity).signOut()
+                    } else if (response.code() == 500) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Internal server error\nPlease try again",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            response.code().toString(),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    progressBar.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                if (context != null) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Failed to clear history",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    progressBar.dismiss()
+                }
+            }
+
+        })
     }
 }

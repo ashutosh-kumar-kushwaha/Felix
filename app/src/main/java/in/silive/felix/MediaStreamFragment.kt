@@ -80,6 +80,8 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
     var builder: AlertDialog.Builder? = null
     lateinit var progressBar: AlertDialog
 
+    lateinit var shareBtn : AppCompatImageView
+
 
     fun getDialogueProgressBar(view: View): AlertDialog.Builder {
         if (builder == null) {
@@ -201,6 +203,7 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
         watchNowBtn = view.findViewById(R.id.watchNowBtn)
         details = view.findViewById(R.id.details)
         fitZoomBtn = view.findViewById(R.id.fitZoomBtn)
+        shareBtn = view.findViewById(R.id.shareBtn)
 
         watchNowBtn.setOnClickListener {
             if (!isVPlaying) {
@@ -209,6 +212,15 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
             if (!isFullScreen) {
                 fullScreen()
             }
+        }
+
+        shareBtn.setOnClickListener {
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.setType("text/plain")
+            intent.putExtra(Intent.EXTRA_SUBJECT, "Movie Share")
+            intent.putExtra(Intent.EXTRA_TEXT, "https://felixapis.herokuapp.com/movie/${(activity as HomePageActivity).movieId}")
+            startActivity(Intent.createChooser(intent, "Share via"))
+
         }
 
         fullScreenBtn.setOnClickListener {
@@ -595,19 +607,19 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
     fun changeResizeMode() {
         when (resizeModeIndex) {
             0 -> {
+                resizeModeIndex = 1
                 fitZoomBtn.setImageResource(resizeMode[resizeModeIndex])
                 videoPlayer.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_ZOOM
-                resizeModeIndex = 1
             }
             1 -> {
+                resizeModeIndex = 2
                 fitZoomBtn.setImageResource(resizeMode[resizeModeIndex])
                 videoPlayer.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FILL
-                resizeModeIndex = 2
             }
             else -> {
+                resizeModeIndex = 0
                 fitZoomBtn.setImageResource(resizeMode[resizeModeIndex])
                 videoPlayer.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
-                resizeModeIndex = 0
             }
         }
     }

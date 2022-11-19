@@ -97,47 +97,7 @@ class MyProfileFragment : Fragment() {
         }
 
         historyBtn.setOnClickListener {
-//            (activity as HomePageActivity).historyFrag()
-            progressBar.show()
-
-            val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
-            val call = retrofitAPI.clearHistory("Bearer " + (activity as HomePageActivity).token)
-            call.enqueue(object : Callback<String> {
-                override fun onResponse(call: Call<String>, response: Response<String>) {
-                    if (response.code() == 200) {
-                        Toast.makeText(requireContext(), "History Cleared", Toast.LENGTH_SHORT).show()
-                    }
-                    else if(response.code() == 401){
-                        (activity as HomePageActivity).signOut()
-                    }
-                    else if(response.code() == 500){
-                        Toast.makeText(
-                            view.context,
-                            "Internal server error\nPlease try again",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                    else{
-                        Toast.makeText(
-                            view.context,
-                            response.code().toString(),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                    progressBar.dismiss()
-                }
-
-                override fun onFailure(call: Call<String>, t: Throwable) {
-                    Toast.makeText(
-                        view.context,
-                        "Failed to clear history",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    progressBar.dismiss()
-                }
-
-            })
-
+            (activity as HomePageActivity).historyFrag()
         }
 
         return view
