@@ -2,13 +2,16 @@ package `in`.silive.felix
 
 import `in`.silive.felix.module.*
 import `in`.silive.felix.recyclerview.ItemClickListener
+import `in`.silive.felix.recyclerview.ParentRecommendationAdapter
 import `in`.silive.felix.recyclerview.ParentRecyclerAdapter
 import `in`.silive.felix.server.RetrofitAPI
 import `in`.silive.felix.server.ServiceBuilder
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.TypedValue
@@ -18,6 +21,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -52,69 +56,111 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
     lateinit var exoPlayer: ExoPlayer
     lateinit var wishListBtn: AppCompatButton
     lateinit var heartImgVw: AppCompatImageView
-    lateinit var details:ConstraintLayout
+    lateinit var details: ConstraintLayout
     var isVPlaying = false
     lateinit var movieRecyclerView: RecyclerView
     var isLiked: Boolean? = false
     var isAddedToWishlist: Boolean? = false
     var isChangingWishList = false
     var isChangingLike = false
-    lateinit var genres : List<Genre>
-    lateinit var flexLayout : FlexboxLayout
+    lateinit var genres: List<Genre>
+    lateinit var flexLayout: FlexboxLayout
     var isAddedToHistory = false
     var isFullScreen = false
-    lateinit var fullScreenBtn : AppCompatImageView
-    lateinit var watchNowBtn : AppCompatButton
-    var moviesList: MutableList<Category> = mutableListOf()
+    lateinit var fullScreenBtn: AppCompatImageView
+    lateinit var watchNowBtn: AppCompatButton
+    var moviesList: MutableList<GenreMovies> = mutableListOf()
     var loadedItems = 0
-    lateinit var fitZoomBtn : AppCompatImageView
+    lateinit var fitZoomBtn: AppCompatImageView
+    var totalGenres = 0
 
     val resizeMode = listOf(R.drawable.ic_fit_to_screen, R.drawable.ic_zoom, R.drawable.ic_stretch)
     var resizeModeIndex = 0
 
+    var builder: AlertDialog.Builder? = null
+    lateinit var progressBar: AlertDialog
+
+
+    fun getDialogueProgressBar(view: View): AlertDialog.Builder {
+        if (builder == null) {
+            builder = AlertDialog.Builder(view.context)
+            val progressBar = ProgressBar(view.context)
+            val lp = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            progressBar.layoutParams = lp
+            builder!!.setView(progressBar)
+        }
+        return builder as AlertDialog.Builder
+    }
+
     fun getCategory(categoryName: String) {
         val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
 
-        val call = retrofitAPI.getMovieByCategory(
+        val call = retrofitAPI.search(
             "Bearer " + (activity as HomePageActivity).token,
             categoryName
         )
-        call.enqueue(object : Callback<List<Movie>> {
+        call.enqueue(object : Callback<List<SearchResponseItem>> {
             override fun onResponse(
-                call: Call<List<Movie>>,
-                response: Response<List<Movie>>
+                call: Call<List<SearchResponseItem>>,
+                response: Response<List<SearchResponseItem>>
             ) {
-                if (response.code() == 200) {
-                    val movies = response.body() as List<Movie>
+                if (context != null) {
+                    if (response.code() == 200) {
+                        val movies = response.body() as List<SearchResponseItem>
 
-                    moviesList.add(Category(categoryName, movies))
+                        moviesList.add(GenreMovies(categoryName, movies))
 
-                    movieRecyclerView.layoutManager =
-                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                        movieRecyclerView.layoutManager =
+                            LinearLayoutManager(
+                                requireContext(),
+                                LinearLayoutManager.VERTICAL,
+                                false
+                            )
 
-                    val parentRecyclerAdapter =
-                        ParentRecyclerAdapter(requireContext(), moviesList, this@MediaStreamFragment)
+                        val parentRecyclerAdapter =
+                            ParentRecommendationAdapter(
+                                requireContext(),
+                                moviesList,
+                                this@MediaStreamFragment
+                            )
 
-                    movieRecyclerView.adapter = parentRecyclerAdapter
+                        movieRecyclerView.adapter = parentRecyclerAdapter
 
-                } else if (response.code() == 401) {
-                    (activity as HomePageActivity).signOut()
-                } else if (response.code() == 500) {
-                    Toast.makeText(
-                        requireContext(),
-                        "Internal Server Error. Please try again.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT)
-                        .show()
+                    } else if (response.code() == 401) {
+                        (activity as HomePageActivity).signOut()
+                    } else if (response.code() == 500) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Internal Server Error. Please try again.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            response.code().toString(),
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
+                    loadedItems++
+                    if (loadedItems == totalGenres) {
+                        progressBar.dismiss()
+                    }
                 }
-                loadedItems++
             }
 
-            override fun onFailure(call: Call<List<Movie>>, t: Throwable) {
-                Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show()
-                loadedItems++
+            override fun onFailure(call: Call<List<SearchResponseItem>>, t: Throwable) {
+                if (context != null) {
+
+                    Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show()
+                    loadedItems++
+                    if (loadedItems == totalGenres) {
+                        progressBar.dismiss()
+                    }
+                }
             }
 
         })
@@ -136,8 +182,13 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
 
         val view = inflater.inflate(R.layout.fragment_media_stream, container, false)
 
+        progressBar = getDialogueProgressBar(view).create()
+        progressBar.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        progressBar.setCanceledOnTouchOutside(false)
 
-        exoPlayer = ExoPlayer.Builder(view.context).setSeekBackIncrementMs(10000).setSeekForwardIncrementMs(10000).build()
+
+        exoPlayer = ExoPlayer.Builder(view.context).setSeekBackIncrementMs(10000)
+            .setSeekForwardIncrementMs(10000).build()
         movieTitle = view.findViewById(R.id.movieTitle)
         movieDetails = view.findViewById(R.id.movieDetails)
         castTxtVw = view.findViewById(R.id.castTxtVw)
@@ -151,16 +202,16 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
         details = view.findViewById(R.id.details)
         fitZoomBtn = view.findViewById(R.id.fitZoomBtn)
 
-        watchNowBtn.setOnClickListener{
-            if(!isVPlaying){
+        watchNowBtn.setOnClickListener {
+            if (!isVPlaying) {
                 exoPlayer.play()
             }
-            if(!isFullScreen){
+            if (!isFullScreen) {
                 fullScreen()
             }
         }
-        
-        fullScreenBtn.setOnClickListener{
+
+        fullScreenBtn.setOnClickListener {
             fullScreen()
         }
 
@@ -188,6 +239,8 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
             changeResizeMode()
         }
 
+        progressBar.show()
+
 
         val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
         val call = retrofitAPI.getMediaStreamingDetails(
@@ -201,86 +254,111 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
                 response: Response<MediaStreamingResponse>
             ) {
 
-
-                val details = response.body()
-                movieTitle.text = details?.movieName
-                movieDetails.text =
-                    "${details?.movieYear} | ${details?.movieRestriction} | ${details?.movieLength}"
-                castTxtVw.text = details?.movieCast
-                synopsisTxtVw.text = details?.movieDescription
-                isAddedToWishlist = details?.addedToWishlist
-                isLiked = details?.liked
-                genres = details!!.genres
+                if (context != null) {
 
 
-                for(i in genres){
-                    var txtVw = AppCompatTextView(view.context)
-                    txtVw.text = i.genreName
-                    var lp = FlexboxLayout.LayoutParams(FlexboxLayout.LayoutParams.WRAP_CONTENT, FlexboxLayout.LayoutParams.WRAP_CONTENT)
-                    txtVw.setTextColor(Color.WHITE)
-                    txtVw.setTypeface(ResourcesCompat.getFont(view.context ,R.font.montserrat))
-                    txtVw.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                        resources.getDimensionPixelSize(R.dimen.sp_12).toFloat()
-                    )
-                    txtVw.background = ContextCompat.getDrawable(view.context ,R.drawable.genre_background)
-                    lp.setMargins(0, 0, resources.getDimensionPixelSize(R.dimen.dp_7), resources.getDimensionPixelSize(R.dimen.dp_7))
-                    txtVw.setPadding(resources.getDimensionPixelSize(R.dimen.dp_5), 0, resources.getDimensionPixelSize(R.dimen.dp_5),0)
-                    txtVw.layoutParams = lp
-                    flexLayout.addView(txtVw)
-                }
-
-                if (isAddedToWishlist == true) {
-                    wishListBtn.setCompoundDrawablesWithIntrinsicBounds(
-                        ContextCompat.getDrawable(
-                            wishListBtn.context,
-                            R.drawable.ic_cross
-                        ), null, null, null
-                    )
-                }
-                if (isLiked == true) {
-                    heartImgVw.setImageResource(R.drawable.heart_liked)
-                }
+                    val details = response.body()
+                    movieTitle.text = details?.movieName
+                    movieDetails.text =
+                        "${details?.movieYear} | ${details?.movieRestriction} | ${details?.movieLength}"
+                    castTxtVw.text = details?.movieCast
+                    synopsisTxtVw.text = details?.movieDescription
+                    isAddedToWishlist = details?.addedToWishlist
+                    isLiked = details?.liked
+                    genres = details!!.genres
 
 
-
-
-                videoPlayer.player = exoPlayer
-
-                val mediaItem = MediaItem.fromUri(details?.streamMoviePath.toString())
-
-                exoPlayer.setMediaItem(mediaItem)
-                exoPlayer.prepare()
-
-
-
-                exoPlayer.addListener(object : Player.Listener {
-                    override fun onIsPlayingChanged(isPlaying: Boolean) {
-                        super.onIsPlayingChanged(isPlaying)
-                        isVPlaying = !isVPlaying
-                        if(!isAddedToHistory){
-                            addToHistory()
-                            isAddedToHistory = true
-                        }
+                    for (i in genres) {
+                        var txtVw = AppCompatTextView(view.context)
+                        txtVw.text = i.genreName
+                        var lp = FlexboxLayout.LayoutParams(
+                            FlexboxLayout.LayoutParams.WRAP_CONTENT,
+                            FlexboxLayout.LayoutParams.WRAP_CONTENT
+                        )
+                        txtVw.setTextColor(Color.WHITE)
+                        txtVw.setTypeface(ResourcesCompat.getFont(view.context, R.font.montserrat))
+                        txtVw.setTextSize(
+                            TypedValue.COMPLEX_UNIT_PX,
+                            resources.getDimensionPixelSize(R.dimen.sp_12).toFloat()
+                        )
+                        txtVw.background =
+                            ContextCompat.getDrawable(view.context, R.drawable.genre_background)
+                        lp.setMargins(
+                            0,
+                            0,
+                            resources.getDimensionPixelSize(R.dimen.dp_7),
+                            resources.getDimensionPixelSize(R.dimen.dp_7)
+                        )
+                        txtVw.setPadding(
+                            resources.getDimensionPixelSize(R.dimen.dp_5),
+                            0,
+                            resources.getDimensionPixelSize(R.dimen.dp_5),
+                            0
+                        )
+                        txtVw.layoutParams = lp
+                        flexLayout.addView(txtVw)
                     }
-                })
+
+                    if (isAddedToWishlist == true) {
+                        wishListBtn.setCompoundDrawablesWithIntrinsicBounds(
+                            ContextCompat.getDrawable(
+                                wishListBtn.context,
+                                R.drawable.ic_cross
+                            ), null, null, null
+                        )
+                    }
+                    if (isLiked == true) {
+                        heartImgVw.setImageResource(R.drawable.heart_liked)
+                    }
 
 
+
+
+                    videoPlayer.player = exoPlayer
+
+                    val mediaItem = MediaItem.fromUri(details?.streamMoviePath.toString())
+
+                    exoPlayer.setMediaItem(mediaItem)
+                    exoPlayer.prepare()
+                    exoPlayer.play()
+
+
+
+                    exoPlayer.addListener(object : Player.Listener {
+                        override fun onIsPlayingChanged(isPlaying: Boolean) {
+                            super.onIsPlayingChanged(isPlaying)
+                            isVPlaying = !isVPlaying
+                            if (!isAddedToHistory) {
+                                addToHistory()
+                                isAddedToHistory = true
+                            }
+                        }
+                    })
+
+                    totalGenres = genres.size
+
+                    for (i in genres) {
+                        i.genreName?.let { getCategory(it) }
+                    }
+
+                }
             }
 
             override fun onFailure(call: Call<MediaStreamingResponse>, t: Throwable) {
-                Toast.makeText(view.context, "Failed to load movie data", Toast.LENGTH_SHORT).show()
+                if (context != null) {
+                    Toast.makeText(view.context, "Failed to load movie data", Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
-
         })
 
-        movieRecyclerView= view.findViewById(R.id.recyclerView)
-        
+        movieRecyclerView = view.findViewById(R.id.recyclerView)
 
-        getCategory("Bollywood")
-        getCategory("Hollywood")
-        getCategory("Anime")
-        getCategory("Horror")
 
+//        getCategory("Bollywood")
+//        getCategory("Hollywood")
+//        getCategory("Anime")
+//        getCategory("Horror")
 
 
         return view
@@ -288,40 +366,45 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
 
     fun addToHistory() {
         val retrofitAPI = ServiceBuilder.buildService(RetrofitAPI::class.java)
-        val call = retrofitAPI.addToHistory("Bearer " + (activity as HomePageActivity).token, MovieId((activity as HomePageActivity).movieId))
-        call.enqueue(object : Callback<String>{
+        val call = retrofitAPI.addToHistory(
+            "Bearer " + (activity as HomePageActivity).token,
+            MovieId((activity as HomePageActivity).movieId)
+        )
+        call.enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
-                if(response.code() != 200){
-                    Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT).show()
+                if (response.code() != 200) {
+                    Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
-                Toast.makeText(requireContext(), "Failed to add to history", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Failed to add to history", Toast.LENGTH_SHORT)
+                    .show()
             }
 
         })
     }
 
-    fun fullScreen(){
-        if(isFullScreen){
+    fun fullScreen() {
+        if (isFullScreen) {
             details.visibility = View.VISIBLE
             fullScreenBtn.setImageResource(R.drawable.ic_baseline_fullscreen_48)
-                activity?.window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
-                var lp = videoPlayer.layoutParams as LinearLayout.LayoutParams
-                lp.width = LinearLayout.LayoutParams.MATCH_PARENT
-                lp.height = resources.getDimensionPixelSize(R.dimen.dp_205)
+            activity?.window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+            var lp = videoPlayer.layoutParams as LinearLayout.LayoutParams
+            lp.width = LinearLayout.LayoutParams.MATCH_PARENT
+            lp.height = resources.getDimensionPixelSize(R.dimen.dp_205)
 
-                (activity as HomePageActivity).showBottomNav()
+            (activity as HomePageActivity).showBottomNav()
             (activity as HomePageActivity).showActionBar()
-                videoPlayer.layoutParams = lp
-            activity?.requestedOrientation  = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        }
-        else{
+            videoPlayer.layoutParams = lp
+            activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        } else {
             details.visibility = View.GONE
             fullScreenBtn.setImageResource(R.drawable.ic_baseline_fullscreen_exit_24)
-                activity?.window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                var lp = videoPlayer.layoutParams as LinearLayout.LayoutParams
+            activity?.window?.decorView?.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+            var lp = videoPlayer.layoutParams as LinearLayout.LayoutParams
 
             activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
 
@@ -330,13 +413,13 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
 
             var width = displayMetrics.widthPixels
             var height = displayMetrics.heightPixels
-                lp.width = ConstraintLayout.LayoutParams.MATCH_PARENT
-                lp.height = width
+            lp.width = ConstraintLayout.LayoutParams.MATCH_PARENT
+            lp.height = width
 
 
-                (activity as HomePageActivity).hideActionBar()
-                (activity as HomePageActivity).hideBottomNav()
-                videoPlayer.layoutParams = lp
+            (activity as HomePageActivity).hideActionBar()
+            (activity as HomePageActivity).hideBottomNav()
+            videoPlayer.layoutParams = lp
         }
         isFullScreen = !isFullScreen
     }
@@ -481,12 +564,12 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
         (activity as HomePageActivity).showBottomNav()
         (activity as HomePageActivity).showActionBar()
         videoPlayer.layoutParams = lp
-        activity?.requestedOrientation  = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         super.onDestroyView()
     }
 
-    fun changeResizeMode(){
+    fun changeResizeMode() {
         when (resizeModeIndex) {
             0 -> {
                 fitZoomBtn.setImageResource(resizeMode[resizeModeIndex])
@@ -505,8 +588,6 @@ class MediaStreamFragment : Fragment(), ItemClickListener {
             }
         }
     }
-
-
 
 
 }
