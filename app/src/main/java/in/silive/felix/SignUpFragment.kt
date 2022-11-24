@@ -106,10 +106,11 @@ class SignUpFragment : Fragment() {
 
                 call.enqueue(object : Callback<String> {
                     override fun onResponse(call: Call<String>, response: Response<String>) {
+                        if (context != null) {
 
                         if (response.code() == 401) {
 
-                            if (context != null) {
+
 
                                 val call2 = retrofitAPI.resendVerificationLink(Email(email))
                                 call2.enqueue(object : Callback<String> {
@@ -118,7 +119,7 @@ class SignUpFragment : Fragment() {
                                         response: Response<String>
                                     ) {
                                         if(context != null) {
-                                            if (response.code() == 201) {
+                                            if (response.code() == 200) {
 //
                                                 (activity as AuthenticationActivity).email = email
                                                 (activity as AuthenticationActivity).password =

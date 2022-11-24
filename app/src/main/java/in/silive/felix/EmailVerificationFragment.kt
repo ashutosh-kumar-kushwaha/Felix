@@ -100,11 +100,11 @@ class EmailVerificationFragment : Fragment() {
 
                     if (response.code() == 200) {
 //                        Toast.makeText(requireContext(), "Hello " + response.body()?.firstName.toString() + "!\nRole = " + response.body()?.role.toString(), Toast.LENGTH_SHORT).show()
-                        Toast.makeText(
-                            requireContext(),
-                            response.headers().get("Set-Cookie").toString(),
-                            Toast.LENGTH_SHORT
-                        ).show()
+//                        Toast.makeText(
+//                            requireContext(),
+//                            response.headers().get("Set-Cookie").toString(),
+//                            Toast.LENGTH_SHORT
+//                        ).show()
 
                         lifecycleScope.launch(Dispatchers.IO) {
                             val dataStoreManager = DataStoreManager(requireContext())
@@ -124,7 +124,7 @@ class EmailVerificationFragment : Fragment() {
 //                        ) } }
 
                         (activity as AuthenticationActivity).homePage()
-                    } else if (response.code() != 500 && response.code() != 401) {
+                    } else if (response.code() != 500 && response.code() != 401 && response.code() != 403) {
                         Toast.makeText(
                             requireContext(),
                             response.code().toString(),

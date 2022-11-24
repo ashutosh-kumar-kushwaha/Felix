@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,10 +20,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
 class SearchFragment : Fragment(), ItemClickListener {
 
     lateinit var recyclerView : RecyclerView
     lateinit var searchView : SearchView
+    lateinit var closeBtn : ImageView
 
 
 
@@ -35,6 +38,10 @@ class SearchFragment : Fragment(), ItemClickListener {
 
         recyclerView = view.findViewById(R.id.recyclerView)
         searchView = (activity as HomePageActivity).searchView
+        searchView.setOnCloseListener {
+            (activity as HomePageActivity).onBackPressed()
+            false
+        }
 
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{

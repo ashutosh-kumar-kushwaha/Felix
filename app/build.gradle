@@ -1,8 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-//    id 'kotlin-kapt'
-//    id 'com.google.dagger.hilt.android' version '2.41' apply false
+    id 'kotlin-android-extensions'
 }
 
 
@@ -37,6 +36,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    namespace 'in.silive.felix'
 }
 
 dependencies {

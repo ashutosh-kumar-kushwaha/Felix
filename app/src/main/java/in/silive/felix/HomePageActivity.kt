@@ -26,6 +26,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+
 class HomePageActivity : AppCompatActivity() {
 
     lateinit var searchLinearLayout : LinearLayoutCompat
@@ -44,6 +45,7 @@ class HomePageActivity : AppCompatActivity() {
     lateinit var categoryBtn : AppCompatTextView
     lateinit var appbarLayout: AppBarLayout
     var currentFragment : String? = "Home"
+    var isCategoryFrag = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -176,6 +178,7 @@ class HomePageActivity : AppCompatActivity() {
 
     fun adminFrag() {
         val adminFragment = AdminFragment()
+        isCategoryFrag = false
         replaceFrag(adminFragment, "Admin")
     }
 
@@ -200,16 +203,12 @@ class HomePageActivity : AppCompatActivity() {
     private fun replaceFrag(fragment : Fragment, name : String){
         val fm : FragmentManager = supportFragmentManager
         val ft : FragmentTransaction = fm.beginTransaction()
-        if(name == "Profile" || name == "Wishlist" || name == "History" || name == "Home"){
-            for (i in 0 .. fm.backStackEntryCount) {
-                fm.popBackStack()
-            }
-            ft.replace(R.id.container, fragment)
+        if(name == "Profile" || name == "Wishlist" || name == "History"){
+            fm.popBackStack("Home", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
-        else{
-            ft.addToBackStack(name)
-            ft.add(R.id.container, fragment)
-        }
+        ft.addToBackStack(name)
+        ft.add(R.id.container, fragment)
+
 
 
         ft.commit()
@@ -222,56 +221,67 @@ class HomePageActivity : AppCompatActivity() {
 
     fun mediaStreamingFrag(){
         val mediaStreamFragment = MediaStreamFragment()
+        isCategoryFrag = false
         replaceFrag(mediaStreamFragment, "Media")
     }
 
     fun profileFrag(){
         val myProfileFrag = MyProfileFragment()
+        isCategoryFrag = false
         replaceFrag(myProfileFrag, "Profile")
     }
 
     fun editMovieFrag(){
         val editMovieFragment = EditMovieFragment()
+        isCategoryFrag = false
         replaceFrag(editMovieFragment, "EditMovie")
     }
 
     fun searchMovieForEditFrag(){
         val searchMovieForEditFragment = SearchMovieForEditFragment()
+        isCategoryFrag = false
         replaceFrag(searchMovieForEditFragment, "SearchMovieForEdit")
     }
 
     fun moviesByCategoryFrag(){
         val moviesByCategoryFragment = MoviesByCategoryFragment()
+        isCategoryFrag = false
         replaceFrag(moviesByCategoryFragment, "moviesByCategory")
     }
 
     fun newAdminFrag(){
         val newAdminFragment = NewAdminFragment()
+        isCategoryFrag = false
         replaceFrag(newAdminFragment, "moviesByCategory")
     }
 
     fun homeFrag(){
         val homeFrag = HomePageFragment()
+        isCategoryFrag = false
         replaceFrag(homeFrag, "Home")
     }
 
     fun changePassFrag(){
         val changePasswordFragment = ChangePasswordFragment()
+        isCategoryFrag = false
         replaceFrag(changePasswordFragment, "ChangePass")
     }
 
     fun wishlistFrag(){
         val wishlistFragment = WishlistFragment()
+        isCategoryFrag = false
         replaceFrag(wishlistFragment, "Wishlist")
     }
 
     fun historyFrag(){
         val historyFragment = WatchHistoryFragment()
+        isCategoryFrag = false
         replaceFrag(historyFragment, "History")
     }
 
     fun searchFrag(){
         val searchFragment = SearchFragment()
+        isCategoryFrag = false
         replaceFrag(searchFragment, "Search")
     }
 
@@ -292,22 +302,28 @@ class HomePageActivity : AppCompatActivity() {
 
 
     fun categoryFrag(){
-        val categoryFragment = CategoryFragment()
-        replaceFrag(categoryFragment, "Category")
+        if(!isCategoryFrag) {
+            val categoryFragment = CategoryFragment()
+            isCategoryFrag = true
+            replaceFrag(categoryFragment, "Category")
+        }
     }
 
     fun newMovieFrag(){
         val newMovieFragment = NewMovieFragment()
+        isCategoryFrag = false
         replaceFrag(newMovieFragment, "AddMovie")
     }
 
     fun deleteMovieFrag(){
         val deleteMovieFragment = DeleteMovieFragment()
+        isCategoryFrag = false
         replaceFrag(deleteMovieFragment, "DeleteMovie")
     }
 
     fun newCategoryFrag(){
         val newCategoryFragment = NewCategoryFragment()
+        isCategoryFrag = false
         replaceFrag(newCategoryFragment, "NewCategory")
     }
 
@@ -323,6 +339,10 @@ class HomePageActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        if(isCategoryFrag){
+            isCategoryFrag = false
+        }
+        showActionBar()
         showBottomNav()
         super.onBackPressed()
     }
